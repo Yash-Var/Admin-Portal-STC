@@ -90,7 +90,7 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={`../../assets/user.png`}
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0kSGqejACPJKggBk7_11_nnC_Zs8PzkWUOA&usqp=CAU"
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
@@ -101,10 +101,10 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Ed Roh
+                  Bajrang Bali
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  VP Fancy Admin
+                  JAI SHREE RAM
                 </Typography>
               </Box>
             </Box>
