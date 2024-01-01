@@ -10,36 +10,39 @@ import { ColorModeContext, useMode } from "./theme";
 import Company from "./components/Company";
 import CompanyReport from "./components/CompanyReport";
 import Questions from "./components/Questions";
+import Error404 from "./components/Error404";
+
 
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
-  const isLoggedin = true;
-  const isSuper = "super"
+  const isLoggedin = false;
+  const isSuper = "super";
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        {isLoggedin ? (
-          <div className="app">
-            <Sidebar isSidebar={isSidebar} />
-            <main className="content">
-              <Topbar setIsSidebar={setIsSidebar} />
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/companies" element={<Company />} />
-                <Route path="/reports" element={<CompanyReport />} />
-                <Route path="/questions" element={<Questions />} />
-                <Route
-                  path="/form"
-                  element={isSuper === "super" ? <Form /> : <Navigate to="/" />}
-                />
-              </Routes>
-            </main>
-          </div>
-        ) : (
-          <Login />
-        )}
+        <div className="app">
+          {isLoggedin?<Sidebar isSidebar={isSidebar} />:null}
+          <main className="content">
+            <Topbar setIsSidebar={setIsSidebar} />
+            <Routes>
+              <Route path='*' element={<Error404/>} />   {/* 404 page  Come here */ }
+              <Route
+                path="/login"
+                element={isLoggedin ? <Navigate to="/" /> : <Login />}
+              />
+              <Route path="/" element={isLoggedin?<Dashboard/>:<Navigate to="/login" />} />
+              <Route path="/companies"  element={isLoggedin?<Company/>:<Navigate to="/login" />} />
+              <Route path="/reports" element={isLoggedin?<CompanyReport/>:<Navigate to="/login" />} />
+              <Route path="/questions"  element={isLoggedin?<Questions/>:<Navigate to="/login" />} />
+              <Route
+                path="/form"
+                element={isLoggedin?(isSuper === "super") ? <Form /> : <Navigate to="/" />:<Navigate to="/login" />}
+              />
+            </Routes>
+          </main>
+        </div>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
