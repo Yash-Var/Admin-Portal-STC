@@ -36,7 +36,7 @@ const Login = () => {
             window.location.replace("/event");
             console.log("yash varshney");
           }, 2000);
-        } else notify("Your password or your email is wrong", "error");
+        } else notify("Your password or your email is wrong", "");
       })
       .catch((error) => {
         console.log(error);
