@@ -7,14 +7,14 @@ import Team from "./scenes/team";
 import Invoices from "./scenes/invoices";
 import Contacts from "./scenes/contacts";
 import Form from "./scenes/form";
-import  Login from "./components/Login";
+import Login from "./components/Login";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
-  const isLoggedin = false;
+  const isLoggedin = true;
 
   return (
     <ColorModeContext.Provider value={colorMode}>
