@@ -15,7 +15,7 @@ function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const isLoggedin = true;
-  const isSuper = localStorage.getItem("isSuper");
+  const isSuper = "super"
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>

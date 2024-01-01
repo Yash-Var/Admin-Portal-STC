@@ -8,6 +8,7 @@ import TrafficIcon from "@mui/icons-material/Traffic";
 import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
+import Header from "../../components/Header";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -17,7 +18,7 @@ const Dashboard = () => {
     <Box m="20px">
       {/* HEADER */}
 
-
+      <Header title="Dashboard" subtitle="Welcome To Dashboard" />  
       {/* GRID & CHARTS */}
       <Box
         display="grid"

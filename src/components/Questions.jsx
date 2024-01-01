@@ -1,8 +1,11 @@
 import React from 'react'
-
+import { Box } from '@mui/material'
+import Header from './Header'
 const Questions = () => {
   return (
-    <div>Questions</div>
+    <Box m = "20px">
+      <Header title="Interview Questions"/>
+    </Box>
   )
 }
 

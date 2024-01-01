@@ -34,7 +34,7 @@ const Sidebar = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
-  const isSuper = localStorage.getItem("isSuper");
+  const isSuper = "super";
   return (
     <Box
       sx={{
@@ -156,7 +156,7 @@ const Sidebar = () => {
                   Manages
                 </Typography>
                 <Item
-                  title="ADD ADMIN"
+                  title="Add ADMIN"
                   to="/form"
                   icon={<PeopleOutlinedIcon />}
                   selected={selected}

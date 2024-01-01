@@ -4,7 +4,6 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 const root = ReactDOM.createRoot(document.getElementById("root"));
-localStorage.setItem("isSuper","super");
 root.render(
   <React.StrictMode>
     <BrowserRouter>
