@@ -10,6 +10,9 @@ import { ColorModeContext, useMode } from "./theme";
 import Company from "./components/Company";
 import CompanyReport from "./components/CompanyReport";
 import Questions from "./components/Questions";
+import Contacts from "./scenes/contacts"
+import Team from "./scenes/team";
+import Invoices from "./scenes/invoices";
 import Error404 from "./components/Error404";
 
 
@@ -33,9 +36,9 @@ function App() {
                 element={isLoggedin ? <Navigate to="/" /> : <Login />}
               />
               <Route path="/" element={isLoggedin?<Dashboard/>:<Navigate to="/login" />} />
-              <Route path="/companies"  element={isLoggedin?<Company/>:<Navigate to="/login" />} />
-              <Route path="/reports" element={isLoggedin?<CompanyReport/>:<Navigate to="/login" />} />
-              <Route path="/questions"  element={isLoggedin?<Questions/>:<Navigate to="/login" />} />
+              <Route path="/companies"  element={isLoggedin?<Contacts/>:<Navigate to="/login" />} />
+              <Route path="/reports" element={isLoggedin?<Team/>:<Navigate to="/login" />} />
+              <Route path="/questions"  element={isLoggedin?<Invoices/>:<Navigate to="/login" />} />
               <Route
                 path="/form"
                 element={isLoggedin?(isSuper === "super") ? <Form /> : <Navigate to="/" />:<Navigate to="/login" />}
