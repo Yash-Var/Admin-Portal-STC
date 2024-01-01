@@ -14,7 +14,7 @@ import { ColorModeContext, useMode } from "./theme";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
-  const isLoggedin = false;
+  const isLoggedin = true;
 
   return (
     <ColorModeContext.Provider value={colorMode}>
