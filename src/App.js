@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Routes, Route, Navigate} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Form from "./scenes/form";
-import  Login from "./components/Login";
+import Login from "./components/Login";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Company from "./components/Company";
@@ -27,10 +27,13 @@ function App() {
               <Topbar setIsSidebar={setIsSidebar} />
               <Routes>
                 <Route path="/" element={<Dashboard />} />
-                <Route path="/companies" element={<Company/>} />
+                <Route path="/companies" element={<Company />} />
                 <Route path="/reports" element={<CompanyReport />} />
-                <Route path="/questions" element={<Questions/>} />
-                <Route path="/form" element={isSuper === "super" ?<Form />:<Navigate to="/"/>} />
+                <Route path="/questions" element={<Questions />} />
+                <Route
+                  path="/form"
+                  element={isSuper === "super" ? <Form /> : <Navigate to="/" />}
+                />
               </Routes>
             </main>
           </div>

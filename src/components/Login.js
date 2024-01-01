@@ -18,29 +18,23 @@ const Login = () => {
   const [touched, setTouched] = useState({});
 
   const chaeckData = (obj) => {
-    const urlApi = `http://localhost:5000/api/v1/user/login`;
+    const urlApi = `http://localhost:5000/api/admin/loginAdmin`;
     const api = axios
       .post(urlApi, obj)
       .then((data) => {
         if (data) {
+          console.log(data);
           notify("You login to your account successfully", "success");
 
-          localStorage.setItem("token", data.data.token);
-          localStorage.setItem("name", data.data.User.name);
-          localStorage.setItem("User_Id", data.data.User.Object_id);
           setData({
             email: "",
             password: "",
           });
-          setTimeout(() => {
-            window.location.replace("/event");
-            console.log("yash varshney");
-          }, 2000);
-        } else notify("Your password or your email is wrong", "");
+        } else notify("Your password or your email is wrong", "error");
       })
       .catch((error) => {
         console.log(error);
-        notify(error.response.data.msg, "error");
+        notify(error.response.data.message, "error");
       });
     toast.promise(api, {
       success: false,
