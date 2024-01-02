@@ -10,6 +10,9 @@ const Company = () => {
   const colors = tokens(theme.palette.mode);
   const [deleteRequest, setDeleteRequest] = useState(false);
   const [deleteIndex,setDeleteIndex] = useState(null);
+
+  const [pageSize, setPageSize] = React.useState(11);
+
   const columns = [
     { field: "companyID", headerName: "Company ID", editable: true },
     {
@@ -115,9 +118,11 @@ const Company = () => {
           rows={companyMockData}
           columns={columns}
           getRowId={(row) => row.companyID}
-          pageSize={10}
-          pagination
           onSelectionModelChange={(itm) => setDeleteIndex(itm)}
+          pageSize={pageSize}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          rowsPerPageOptions={[11, 21, 51]}
+
         />
         <button
           onClick={() => {
