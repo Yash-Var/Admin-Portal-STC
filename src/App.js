@@ -10,11 +10,10 @@ import { ColorModeContext, useMode } from "./theme";
 import Company from "./components/Company";
 import CompanyReport from "./components/CompanyReport";
 import Questions from "./components/Questions";
-import Contacts from "./scenes/contacts"
+import Contacts from "./scenes/contacts";
 import Team from "./scenes/team";
 import Invoices from "./scenes/invoices";
 import Error404 from "./components/Error404";
-
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -26,22 +25,44 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          {isLoggedin?<Sidebar isSidebar={isSidebar} />:null}
+          {isLoggedin ? <Sidebar isSidebar={isSidebar} /> : null}
           <main className="content">
             <Topbar setIsSidebar={setIsSidebar} />
             <Routes>
-              <Route path='*' element={<Error404/>} />   {/* 404 page  Come here */ }
+              <Route path="*" element={<Error404 />} />
               <Route
                 path="/login"
                 element={isLoggedin ? <Navigate to="/" /> : <Login />}
               />
-              <Route path="/" element={isLoggedin?<Dashboard/>:<Navigate to="/login" />} />
-              <Route path="/companies"  element={isLoggedin?<Contacts/>:<Navigate to="/login" />} />
-              <Route path="/reports" element={isLoggedin?<Team/>:<Navigate to="/login" />} />
-              <Route path="/questions"  element={isLoggedin?<Invoices/>:<Navigate to="/login" />} />
+              <Route
+                path="/"
+                element={isLoggedin ? <Dashboard /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="/companies"
+                element={isLoggedin ? <Contacts /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="/reports"
+                element={isLoggedin ? <Team /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="/questions"
+                element={isLoggedin ? <Invoices /> : <Navigate to="/login" />}
+              />
               <Route
                 path="/form"
-                element={isLoggedin?(isSuper === "super") ? <Form /> : <Navigate to="/" />:<Navigate to="/login" />}
+                element={
+                  isLoggedin ? (
+                    isSuper === "super" ? (
+                      <Form />
+                    ) : (
+                      <Navigate to="/" />
+                    )
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
               />
             </Routes>
           </main>
