@@ -1,15 +1,19 @@
 import React from "react";
 import Header from "./Header";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import { companyMockData } from "../constants";
 import { useEffect, useState } from "react";
+import CompanyModal from "./CompanyModal";
 const Company = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [deleteRequest, setDeleteRequest] = useState(false);
-  const [deleteIndex,setDeleteIndex] = useState(null);
+  // const [deleteRequest, setDeleteRequest] = useState(false);
+  // const [deleteIndex,setDeleteIndex] = useState(null);
+  const [index, setIndex] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedCompanyId, setSelectedCompanyId] = useState(null);
 
   const [pageSize, setPageSize] = React.useState(11);
 
@@ -71,15 +75,38 @@ const Company = () => {
         );
       },
     },
+    {
+      field: "edit",
+      headerName: "Edit",
+      sortable: false,
+      width: 100,
+      renderCell: ({ row }) => (
+        <Button
+          variant="outlined"
+          style={{ color: "#fff", borderColor: "#2196f3" }}
+          onClick={() => handleEdit(row.companyID)}
+        >
+          Edit
+        </Button>
+      ),
+    },
   ];
 
-  useEffect(() => {
-    if(deleteRequest&&deleteIndex){
-      console.log(deleteIndex);
-      setDeleteRequest(false);
-      setDeleteIndex(null);
-    }
-  }, [deleteRequest]);
+  // useEffect(() => {
+  //   if(deleteRequest&&deleteIndex){
+  //     console.log(deleteIndex);
+  //     setDeleteRequest(false);
+  //     setDeleteIndex(null);
+  //   }
+  // }, [deleteRequest]);
+  const handleEdit = (companyId) => {
+    setSelectedCompanyId(companyId); // Set the selected company ID
+    setOpenModal(true); // Open the modal
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false); // Close the modal
+  };
 
   return (
     <Box m="20px">
@@ -114,23 +141,26 @@ const Company = () => {
       >
         <Header title="Companies" />
         <DataGrid
-          checkboxSelection
           rows={companyMockData}
           columns={columns}
           getRowId={(row) => row.companyID}
-          onSelectionModelChange={(itm) => setDeleteIndex(itm)}
+          onSelectionModelChange={(itm) => setIndex(itm)}
           pageSize={pageSize}
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
           rowsPerPageOptions={[11, 21, 51]}
-
         />
-        <button
+        {/* <button
           onClick={() => {
             setDeleteRequest(true);
           }}
         >
           Delete
-        </button>
+        </button> */}
+        <CompanyModal
+          open={openModal}
+          handleClose={handleCloseModal}
+          companyId={selectedCompanyId}
+        />
       </Box>
     </Box>
   );
