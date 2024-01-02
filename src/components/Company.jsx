@@ -3,10 +3,42 @@ import Header from "./Header";
 import { Box, Typography, useTheme, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../theme";
-import { companyMockData } from "../constants";
+// import { } from "../constants";
 import { useEffect, useState } from "react";
 import CompanyModal from "./CompanyModal";
+import axios from "axios";
 const Company = () => {
+  const [companyData, setCompanyData] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+
+    
+  }
+  , []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/admin/getCompanyData",
+        {
+          headers: {
+            Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNAc3RjYWRtaW4uY29tIiwiZGF0YSI6IlNodWJoZW5kcmEiLCJ1c2VyVHlwZSI6IlN1cGVyIEFkbWluIiwiaWF0IjoxNzA0MTIxMDE5LCJleHAiOjE3MzU2Nzg2MTl9.xw5bdNKGeRlknod92qN-f5mXBqnIdw6Xz0mvh_4FKJM",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = response.data.data[0];
+      
+      // Sort the companyData array by companyName
+      const sortedData = data.sort((a, b) => a.companyName.localeCompare(b.companyName));
+      
+      setCompanyData(sortedData);
+      console.log(sortedData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   // const [deleteRequest, setDeleteRequest] = useState(false);
@@ -18,7 +50,7 @@ const Company = () => {
   const [pageSize, setPageSize] = React.useState(11);
 
   const columns = [
-    { field: "companyID", headerName: "Company ID", editable: true },
+    { field: "sNo", headerName: "S.No"},
     {
       field: "companyName",
       headerName: "Company Name",
@@ -100,8 +132,8 @@ const Company = () => {
   //   }
   // }, [deleteRequest]);
   const handleEdit = (companyId) => {
-    setSelectedCompanyId(companyId); // Set the selected company ID
-    setOpenModal(true); // Open the modal
+    setSelectedCompanyId(companyId); 
+    setOpenModal(true); 
   };
 
   const handleCloseModal = () => {
@@ -141,7 +173,8 @@ const Company = () => {
       >
         <Header title="Companies" />
         <DataGrid
-          rows={companyMockData}
+         rows={companyData.map((row, index) => ({ ...row, sNo: index + 1 }))}
+         
           columns={columns}
           getRowId={(row) => row.companyID}
           onSelectionModelChange={(itm) => setIndex(itm)}

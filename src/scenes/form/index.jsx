@@ -11,12 +11,7 @@ const Form = () => {
   const roles = ["Admin", "Super Admin"];
 
   const handleFormSubmit = async (values) => {
-    console.log("values");
-    console.log(values);
-
     const { confirmPassword, ...value2 } = values;
-    console.log("value2");
-    console.log(value2);
 
     try {
       const response = await axios.post(
