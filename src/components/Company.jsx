@@ -4,24 +4,41 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import { companyMockData } from "../constants";
-
+import { useEffect, useState } from "react";
 const Company = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [deleteRequest, setDeleteRequest] = useState(false);
+  const [deleteIndex,setDeleteIndex] = useState(null);
   const columns = [
-    { field: "companyID", headerName: "Company ID" ,editable: true },
-    { field: "companyName", headerName: "Company Name", flex: 2 ,editable: true },
-    { field: "companyDescription", headerName: "Company Description", flex: 2 ,editable: true},
+    { field: "companyID", headerName: "Company ID", editable: true },
+    {
+      field: "companyName",
+      headerName: "Company Name",
+      flex: 2,
+      editable: true,
+    },
+    {
+      field: "companyDescription",
+      headerName: "Company Description",
+      flex: 2,
+      editable: true,
+    },
     {
       field: "companyEstablishment",
       headerName: "Establishment Year",
       flex: 1,
-      editable: true
+      editable: true,
     },
-    { field: "companyWebsite", headerName: "Website", flex: 2 ,editable: true},
-    { field: "companyAddDate", headerName: "Added Date", flex: 2,editable: true },
-    { field: "className", headerName: "Company Type", flex: 2,editable: true },
-    { field: "userName", headerName: "Added By", flex: 2 ,editable: true},
+    { field: "companyWebsite", headerName: "Website", flex: 2, editable: true },
+    {
+      field: "companyAddDate",
+      headerName: "Added Date",
+      flex: 2,
+      editable: true,
+    },
+    { field: "className", headerName: "Company Type", flex: 2, editable: true },
+    { field: "userName", headerName: "Added By", flex: 2, editable: true },
     {
       field: "userType",
       headerName: "User Type",
@@ -39,7 +56,8 @@ const Company = () => {
               userType === "Super Admin"
                 ? colors.greenAccent[600]
                 : userType === "Admin"
-                ? colors.greenAccent[700]:null
+                ? colors.greenAccent[700]
+                : null
             }
             borderRadius="4px"
           >
@@ -51,6 +69,15 @@ const Company = () => {
       },
     },
   ];
+
+  useEffect(() => {
+    if(deleteRequest&&deleteIndex){
+      console.log(deleteIndex);
+      setDeleteRequest(false);
+      setDeleteIndex(null);
+    }
+  }, [deleteRequest]);
+
   return (
     <Box m="20px">
       <Box
@@ -88,7 +115,17 @@ const Company = () => {
           rows={companyMockData}
           columns={columns}
           getRowId={(row) => row.companyID}
+          pageSize={10}
+          pagination
+          onSelectionModelChange={(itm) => setDeleteIndex(itm)}
         />
+        <button
+          onClick={() => {
+            setDeleteRequest(true);
+          }}
+        >
+          Delete
+        </button>
       </Box>
     </Box>
   );
