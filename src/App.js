@@ -10,9 +10,6 @@ import { ColorModeContext, useMode } from "./theme";
 import Company from "./components/Company";
 import CompanyReport from "./components/CompanyReport";
 import Questions from "./components/Questions";
-import Contacts from "./scenes/contacts";
-import Team from "./scenes/team";
-import Invoices from "./scenes/invoices";
 import Error404 from "./components/Error404";
 
 function App() {
@@ -29,7 +26,8 @@ function App() {
           <main className="content">
             <Topbar setIsSidebar={setIsSidebar} />
             <Routes>
-              <Route path="*" element={<Error404 />} />
+              <Route path="*" element={<Error404 />} />{" "}
+              {/* 404 page  Come here */}
               <Route
                 path="/login"
                 element={isLoggedin ? <Navigate to="/" /> : <Login />}
@@ -40,15 +38,17 @@ function App() {
               />
               <Route
                 path="/companies"
-                element={isLoggedin ? <Contacts /> : <Navigate to="/login" />}
+                element={isLoggedin ? <Company /> : <Navigate to="/login" />}
               />
               <Route
                 path="/reports"
-                element={isLoggedin ? <Team /> : <Navigate to="/login" />}
+                element={
+                  isLoggedin ? <CompanyReport /> : <Navigate to="/login" />
+                }
               />
               <Route
                 path="/questions"
-                element={isLoggedin ? <Invoices /> : <Navigate to="/login" />}
+                element={isLoggedin ? <Questions /> : <Navigate to="/login" />}
               />
               <Route
                 path="/form"

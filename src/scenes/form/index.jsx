@@ -42,7 +42,7 @@ const Form = () => {
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
-        // validationSchema={checkoutSchema}
+        validationSchema={checkoutSchema}
       >
         {({
           values,
@@ -65,7 +65,7 @@ const Form = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="First Name"
+                label="Full Name"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.name}
@@ -170,20 +170,20 @@ const Form = () => {
 const passwordRegExp =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*!])[A-Za-z\d@#$%^&*!]{8,}$/;
 
-// const checkoutSchema = yup.object().shape({
-//   fullName: yup.string().required("required"),
-//   email: yup.string().email("invalid email").required("required"),
-//   password: yup
-//     .string()
-//     .matches(passwordRegExp, "Password is not valid")
-//     .required("required"),
-//   confirmPassword: yup
-//     .string()
-//     .oneOf([yup.ref("password"), null], "Passwords must match")
-//     .required("Confirm Password is required"),
-//   type: yup.string().required("required"),
+const checkoutSchema = yup.object().shape({
+  fullName: yup.string().required("required"),
+  email: yup.string().email("invalid email").required("required"),
+  password: yup
+    .string()
+    .matches(passwordRegExp, "Password is not valid")
+    .required("required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .required("Confirm Password is required"),
+  type: yup.string().required("required"),
 
-// });
+});
 const initialValues = {
   email: "",
   password: "",
