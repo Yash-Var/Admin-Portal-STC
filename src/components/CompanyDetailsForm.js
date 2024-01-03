@@ -1,20 +1,23 @@
-import React, { useState } from "react";
 import {
   Box,
-  Typography,
-  TextField,
   Button,
-  useTheme,
+  TextField,
+  FormControl,
+  InputLabel,
+  FormHelperText,
+  MenuItem,
+  Select,
 } from "@mui/material";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Header from "./Header";
 
-const CompanyDetails = () => {
-  const Navigate = useNavigate();
-
-  // State for form fields
-  const [formData, setFormData] = useState({
-    companyName:"",
+// Define the form component
+const CompanyForm = () => {
+  const isNonMobile = useMediaQuery("(min-width:600px,)");
+  const initialValues = {
+    companyName: "",
     companyNumOfRounds: "",
     companyCTC: "",
     companyEligibility: "",
@@ -38,263 +41,600 @@ const CompanyDetails = () => {
     companyReportAddedBy: "",
     companyReportYear: "",
     reportFeedBack: "",
-  });
-
-  // Handle form field changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      // Make API request to submit form data
-      const response = await axios.post(
-        "http://localhost:5000/api/admin/addCompany", // Replace with your API endpoint
-        formData,
-        {
-          headers: {
-            Authorization: "Bearer " + "your_access_token_here",
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      console.log("Company added successfully:", response.data);
-      // Optionally, navigate to another page after successful submission
-      Navigate("/companies");
-    } catch (error) {
-      console.error("Error adding company:", error);
-    }
+  const validationSchema = Yup.object({
+    companyName: Yup.string().required("Company Name is required"),
+    companyNumOfRounds: Yup.string().required("Number of Rounds is required"),
+    companyCTC: Yup.string().required("CTC is required"),
+    companyEligibility: Yup.string().required("Eligibility is required"),
+    companyJOBProfile: Yup.string().required("Job Profile is required"),
+    companyFirstRoundName: Yup.string().required(
+      "First Round Name is required"
+    ),
+    companyFirstRoundDescrip: Yup.string().required(
+      "First Round Description is required"
+    ),
+    companyFirstRoundDuration: Yup.string().required(
+      "First Round Duration is required"
+    ),
+    companySecondRoundName: Yup.string().required(
+      "Second Round Name is required"
+    ),
+    companySecondRoundDescrip: Yup.string().required(
+      "Second Round Description is required"
+    ),
+    companySecondRoundDuration: Yup.string().required(
+      "Second Round Duration is required"
+    ),
+    companyThirdRoundName: Yup.string().required(
+      "Third Round Name is required"
+    ),
+    companyThirdRoundDescrip: Yup.string().required(
+      "Third Round Description is required"
+    ),
+    companyThirdRoundDuration: Yup.string().required(
+      "Third Round Duration is required"
+    ),
+    companyFourthRoundName: Yup.string().required(
+      "Fourth Round Name is required"
+    ),
+    companyFourthRoundDescrip: Yup.string().required(
+      "Fourth Round Description is required"
+    ),
+    companyFourthRoundDuration: Yup.string().required(
+      "Fourth Round Duration is required"
+    ),
+    companyAdditionalRoundDescrip: Yup.string(),
+    companyReportApprovalStatus: Yup.string(),
+    companyPracticeDetails: Yup.string(),
+    companyReportAddDate: Yup.string(),
+    companyReportAddedBy: Yup.string(),
+    companyReportYear: Yup.string(),
+    reportFeedBack: Yup.string(),
+  }); 
+  const onSubmit = (values) => {
+    console.log(values);
   };
-
-  const theme = useTheme();
 
   return (
-    <Box m="20px">
-      <Box m="40px" maxWidth="auto">
-        <Typography variant="h4" mb="20px">
-          Add Company
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          {/* Add input fields for each form field */}
-          <TextField
-            label="Company Name"
-            name="companyName"
-            value={formData.companyName}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-          <TextField
-            label="Number of Rounds"
-            name="companyNumOfRounds"
-            value={formData.companyNumOfRounds}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            label="CTC"
-            name="companyCTC"
-            value={formData.companyCTC}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            label="Eligibility"
-            name="companyEligibility"
-            value={formData.companyEligibility}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-          />
-            <TextField
-            label="Job Profile"
-            name="companyJOBProfile"
-            value={formData.companyJOBProfile}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
-            label="First Round Name"
-            name="companyFirstRoundName"
-            value={formData.companyFirstRoundName}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
-            label="First Round Description"
-            name="companyFirstRoundDescrip"
-            value={formData.companyFirstRoundDescrip}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
-            label="First Round Duration"
-            name="companyFirstRoundDuration"
-            value={formData.companyFirstRoundDuration}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
+    <Box mx="20vw" my="10vw">
+      <Header
+        title="ADD COMPANY DESCRIPTION"
+        subtitle="Add a New Company Description"
+      />
+      <Formik
+        onSubmit={onSubmit}
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleBlur,
+          handleChange,
+          handleSubmit,
+        }) => (
+          <form onSubmit={handleSubmit}>
+            <Box
+              display="grid"
+              gap="30px"
+              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+              sx={{
+                "& > div": { gridColumn: isNonMobile ? undefined : "span 2" },
+              }}
+            >
+              <TextField
+                label="Company Name"
+                variant="filled"
+                id="companyName"
+                name="companyName"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyName}
+                error={
+                  touched.companyName &&
+                  Boolean(errors.companyName)
+                }
+                helperText={
+                  touched.companyName && errors.companyName
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 2" }}
+              />
 
-            label="Second Round Name"
-            name="companySecondRoundName"
-            value={formData.companySecondRoundName}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
-            label="Second Round Description"
-            name="companySecondRoundDescrip"
-            value={formData.companySecondRoundDescrip}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
-            label="Second Round Duration"
-            name="companySecondRoundDuration"
-            value={formData.companySecondRoundDuration}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
-            label="Third Round Name"
-            name="companyThirdRoundName"
-            value={formData.companyThirdRoundName}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
+              <TextField
+                label="Number of Rounds"
+                variant="filled"
+                id="companyNumOfRounds"
+                name="companyNumOfRounds"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyNumOfRounds}
+                error={
+                  touched.companyNumOfRounds &&
+                  Boolean(errors.companyNumOfRounds)
+                }
+                helperText={
+                  touched.companyNumOfRounds &&
+                  errors.companyNumOfRounds
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 2" }}
+              />
 
-            label="Third Round Description"
-            name="companyThirdRoundDescrip"
-            value={formData.companyThirdRoundDescrip}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
-            label="Third Round Duration"
-            name="companyThirdRoundDuration"
-            value={formData.companyThirdRoundDuration}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
-            label="Fourth Round Name"
-            name="companyFourthRoundName"
-            value={formData.companyFourthRoundName}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
-            label="Fourth Round Description"
-            name="companyFourthRoundDescrip"
+              <TextField
+                label="CTC"
+                variant="filled"
+                id="companyCTC"
+                name="companyCTC"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyCTC}
+                error={
+                  touched.companyCTC && Boolean(errors.companyCTC)
+                }
+                helperText={
+                  touched.companyCTC && errors.companyCTC
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 2" }}
+              />
 
-            value={formData.companyFourthRoundDescrip}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
-            label="Fourth Round Duration"
-            name="companyFourthRoundDuration"
-            value={formData.companyFourthRoundDuration}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
-            label="Additional Round Description"
-            name="companyAdditionalRoundDescrip"
-            value={formData.companyAdditionalRoundDescrip}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
-            label="Report Approval Status"
-            name="companyReportApprovalStatus"
-            value={formData.companyReportApprovalStatus}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
-            label="Practice Details"
-            name="companyPracticeDetails"
-            value={formData.companyPracticeDetails}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
-            label="Report Add Date"
-            name="companyReportAddDate"
-            value={formData.companyReportAddDate}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
-            label="Report Added By"
-            name="companyReportAddedBy"
-            value={formData.companyReportAddedBy}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
-            label="Report Year"
-            name="companyReportYear"
-            value={formData.companyReportYear}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
-            <TextField
-            label="Report Feedback"
-            name="reportFeedBack"
-            value={formData.reportFeedBack}
+              <TextField
+                label="Eligibility"
+                variant="filled"
+                id="companyEligibility"
+                name="companyEligibility"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyEligibility}
+                error={
+                  touched.companyEligibility &&
+                  Boolean(errors.companyEligibility)
+                }
+                helperText={
+                  touched.companyEligibility &&
+                  errors.companyEligibility
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 2" }}
+              />
 
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            />
+              <TextField
+                label="Job Profile"
+                variant="filled"
+                id="companyJOBProfile"
+                name="companyJOBProfile"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyJOBProfile}
+                error={
+                  touched.companyJOBProfile &&
+                  Boolean(errors.companyJOBProfile)
+                }
+                helperText={
+                  touched.companyJOBProfile &&
+                  errors.companyJOBProfile
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 2" }}
+              />
 
-          {/* Add other input fields here... */}
+              <TextField
+                label="First Round Name"
+                variant="filled"
+                id="companyFirstRoundName"
+                name="companyFirstRoundName"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyFirstRoundName}
+                error={
+                  touched.companyFirstRoundName &&
+                  Boolean(errors.companyFirstRoundName)
+                }
+                helperText={
+                  touched.companyFirstRoundName &&
+                  errors.companyFirstRoundName
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 2" }}
+              />
 
-          {/* Submit Button */}
-          <Button
-            type="submit"
-            color="secondary"
-            variant="contained"
-            sx={{ height: "40px", width: "120px", marginTop: "20px" }}
-          >
-            Add Company
-          </Button>
-        </form>
-      </Box>
+              <TextField
+                label="First Round Description"
+                variant="filled"
+                id="companyFirstRoundDescrip"
+                name="companyFirstRoundDescrip"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyFirstRoundDescrip}
+                error={
+                  touched.companyFirstRoundDescrip &&
+                  Boolean(errors.companyFirstRoundDescrip)
+                }
+                helperText={
+                  touched.companyFirstRoundDescrip &&
+                  errors.companyFirstRoundDescrip
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 2" }}
+              />
+
+              <TextField
+                label="First Round Duration"
+                variant="filled"
+                id="companyFirstRoundDuration"
+                name="companyFirstRoundDuration"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyFirstRoundDuration}
+                error={
+                  touched.companyFirstRoundDuration &&
+                  Boolean(errors.companyFirstRoundDuration)
+                }
+                helperText={
+                  touched.companyFirstRoundDuration &&
+                  errors.companyFirstRoundDuration
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 2" }}
+              />
+
+              <TextField
+                label="Second Round Name"
+                variant="filled"
+                id="companySecondRoundName"
+                name="companySecondRoundName"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companySecondRoundName}
+                error={
+                  touched.companySecondRoundName &&
+                  Boolean(errors.companySecondRoundName)
+                }
+                helperText={
+                  touched.companySecondRoundName &&
+                  errors.companySecondRoundName
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 2" }}
+              />
+
+              <TextField
+                label="Second Round Description"
+                variant="filled"
+                id="companySecondRoundDescrip"
+                name="companySecondRoundDescrip"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companySecondRoundDescrip}
+                error={
+                  touched.companySecondRoundDescrip &&
+                  Boolean(errors.companySecondRoundDescrip)
+                }
+                helperText={
+                  touched.companySecondRoundDescrip &&
+                  errors.companySecondRoundDescrip
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 2" }}
+              />
+
+              <TextField
+                label="Second Round Duration"
+                variant="filled"
+                id="companySecondRoundDuration"
+                name="companySecondRoundDuration"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companySecondRoundDuration}
+                error={
+                  touched.companySecondRoundDuration &&
+                  Boolean(errors.companySecondRoundDuration)
+                }
+                helperText={
+                  touched.companySecondRoundDuration &&
+                  errors.companySecondRoundDuration
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 4" }}
+              />
+
+              <TextField
+                label="Third Round Name"
+                variant="filled"
+                id="companyThirdRoundName"
+                name="companyThirdRoundName"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyThirdRoundName}
+                error={
+                  touched.companyThirdRoundName &&
+                  Boolean(errors.companyThirdRoundName)
+                }
+                helperText={
+                  touched.companyThirdRoundName &&
+                  errors.companyThirdRoundName
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 4" }}
+              />
+
+              <TextField
+                label="Third Round Description"
+                variant="filled"
+                id="companyThirdRoundDescrip"
+                name="companyThirdRoundDescrip"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyThirdRoundDescrip}
+                error={
+                  touched.companyThirdRoundDescrip &&
+                  Boolean(errors.companyThirdRoundDescrip)
+                }
+                helperText={
+                  touched.companyThirdRoundDescrip &&
+                  errors.companyThirdRoundDescrip
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 4" }}
+              />
+
+              <TextField
+                label="Third Round Duration"
+                variant="filled"
+                id="companyThirdRoundDuration"
+                name="companyThirdRoundDuration"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyThirdRoundDuration}
+                error={
+                  touched.companyThirdRoundDuration &&
+                  Boolean(errors.companyThirdRoundDuration)
+                }
+                helperText={
+                  touched.companyThirdRoundDuration &&
+                  errors.companyThirdRoundDuration
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 4" }}
+              />
+
+              <TextField
+                label="Fourth Round Name"
+                variant="filled"
+                id="companyFourthRoundName"
+                name="companyFourthRoundName"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyFourthRoundName}
+                error={
+                  touched.companyFourthRoundName &&
+                  Boolean(errors.companyFourthRoundName)
+                }
+                helperText={
+                  touched.companyFourthRoundName &&
+                  errors.companyFourthRoundName
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 4" }}
+              />
+
+              <TextField
+                label="Fourth Round Description"
+                variant="filled"
+                id="companyFourthRoundDescrip"
+                name="companyFourthRoundDescrip"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyFourthRoundDescrip}
+                error={
+                  touched.companyFourthRoundDescrip &&
+                  Boolean(errors.companyFourthRoundDescrip)
+                }
+                helperText={
+                  touched.companyFourthRoundDescrip &&
+                  errors.companyFourthRoundDescrip
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 4" }}
+              />
+
+              <TextField
+                label="Fourth Round Duration"
+                variant="filled"
+                id="companyFourthRoundDuration"
+                name="companyFourthRoundDuration"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyFourthRoundDuration}
+                error={
+                  touched.companyFourthRoundDuration &&
+                  Boolean(errors.companyFourthRoundDuration)
+                }
+                helperText={
+                  touched.companyFourthRoundDuration &&
+                  errors.companyFourthRoundDuration
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 4" }}
+              />
+
+              <TextField
+                label="Additional Round Description"
+                variant="filled"
+                id="companyAdditionalRoundDescrip"
+                name="companyAdditionalRoundDescrip"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyAdditionalRoundDescrip}
+                error={
+                  touched.companyAdditionalRoundDescrip &&
+                  Boolean(errors.companyAdditionalRoundDescrip)
+                }
+                helperText={
+                  touched.companyAdditionalRoundDescrip &&
+                  errors.companyAdditionalRoundDescrip
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 4" }}
+              />
+
+              <TextField
+                label="Report Approval Status"
+                variant="filled"
+                id="companyReportApprovalStatus"
+                name="companyReportApprovalStatus"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyReportApprovalStatus}
+                error={
+                  touched.companyReportApprovalStatus &&
+                  Boolean(errors.companyReportApprovalStatus)
+                }
+                helperText={
+                  touched.companyReportApprovalStatus &&
+                  errors.companyReportApprovalStatus
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 4" }}
+              />
+
+              <TextField
+                label="Practice Details"
+                variant="filled"
+                id="companyPracticeDetails"
+                name="companyPracticeDetails"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyPracticeDetails}
+                error={
+                  touched.companyPracticeDetails &&
+                  Boolean(errors.companyPracticeDetails)
+                }
+                helperText={
+                  touched.companyPracticeDetails &&
+                  errors.companyPracticeDetails
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 4" }}
+              />
+
+              <TextField
+                label="Report Add Date"
+                variant="filled"
+                id="companyReportAddDate"
+                name="companyReportAddDate"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyReportAddDate}
+                error={
+                  touched.companyReportAddDate &&
+                  Boolean(errors.companyReportAddDate)
+                }
+                helperText={
+                  touched.companyReportAddDate &&
+                  errors.companyReportAddDate
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 4" }}
+              />
+
+              <TextField
+                label="Report Added By"
+                variant="filled"
+                id="companyReportAddedBy"
+                name="companyReportAddedBy"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyReportAddedBy}
+                error={
+                  touched.companyReportAddedBy &&
+                  Boolean(errors.companyReportAddedBy)
+                }
+                helperText={
+                  touched.companyReportAddedBy &&
+                  errors.companyReportAddedBy
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 4" }}
+              />
+
+              <TextField
+                label="Report Year"
+                variant="filled"
+                id="companyReportYear"
+                name="companyReportYear"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyReportYear}
+                error={
+                  touched.companyReportYear &&
+                  Boolean(errors.companyReportYear)
+                }
+                helperText={
+                  touched.companyReportYear &&
+                  errors.companyReportYear
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 4" }}
+              />
+
+              <TextField
+                label="Report Feedback"
+                variant="filled"
+                id="reportFeedBack"
+                name="reportFeedBack"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.reportFeedBack}
+                error={
+                  touched.reportFeedBack &&
+                  Boolean(errors.reportFeedBack)
+                }
+                helperText={
+                  touched.reportFeedBack && errors.reportFeedBack
+                }
+                fullWidth
+                margin="normal"
+                sx={{ gridColumn: "span 4" }}
+              />
+            </Box>
+            <Box display="flex" justifyContent="end" my="20px">
+              <Button type="submit" color="secondary" variant="contained">
+                Add Company Description
+              </Button>
+            </Box>
+          </form>
+        )}
+      </Formik>
     </Box>
   );
 };
 
-export default CompanyDetails;
+export default CompanyForm;
