@@ -7,7 +7,15 @@ import { tokens } from "../theme";
 import { useEffect, useState } from "react";
 import CompanyModal from "./CompanyModal";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const Company = () => {
+  const Navigate=useNavigate();
+  const handleaddCompany = () => {
+    console.log("add company");
+    Navigate("/addCompany");
+    
+  };
+
   const [companyData, setCompanyData] = useState([]);
   const [companyFetchData, setCompanyFetchData] = useState(true);
   const [openModal, setOpenModal] = useState(false);
@@ -20,7 +28,7 @@ const Company = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/admin/getCompanyData",
+        "http://localhost:5000/api/admin/getCompanies",
         {
           headers: {
             Authorization:
@@ -220,7 +228,18 @@ const Company = () => {
           },
         }}
       >
+        <div style={{  display:"flex", justifyContent:"space-between" }}>
         <Header title="Companies" />
+        <Button
+          onClick={() => handleaddCompany()}
+          type="submit"
+          color="secondary"
+          variant="contained"
+          sx={{ height: "40px", width: "120px" }}
+        >
+          Add Company
+        </Button>
+        </div>
         <DataGrid
           rows={companyData.map((row, index) => ({ ...row, sNo: index + 1 }))}
           columns={columns}

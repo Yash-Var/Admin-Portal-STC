@@ -6,30 +6,30 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "./Header";
 import axios from "axios";
 
-
 // Define the form component
 const CompanyForm = () => {
-
-  const Type = [1,2,3,4];
+  const Type = [1, 2, 3, 4];
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = async (values) => {
-    // try {
-        console.log(values);
-    //   const response = await axios.post(
-    //     "http://localhost:5000/api/admin/addCompany",
-    //     values,
-    //     {
-    //       headers: {
-    //         Authorization: "Bearer YOUR_ACCESS_TOKEN", // Replace with your actual access token
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   );
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    try {
+      console.log(values);
+      const response = await axios.post(
+        "http://localhost:5000/api/admin/addCompany",
+        values,
+        {
+          headers: {
+            Authorization:
+              "Bearer " +
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNAc3RjYWRtaW4uY29tIiwiZGF0YSI6IlNodWJoZW5kcmEiLCJ1c2VyVHlwZSI6IlN1cGVyIEFkbWluIiwiaWF0IjoxNzA0MTIxMDE5LCJleHAiOjE3MzU2Nzg2MTl9.xw5bdNKGeRlknod92qN-f5mXBqnIdw6Xz0mvh_4FKJM", // Replace with your actual access token
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // Define the form validation schema
@@ -49,7 +49,7 @@ const CompanyForm = () => {
     companyDescription: "",
     companyEstablishment: "",
     companyWebsite: "",
-    companyAddedBy: "",
+    companyAddedBy: "7",
   };
 
   return (
@@ -90,26 +90,26 @@ const CompanyForm = () => {
                 helperText={touched.companyName && errors.companyName}
                 sx={{ gridColumn: "span 4" }}
               />
-               <FormControl fullWidth variant="filled" sx={{ gridColumn: "span 4" }}>
+              <FormControl fullWidth variant="filled" sx={{ gridColumn: "span 4" }}>
                 <InputLabel id="type-label">Type</InputLabel>
                 <Select
                   labelId="type-label"
-                  id="type"
-                  name="type"
-                  value={values.type}
+                  id="companyClass"
+                  name="companyClass"
+                  value={values.companyClass || ""}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={!!touched.type && !!errors.type}
-                  label="Type"
+                  error={!!touched.companyClass && !!errors.companyClass}
+                  label="Company Class"
                 >
                   {Type.map((type) => (
-                  <MenuItem key={type} value={type}>
-                    {type}
-                  </MenuItem>
-                ))}
+                    <MenuItem key={type} value={type}>
+                      {type}
+                    </MenuItem>
+                  ))}
                 </Select>
-                {touched.type && errors.type && (
-                  <FormHelperText>{errors.type}</FormHelperText>
+                {touched.companyClass && errors.companyClass && (
+                  <FormHelperText>{errors.companyClass}</FormHelperText>
                 )}
               </FormControl>
 
@@ -139,7 +139,7 @@ const CompanyForm = () => {
                 helperText={touched.companyWebsite && errors.companyWebsite}
                 sx={{ gridColumn: "span 4" }}
               />
-               <TextField
+              <TextField
                 fullWidth
                 variant="filled"
                 type="text"
