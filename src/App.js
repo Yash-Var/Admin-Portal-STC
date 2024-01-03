@@ -13,6 +13,7 @@ import Questions from "./components/Questions";
 import Error404 from "./components/Error404";
 import Bottombar from "./scenes/global/Bottombar";
 import CompanyForm from "./components/AddCompany";
+import CompanyDetails from "./components/CompanyDetailsForm";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -65,6 +66,13 @@ function App() {
                 path="/companies"
                 element={isLoggedin ? <Company /> : <Navigate to="/login" />}
               />
+              <Route
+                path="/companyDetails"
+                element={
+                  isLoggedin ? <CompanyDetails /> : <Navigate to="/login" />
+                }
+              />
+
               <Route
                 path="/reports"
                 element={
