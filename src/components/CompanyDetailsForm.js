@@ -32,19 +32,18 @@ const CompanyForm = () => {
             const response = await axios.get("http://localhost:5000/api/admin/getCompanyNames", { headers });
 
             // Store the company names into an array
+            const companyNames = response.data.data.map(company => company.companyName);
+
+            console.log(response.data.data);
             setCompanies(response.data.data);
         } catch (error) {
             // Handle the error
             console.error(error);
         }
     };
-
-    
-
-
   const isNonMobile = useMediaQuery("(min-width:600px,)");
   const initialValues = {
-    companyID: null,
+    companyName: "",
     companyNumOfRounds: "",
     companyCTC: "",
     companyEligibility: "",
@@ -62,63 +61,13 @@ const CompanyForm = () => {
     companyFourthRoundDescrip: "",
     companyFourthRoundDuration: "",
     companyAdditionalRoundDescrip: "",
-    companyReportApprovalStatus: "",
     companyPracticeDetails: "",
-    companyReportAddDate: "",
-
     companyReportYear: "",
     reportFeedBack: "",
   };
 
   const validationSchema = Yup.object({
     companyName: Yup.string().required("Company Name is required"),
-    companyNumOfRounds: Yup.string().required("Number of Rounds is required"),
-    companyCTC: Yup.string().required("CTC is required"),
-    companyEligibility: Yup.string().required("Eligibility is required"),
-    companyJOBProfile: Yup.string().required("Job Profile is required"),
-    companyFirstRoundName: Yup.string().required(
-      "First Round Name is required"
-    ),
-    companyFirstRoundDescrip: Yup.string().required(
-      "First Round Description is required"
-    ),
-    companyFirstRoundDuration: Yup.string().required(
-      "First Round Duration is required"
-    ),
-    companySecondRoundName: Yup.string().required(
-      "Second Round Name is required"
-    ),
-    companySecondRoundDescrip: Yup.string().required(
-      "Second Round Description is required"
-    ),
-    companySecondRoundDuration: Yup.string().required(
-      "Second Round Duration is required"
-    ),
-    companyThirdRoundName: Yup.string().required(
-      "Third Round Name is required"
-    ),
-    companyThirdRoundDescrip: Yup.string().required(
-      "Third Round Description is required"
-    ),
-    companyThirdRoundDuration: Yup.string().required(
-      "Third Round Duration is required"
-    ),
-    companyFourthRoundName: Yup.string().required(
-      "Fourth Round Name is required"
-    ),
-    companyFourthRoundDescrip: Yup.string().required(
-      "Fourth Round Description is required"
-    ),
-    companyFourthRoundDuration: Yup.string().required(
-      "Fourth Round Duration is required"
-    ),
-    companyAdditionalRoundDescrip: Yup.string(),
-    companyReportApprovalStatus: Yup.string(),
-    companyPracticeDetails: Yup.string(),
-    companyReportAddDate: Yup.string(),
-    companyReportAddedBy: Yup.string(),
-    companyReportYear: Yup.string(),
-    reportFeedBack: Yup.string(),
   }); 
 const onSubmit = async (values) => {
     try {
@@ -127,8 +76,13 @@ const onSubmit = async (values) => {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
         };
+        
+        const newValues = {
+            ...values,
+            companyReportAddedBy: localStorage.getItem("userId"),
+        };
 
-        const response = await axios.post('http://localhost:5000/api/admin/addCompanyData', values, { headers });
+        const response = await axios.post('http://localhost:5000/api/admin/addCompanyData', newValues, { headers });
         console.log(response.data); 
     } catch (error) {
         console.error(error); 
@@ -167,9 +121,9 @@ const onSubmit = async (values) => {
                 <InputLabel id="company-name-label">Company Name</InputLabel>
                 <Select
                     labelId="company-name-label"
-                    id="companyID"
-                    name="companyID"
-                    value={values.companyID|| ""}
+                    id="companyName"
+                    name="companyName"
+                    value={values.companyName||""}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.companyName && !!errors.companyName}
@@ -581,6 +535,8 @@ const onSubmit = async (values) => {
                 margin="normal"
                 sx={{ gridColumn: "span 4" }}
               />
+
+              
 
               <TextField
                 label="Report Year"

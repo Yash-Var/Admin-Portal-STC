@@ -27,6 +27,7 @@ const Login = () => {
           notify("You login to your account successfully", "success");
           localStorage.setItem("token", data.data.access_token);
           localStorage.setItem("user", data.data.userType);
+          localStorage.setItem("userId", data.data.userId);
           window.location.href = "/";
 
           setData({
