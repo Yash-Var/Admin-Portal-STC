@@ -7,7 +7,15 @@ import { tokens } from "../theme";
 import { useEffect, useState } from "react";
 import CompanyModal from "./CompanyModal";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const Company = () => {
+  const Navigate=useNavigate();
+  const handleaddCompany = () => {
+    console.log("add company");
+    Navigate("/addCompany");
+    
+  };
+
   const [companyData, setCompanyData] = useState([]);
 
   useEffect(() => {
@@ -20,7 +28,7 @@ const Company = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/admin/getCompanyData",
+        "http://localhost:5000/api/admin/getCompanies",
         {
           headers: {
             Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNAc3RjYWRtaW4uY29tIiwiZGF0YSI6IlNodWJoZW5kcmEiLCJ1c2VyVHlwZSI6IlN1cGVyIEFkbWluIiwiaWF0IjoxNzA0MTIxMDE5LCJleHAiOjE3MzU2Nzg2MTl9.xw5bdNKGeRlknod92qN-f5mXBqnIdw6Xz0mvh_4FKJM",
@@ -171,7 +179,18 @@ const Company = () => {
           },
         }}
       >
+        <div style={{  display:"flex", justifyContent:"space-between" }}>
         <Header title="Companies" />
+        <Button
+          onClick={() => handleaddCompany()}
+          type="submit"
+          color="secondary"
+          variant="contained"
+          sx={{ height: "40px", width: "120px" }}
+        >
+          Add Company
+        </Button>
+        </div>
         <DataGrid
          rows={companyData.map((row, index) => ({ ...row, sNo: index + 1 }))}
          
