@@ -57,6 +57,10 @@ const Company = () => {
   const [index, setIndex] = useState([]);
 
   const [pageSize, setPageSize] = React.useState(11);
+  const handleViewMore = (companyId) => {
+    console.log(companyId);
+    Navigate(`/company/${companyId}`);
+  };
 
   const handleDelete = async (companyId) => {
     try {
@@ -89,25 +93,22 @@ const Company = () => {
       field: "companyName",
       headerName: "Company Name",
       flex: 2,
-      editable: true,
     },
     {
       field: "companyDescription",
       headerName: "Company Description",
       flex: 2,
-      editable: true,
     },
     {
       field: "companyEstablishment",
       headerName: "Establishment Year",
       flex: 1,
-      editable: true,
     },
     {
       field: "companyWebsite",
       headerName: "Website",
       flex: 1,
-      editable: true,
+
       renderCell: ({ row: { companyWebsite, companyName } }) => (
         <Typography>
           <a href={companyWebsite} target="_blank" rel="noopener noreferrer">
@@ -120,45 +121,30 @@ const Company = () => {
       field: "companyAddDate",
       headerName: "Added Date",
       flex: 1,
-      editable: true,
+
       renderCell: ({ row: { companyAddDate } }) => {
         const date = companyAddDate.split("T")[0];
         return <Typography>{date}</Typography>;
       },
     },
 
-    { field: "className", headerName: "Company Type", flex: 1, editable: true },
-    { field: "userName", headerName: "Added By", flex: 1, editable: true },
+    { field: "className", headerName: "Company Type", flex: 1 },
+    { field: "userName", headerName: "Added By", flex: 1 },
     {
-      field: "userType",
-      headerName: "User Type",
-      flex: 2,
-      editable: true,
-      renderCell: ({ row: { userType } }) => {
-        return (
-          <Box
-            width="60%"
-            m="0 auto"
-            p="5px"
-            display="flex"
-            justifyContent="center"
-            backgroundColor={
-              userType === "Super Admin"
-                ? colors.greenAccent[600]
-                : userType === "Admin"
-                ? colors.greenAccent[700]
-                : null
-            }
-            borderRadius="4px"
-          >
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-              {userType}
-            </Typography>
-          </Box>
-        );
-      },
+      field: "View",
+      headerName: "View",
+      sortable: false,
+      width: 100,
+      renderCell: ({ row }) => (
+        <Button
+          variant="outlined"
+          style={{ color: "#fff", borderColor: "#2196f3" }}
+          onClick={() => handleViewMore(row.companyID)}
+        >
+          View More
+        </Button>
+      ),
     },
-
     {
       field: "edit",
       headerName: "Edit",
