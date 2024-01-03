@@ -17,13 +17,13 @@ const Company = () => {
   };
 
   const [companyData, setCompanyData] = useState([]);
+  const [companyFetchData, setCompanyFetchData] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedCompanyId, setSelectedCompanyId] = useState(null);
 
   useEffect(() => {
     fetchData();
-
-    
-  }
-  , []);
+  }, []);
 
   const fetchData = async () => {
     try {
@@ -31,20 +31,26 @@ const Company = () => {
         "http://localhost:5000/api/admin/getCompanies",
         {
           headers: {
-            Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNAc3RjYWRtaW4uY29tIiwiZGF0YSI6IlNodWJoZW5kcmEiLCJ1c2VyVHlwZSI6IlN1cGVyIEFkbWluIiwiaWF0IjoxNzA0MTIxMDE5LCJleHAiOjE3MzU2Nzg2MTl9.xw5bdNKGeRlknod92qN-f5mXBqnIdw6Xz0mvh_4FKJM",
+            Authorization:
+              "Bearer " +
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNAc3RjYWRtaW4uY29tIiwiZGF0YSI6IlNodWJoZW5kcmEiLCJ1c2VyVHlwZSI6IlN1cGVyIEFkbWluIiwiaWF0IjoxNzA0MTIxMDE5LCJleHAiOjE3MzU2Nzg2MTl9.xw5bdNKGeRlknod92qN-f5mXBqnIdw6Xz0mvh_4FKJM",
             "Content-Type": "application/json",
           },
         }
       );
       const data = response.data.data[0];
-      
+
       // Sort the companyData array by companyName
-      const sortedData = data.sort((a, b) => a.companyName.localeCompare(b.companyName));
-      
+      const sortedData = data.sort((a, b) =>
+        a.companyName.localeCompare(b.companyName)
+      );
+
       setCompanyData(sortedData);
+      setCompanyFetchData(false);
       console.log(sortedData);
     } catch (error) {
       console.error(error);
+      setCompanyFetchData(false);
     }
   };
   const theme = useTheme();
@@ -52,13 +58,38 @@ const Company = () => {
   // const [deleteRequest, setDeleteRequest] = useState(false);
   // const [deleteIndex,setDeleteIndex] = useState(null);
   const [index, setIndex] = useState([]);
-  const [openModal, setOpenModal] = useState(false);
-  const [selectedCompanyId, setSelectedCompanyId] = useState(null);
 
   const [pageSize, setPageSize] = React.useState(11);
 
+  const handleDelete = async (companyId) => {
+    try {
+      console.log(companyId);
+      const confirmDelete = window.confirm(
+        "Are you sure you want to delete this company?"
+      );
+      if (confirmDelete) {
+        await axios.get(
+          `http://localhost:5000/api/admin/deleteCompany/${companyId}`,
+          {
+            headers: {
+              Authorization:
+                "Bearer " +
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNAc3RjYWRtaW4uY29tIiwiZGF0YSI6IlNodWJoZW5kcmEiLCJ1c2VyVHlwZSI6IlN1cGVyIEFkbWluIiwiaWF0IjoxNzA0MTIxMDE5LCJleHAiOjE3MzU2Nzg2MTl9.xw5bdNKGeRlknod92qN-f5mXBqnIdw6Xz0mvh_4FKJM",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        fetchData();
+      } else {
+        console.error("Deletion cancelled by user");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const columns = [
-    { field: "sNo", headerName: "S.No"},
+    { field: "sNo", headerName: "S.No" },
     {
       field: "companyName",
       headerName: "Company Name",
@@ -136,6 +167,7 @@ const Company = () => {
         );
       },
     },
+
     {
       field: "edit",
       headerName: "Edit",
@@ -151,6 +183,21 @@ const Company = () => {
         </Button>
       ),
     },
+    {
+      field: "delete",
+      headerName: "Delete",
+      sortable: false,
+      width: 100,
+      renderCell: ({ row }) => (
+        <Button
+          variant="outlined"
+          style={{ color: "#fff", borderColor: "#2196f3" }}
+          onClick={() => handleDelete(row.companyID)}
+        >
+          Delete
+        </Button>
+      ),
+    },
   ];
 
   // useEffect(() => {
@@ -161,12 +208,14 @@ const Company = () => {
   //   }
   // }, [deleteRequest]);
   const handleEdit = (companyId) => {
-    setSelectedCompanyId(companyId); 
-    setOpenModal(true); 
+    setSelectedCompanyId(companyId);
+
+    setOpenModal(true);
   };
 
   const handleCloseModal = () => {
-    setOpenModal(false); // Close the modal
+    fetchData();
+    setOpenModal(false);
   };
 
   return (
@@ -213,8 +262,7 @@ const Company = () => {
         </Button>
         </div>
         <DataGrid
-         rows={companyData.map((row, index) => ({ ...row, sNo: index + 1 }))}
-         
+          rows={companyData.map((row, index) => ({ ...row, sNo: index + 1 }))}
           columns={columns}
           getRowId={(row) => row.companyID}
           onSelectionModelChange={(itm) => setIndex(itm)}
