@@ -12,12 +12,39 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "./Header";
+import { useEffect ,useState} from "react";
+import axios from "axios";
 
 // Define the form component
 const CompanyForm = () => {
+    const [companies, setCompanies] = useState([]);
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            const token = localStorage.getItem("token"); // Get the token from localStorage
+            const headers = {
+                Authorization: `Bearer ${token}`, // Set the Authorization header with the token
+            };
+
+            const response = await axios.get("http://localhost:5000/api/admin/getCompanyNames", { headers });
+
+            // Store the company names into an array
+            setCompanies(response.data.data);
+        } catch (error) {
+            // Handle the error
+            console.error(error);
+        }
+    };
+
+    
+
+
   const isNonMobile = useMediaQuery("(min-width:600px,)");
   const initialValues = {
-    companyName: "",
+    companyID: null,
     companyNumOfRounds: "",
     companyCTC: "",
     companyEligibility: "",
@@ -38,7 +65,7 @@ const CompanyForm = () => {
     companyReportApprovalStatus: "",
     companyPracticeDetails: "",
     companyReportAddDate: "",
-    companyReportAddedBy: "",
+
     companyReportYear: "",
     reportFeedBack: "",
   };
@@ -93,12 +120,23 @@ const CompanyForm = () => {
     companyReportYear: Yup.string(),
     reportFeedBack: Yup.string(),
   }); 
-  const onSubmit = (values) => {
-    console.log(values);
-  };
+const onSubmit = async (values) => {
+    try {
+        const token = localStorage.getItem("token"); // Replace with your actual token
+        const headers = {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        };
+
+        const response = await axios.post('http://localhost:5000/api/admin/addCompanyData', values, { headers });
+        console.log(response.data); 
+    } catch (error) {
+        console.error(error); 
+    }
+};
 
   return (
-    <Box mx="20vw" my="10vw">
+    <Box mx="20vw" my="5vw">
       <Header
         title="ADD COMPANY DESCRIPTION"
         subtitle="Add a New Company Description"
@@ -122,29 +160,31 @@ const CompanyForm = () => {
               gap="30px"
               gridTemplateColumns="repeat(4, minmax(0, 1fr))"
               sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 2" },
+                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
             >
-              <TextField
-                label="Company Name"
-                variant="filled"
-                id="companyName"
-                name="companyName"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.companyName}
-                error={
-                  touched.companyName &&
-                  Boolean(errors.companyName)
-                }
-                helperText={
-                  touched.companyName && errors.companyName
-                }
-                fullWidth
-                margin="normal"
-                sx={{ gridColumn: "span 2" }}
-              />
-
+            <FormControl fullWidth variant="filled" >
+                <InputLabel id="company-name-label">Company Name</InputLabel>
+                <Select
+                    labelId="company-name-label"
+                    id="companyID"
+                    name="companyID"
+                    value={values.companyID|| ""}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={!!touched.companyName && !!errors.companyName}
+                    label="Company Name"
+                >
+                    {companies.map((name) => (
+                        <MenuItem key={name.companyID} value={name.companyID}>
+                            {name.companyName}
+                        </MenuItem>
+                    ))}
+                </Select>
+                {touched.companyName && errors.companyName && (
+                    <FormHelperText>{errors.companyName}</FormHelperText>
+                )}
+            </FormControl>
               <TextField
                 label="Number of Rounds"
                 variant="filled"
@@ -536,48 +576,6 @@ const CompanyForm = () => {
                 helperText={
                   touched.companyPracticeDetails &&
                   errors.companyPracticeDetails
-                }
-                fullWidth
-                margin="normal"
-                sx={{ gridColumn: "span 4" }}
-              />
-
-              <TextField
-                label="Report Add Date"
-                variant="filled"
-                id="companyReportAddDate"
-                name="companyReportAddDate"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.companyReportAddDate}
-                error={
-                  touched.companyReportAddDate &&
-                  Boolean(errors.companyReportAddDate)
-                }
-                helperText={
-                  touched.companyReportAddDate &&
-                  errors.companyReportAddDate
-                }
-                fullWidth
-                margin="normal"
-                sx={{ gridColumn: "span 4" }}
-              />
-
-              <TextField
-                label="Report Added By"
-                variant="filled"
-                id="companyReportAddedBy"
-                name="companyReportAddedBy"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.companyReportAddedBy}
-                error={
-                  touched.companyReportAddedBy &&
-                  Boolean(errors.companyReportAddedBy)
-                }
-                helperText={
-                  touched.companyReportAddedBy &&
-                  errors.companyReportAddedBy
                 }
                 fullWidth
                 margin="normal"

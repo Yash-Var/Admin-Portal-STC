@@ -10,6 +10,7 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
+import { Fullscreen } from "@material-ui/icons";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -38,12 +39,7 @@ const Sidebar = () => {
   return (
     <Box
       sx={{
-        position: "fixed",
-        left: 0,
-        top: 0,
-        height: "100vh",
-        width: "20vw",
-        zIndex: 1000,
+
 
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
