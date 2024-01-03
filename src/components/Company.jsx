@@ -77,13 +77,34 @@ const Company = () => {
       flex: 1,
       editable: true,
     },
-    { field: "companyWebsite", headerName: "Website", flex: 2, editable: true },
+    {
+      field: "companyWebsite",
+      headerName: "Website",
+      flex: 2,
+      editable: true,
+      renderCell: ({ row: { companyWebsite,companyName } }) => (
+        <Typography>
+      <a href={companyWebsite} target="_blank" rel="noopener noreferrer">
+        LINK
+      </a>
+    </Typography>
+      ),
+    },
     {
       field: "companyAddDate",
       headerName: "Added Date",
       flex: 2,
       editable: true,
+      renderCell: ({ row: { companyAddDate } }) => {
+        const date = companyAddDate.split('T')[0];
+        return (
+          <Typography>
+            {date}
+          </Typography>
+        );
+      }
     },
+           
     { field: "className", headerName: "Company Type", flex: 2, editable: true },
     { field: "userName", headerName: "Added By", flex: 2, editable: true },
     {
