@@ -27,9 +27,7 @@ const CompanyModal = ({ open, handleClose, companyId }) => {
           `http://localhost:5000/api/admin/getCompany/${companyId}`,
           {
             headers: {
-              Authorization:
-                "Bearer " +
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNAc3RjYWRtaW4uY29tIiwiZGF0YSI6IlNodWJoZW5kcmEiLCJ1c2VyVHlwZSI6IlN1cGVyIEFkbWluIiwiaWF0IjoxNzA0MTIxMDE5LCJleHAiOjE3MzU2Nzg2MTl9.xw5bdNKGeRlknod92qN-f5mXBqnIdw6Xz0mvh_4FKJM",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
               "Content-Type": "application/json",
             },
           }
@@ -40,7 +38,6 @@ const CompanyModal = ({ open, handleClose, companyId }) => {
           companyDescription: response.data.data[0].companyDescription,
           companyWebsite: response.data.data[0].companyWebsite,
           companyEstablishment: response.data.data[0].companyEstablishment,
-          // companyType: response.data.data[0].className,
         });
       } catch (error) {
         console.error(error);
@@ -66,20 +63,15 @@ const CompanyModal = ({ open, handleClose, companyId }) => {
         companyData,
         {
           headers: {
-            Authorization:
-              "Bearer " +
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNAc3RjYWRtaW4uY29tIiwiZGF0YSI6IlNodWJoZW5kcmEiLCJ1c2VyVHlwZSI6IlN1cGVyIEFkbWluIiwiaWF0IjoxNzA0MTIxMDE5LCJleHAiOjE3MzU2Nzg2MTl9.xw5bdNKGeRlknod92qN-f5mXBqnIdw6Xz0mvh_4FKJM",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
           },
         }
       );
-      // Optionally, add a success message or any necessary updates after saving
-      // For example: show a success message, close the modal, etc.
+
       handleClose();
     } catch (error) {
       console.error("Error while saving data:", error);
-      // Handle error scenarios (e.g., show an error message)
-      // You might also want to revert changes or display an error message to the user
     }
   };
 

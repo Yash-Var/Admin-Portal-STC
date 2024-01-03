@@ -34,7 +34,7 @@ const Sidebar = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
-  const isSuper = "super";
+  const isSuper = localStorage.getItem("user");
   return (
     <Box
       sx={{
@@ -74,7 +74,7 @@ const Sidebar = () => {
                 ml="15px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                  {isSuper === "super" ? "SUPER ADMIN" : "ADMIN"}
+                  {isSuper === "Super Admin" ? "SUPER ADMIN" : "ADMIN"}
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
@@ -146,7 +146,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            {isSuper === "super" && (
+            {isSuper === "Super Admin" && (
               <>
                 <Typography
                   variant="h6"

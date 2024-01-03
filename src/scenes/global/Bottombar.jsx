@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 
 const Bottombar = () => {
   const [value, setValue] = useState(0);
+  const isSuper = localStorage.getItem("user");
 
   return (
     <div style={{ position: "fixed", bottom: "1px", width: "100%" }}>
@@ -57,12 +58,14 @@ const Bottombar = () => {
           />
         </Link>
 
-        <Link to="/form" style={{ textDecoration: "none", color: "inherit" }}>
-          <BottomNavigationAction
-            label="Nearby"
-            icon={<PeopleOutlinedIcon />}
-          />
-        </Link>
+        {isSuper === "Super Admin" && (
+          <Link to="/form" style={{ textDecoration: "none", color: "inherit" }}>
+            <BottomNavigationAction
+              label="Nearby"
+              icon={<PeopleOutlinedIcon />}
+            />
+          </Link>
+        )}
       </BottomNavigation>
     </div>
   );

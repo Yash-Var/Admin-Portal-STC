@@ -18,8 +18,8 @@ function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const [showBottomBar, setShowBottomBar] = useState(false);
-  const isLoggedin = true;
-  const isSuper = "super";
+  const isLoggedin = localStorage.getItem("token");
+  const isSuper = localStorage.getItem("user");
 
   useEffect(() => {
     const handleResize = () => {
@@ -46,7 +46,6 @@ function App() {
             <Topbar setIsSidebar={setIsSidebar} />
             <Routes>
               <Route path="*" element={<Error404 />} />{" "}
-              {/* 404 page  Come here */}
               <Route
                 path="/login"
                 element={isLoggedin ? <Navigate to="/" /> : <Login />}
@@ -60,7 +59,7 @@ function App() {
                 element={
                   isLoggedin ? <CompanyForm /> : <Navigate to="/login" />
                 }
-                />
+              />
               <Route
                 path="/companies"
                 element={isLoggedin ? <Company /> : <Navigate to="/login" />}
@@ -79,7 +78,7 @@ function App() {
                 path="/form"
                 element={
                   isLoggedin ? (
-                    isSuper === "super" ? (
+                    isSuper === "Super Admin" ? (
                       <Form />
                     ) : (
                       <Navigate to="/" />

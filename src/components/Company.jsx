@@ -9,11 +9,10 @@ import CompanyModal from "./CompanyModal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const Company = () => {
-  const Navigate=useNavigate();
+  const Navigate = useNavigate();
   const handleaddCompany = () => {
     console.log("add company");
     Navigate("/addCompany");
-    
   };
 
   const [companyData, setCompanyData] = useState([]);
@@ -31,9 +30,7 @@ const Company = () => {
         "http://localhost:5000/api/admin/getCompanies",
         {
           headers: {
-            Authorization:
-              "Bearer " +
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNAc3RjYWRtaW4uY29tIiwiZGF0YSI6IlNodWJoZW5kcmEiLCJ1c2VyVHlwZSI6IlN1cGVyIEFkbWluIiwiaWF0IjoxNzA0MTIxMDE5LCJleHAiOjE3MzU2Nzg2MTl9.xw5bdNKGeRlknod92qN-f5mXBqnIdw6Xz0mvh_4FKJM",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
           },
         }
@@ -72,9 +69,7 @@ const Company = () => {
           `http://localhost:5000/api/admin/deleteCompany/${companyId}`,
           {
             headers: {
-              Authorization:
-                "Bearer " +
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNAc3RjYWRtaW4uY29tIiwiZGF0YSI6IlNodWJoZW5kcmEiLCJ1c2VyVHlwZSI6IlN1cGVyIEFkbWluIiwiaWF0IjoxNzA0MTIxMDE5LCJleHAiOjE3MzU2Nzg2MTl9.xw5bdNKGeRlknod92qN-f5mXBqnIdw6Xz0mvh_4FKJM",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
               "Content-Type": "application/json",
             },
           }
@@ -113,12 +108,12 @@ const Company = () => {
       headerName: "Website",
       flex: 2,
       editable: true,
-      renderCell: ({ row: { companyWebsite,companyName } }) => (
+      renderCell: ({ row: { companyWebsite, companyName } }) => (
         <Typography>
-      <a href={companyWebsite} target="_blank" rel="noopener noreferrer">
-        LINK
-      </a>
-    </Typography>
+          <a href={companyWebsite} target="_blank" rel="noopener noreferrer">
+            LINK
+          </a>
+        </Typography>
       ),
     },
     {
@@ -127,15 +122,11 @@ const Company = () => {
       flex: 2,
       editable: true,
       renderCell: ({ row: { companyAddDate } }) => {
-        const date = companyAddDate.split('T')[0];
-        return (
-          <Typography>
-            {date}
-          </Typography>
-        );
-      }
+        const date = companyAddDate.split("T")[0];
+        return <Typography>{date}</Typography>;
+      },
     },
-           
+
     { field: "className", headerName: "Company Type", flex: 2, editable: true },
     { field: "userName", headerName: "Added By", flex: 2, editable: true },
     {
@@ -249,17 +240,17 @@ const Company = () => {
           },
         }}
       >
-        <div style={{  display:"flex", justifyContent:"space-between" }}>
-        <Header title="Companies" />
-        <Button
-          onClick={() => handleaddCompany()}
-          type="submit"
-          color="secondary"
-          variant="contained"
-          sx={{ height: "40px", width: "120px" }}
-        >
-          Add Company
-        </Button>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Header title="Companies" />
+          <Button
+            onClick={() => handleaddCompany()}
+            type="submit"
+            color="secondary"
+            variant="contained"
+            sx={{ height: "40px", width: "120px" }}
+          >
+            Add Company
+          </Button>
         </div>
         <DataGrid
           rows={companyData.map((row, index) => ({ ...row, sNo: index + 1 }))}
