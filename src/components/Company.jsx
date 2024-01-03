@@ -106,7 +106,7 @@ const Company = () => {
     {
       field: "companyWebsite",
       headerName: "Website",
-      flex: 2,
+      flex: 1,
       editable: true,
       renderCell: ({ row: { companyWebsite, companyName } }) => (
         <Typography>
@@ -119,7 +119,7 @@ const Company = () => {
     {
       field: "companyAddDate",
       headerName: "Added Date",
-      flex: 2,
+      flex: 1,
       editable: true,
       renderCell: ({ row: { companyAddDate } }) => {
         const date = companyAddDate.split("T")[0];
@@ -127,8 +127,8 @@ const Company = () => {
       },
     },
 
-    { field: "className", headerName: "Company Type", flex: 2, editable: true },
-    { field: "userName", headerName: "Added By", flex: 2, editable: true },
+    { field: "className", headerName: "Company Type", flex: 1, editable: true },
+    { field: "userName", headerName: "Added By", flex: 1, editable: true },
     {
       field: "userType",
       headerName: "User Type",

@@ -38,6 +38,13 @@ const Sidebar = () => {
   return (
     <Box
       sx={{
+        position: "fixed",
+        left: 0,
+        top: 0,
+        height: "100vh",
+        width: "20vw",
+        zIndex: 1000,
+
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
         },
