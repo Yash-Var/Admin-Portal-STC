@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { tokens } from "../theme";
+import { Box, Typography, useTheme, Button } from "@mui/material";
 import {
   Container,
   Paper,
-  Typography,
   Divider,
   Grid,
   List,
@@ -12,6 +13,7 @@ import {
   ListItemText,
   makeStyles,
 } from "@material-ui/core";
+import CompanyInformationModal from "./CompanyInformationModal";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -24,10 +26,46 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CompanyInformation = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const classes = useStyles();
   const { id } = useParams();
   const [companyInfo, setCompanyData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
+  const handleDelete = async () => {
+    try {
+      const confirmDelete = window.confirm(
+        "Are you sure you want to delete this company?"
+      );
+      if (confirmDelete) {
+        // await axios.get(
+        //   `http://localhost:5000/api/admin/deleteCompanyData/${id}`,
+        //   {
+        //     headers: {
+        //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+        //       "Content-Type": "application/json",
+        //     },
+        //   }
+        // );
+        // fetchData();
+        console.log(id);
+      } else {
+        console.error("Deletion cancelled by user");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleEdit = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    fetchData();
+    setOpenModal(false);
+  };
 
   useEffect(() => {
     fetchData();
@@ -57,13 +95,34 @@ const CompanyInformation = () => {
     <>
       {companyInfo.map((companyInfo, index) => {
         return (
-          <Container key={index} maxWidth="md">
+          <Container key={index} maxWidth="sm">
             <Paper elevation={3} className={classes.paper}>
-              <Typography variant="h4" gutterBottom>
-                {companyInfo.companyName}
-              </Typography>
+              <Box display="flex" justifyContent="space-between">
+                <Typography variant="h4" color={colors.primary}>
+                  {companyInfo.companyName}
+                </Typography>
+                <Box display="flex" justifyContent="end" my="20px">
+                  <Button
+                    type="submit"
+                    color="secondary"
+                    variant="contained"
+                    onClick={() => handleEdit()}
+                  >
+                    Edit
+                  </Button>
+                </Box>
+                <Box display="flex" justifyContent="end" my="20px">
+                  <Button
+                    type="submit"
+                    color="secondary"
+                    variant="contained"
+                    onClick={() => handleDelete()}
+                  >
+                    Delete
+                  </Button>
+                </Box>
+              </Box>
               <Divider />
-
               <Grid container spacing={3} style={{ marginTop: "20px" }}>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="h6">
@@ -163,6 +222,11 @@ const CompanyInformation = () => {
                 </Grid>
               </Grid>
             </Paper>
+            <CompanyInformationModal
+              open={openModal}
+              handleClose={handleCloseModal}
+              companyId={id}
+            />
           </Container>
         );
       })}
