@@ -13,6 +13,10 @@ const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+  };
 
   return (
     <Box p={2} position="relative">
@@ -33,7 +37,7 @@ const Topbar = () => {
         <IconButton>
           <SettingsOutlinedIcon />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={handleLogout}>
           <PersonOutlinedIcon />
         </IconButton>
       </Box>
