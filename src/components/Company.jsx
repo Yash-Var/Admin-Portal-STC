@@ -8,20 +8,20 @@ import { useEffect, useState } from "react";
 import CompanyModal from "./CompanyModal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setCompanyData } from "../utils/companySlice";
 const Company = () => {
   const Navigate = useNavigate();
   const handleaddCompany = () => {
     console.log("add company");
     Navigate("/addCompany");
   };
-
-  const [companyData, setCompanyData] = useState([]);
-  const [companyFetchData, setCompanyFetchData] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [selectedCompanyId, setSelectedCompanyId] = useState(null);
-
+  const dispatch = useDispatch();
+  const companyData = useSelector((state) => state.company.companyData);
   useEffect(() => {
-    fetchData();
+    if (companyData.length === 0) fetchData();
   }, []);
 
   const fetchData = async () => {
@@ -36,23 +36,16 @@ const Company = () => {
         }
       );
       const data = response.data.data[0];
-
-      // Sort the companyData array by companyName
       const sortedData = data.sort((a, b) =>
         a.companyName.localeCompare(b.companyName)
       );
-
-      setCompanyData(sortedData);
-      setCompanyFetchData(false);
+      dispatch(setCompanyData(sortedData));
     } catch (error) {
       console.error(error);
-      setCompanyFetchData(false);
     }
   };
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  // const [deleteRequest, setDeleteRequest] = useState(false);
-  // const [deleteIndex,setDeleteIndex] = useState(null);
   const [index, setIndex] = useState([]);
 
   const [pageSize, setPageSize] = React.useState(11);
