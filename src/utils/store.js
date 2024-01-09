@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import companySlice from "./companySlice";
+import reportSlice from "./reportSlice";
 const store = configureStore({
-    reducer:{
-        company: companySlice,
-    }
+  reducer: {
+    report: reportSlice,
+  },
 });
 
 export default store;

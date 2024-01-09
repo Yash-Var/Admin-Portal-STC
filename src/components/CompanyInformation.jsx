@@ -49,7 +49,6 @@ const CompanyInformation = () => {
         //   }
         // );
         // fetchData();
-        console.log(id);
       } else {
         console.error("Deletion cancelled by user");
       }

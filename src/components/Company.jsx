@@ -44,7 +44,6 @@ const Company = () => {
 
       setCompanyData(sortedData);
       setCompanyFetchData(false);
-      console.log(sortedData);
     } catch (error) {
       console.error(error);
       setCompanyFetchData(false);

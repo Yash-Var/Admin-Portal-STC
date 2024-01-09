@@ -7,10 +7,9 @@ import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
-import { Fullscreen } from "@material-ui/icons";
+import FactCheckOutlinedIcon from "@mui/icons-material/FactCheckOutlined";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -39,8 +38,6 @@ const Sidebar = () => {
   return (
     <Box
       sx={{
-
-
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
         },
@@ -136,9 +133,9 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Companies Reports"
-              to="/reports"
-              icon={<ArticleOutlinedIcon />}
+              title="Reports Status"
+              to="/reportstatus"
+              icon={<FactCheckOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />

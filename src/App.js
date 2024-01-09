@@ -8,7 +8,7 @@ import Login from "./components/Login";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Company from "./components/Company";
-import CompanyReport from "./components/CompanyReport";
+import ReportStatus from "./components/ReportStatus";
 import Questions from "./components/Questions";
 import Error404 from "./components/Error404";
 import Bottombar from "./scenes/global/Bottombar";
@@ -73,9 +73,9 @@ function App() {
                 }
               />
               <Route
-                path="/reports"
+                path="/reportstatus"
                 element={
-                  isLoggedin ? <CompanyReport /> : <Navigate to="/login" />
+                  isLoggedin ? <ReportStatus /> : <Navigate to="/login" />
                 }
               />
               <Route
