@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  Modal,
-  TextField,
-  Box,
-  Button,
-  Grid,
-} from "@mui/material";
+import { Modal, TextField, Box, Button, Grid } from "@mui/material";
 import axios from "axios";
 
-const CompanyInformationModal = ({ open, handleClose, companyId }) => {
+const ReportEditModal = ({ open, handleClose, reportId }) => {
   const [companyData, setCompanyData] = useState({
     companyName: "",
     companyNumOfRounds: "",
@@ -39,7 +33,7 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/admin/getCompanyData/${companyId}`,
+          `http://localhost:5000/api/admin/getCompanyDataByDataId/${reportId}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -47,8 +41,6 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
             },
           }
         );
-        console.log(response.data.data[0]);
-        console.log("temp");
         setCompanyData({
           companyEstablishment:
             response.data.data[0].companyEstablishment || "",
@@ -100,7 +92,7 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
     };
 
     fetchData();
-  }, [companyId]);
+  }, [reportId]);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setCompanyData({
@@ -109,21 +101,19 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
     });
   };
   const handleSave = async () => {
-    console.log(companyData);
     try {
-      // Perform action to save data (e.g., send updated data to an API)
-      // Example: Axios PUT request to update company details
-    //   await axios.post(
-    //     `http://localhost:5000/api/admin/updateCompany/${companyId}`,
-    //     companyData,
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   );
-        console.log(companyData);
+      companyData.companyReportApprovalStatus = "Pending Approval";
+      const response = await axios.post(
+        `http://localhost:5000/api/admin/updateCompanyData/${reportId}`,
+        companyData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response);
       handleClose();
     } catch (error) {
       console.error("Error while saving data:", error);
@@ -148,7 +138,7 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
         }}
       >
         <Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Company Name"
@@ -157,9 +147,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyName}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Number of Rounds"
@@ -168,9 +159,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyNumOfRounds}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Company CTC"
@@ -179,9 +171,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyCTC}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Eligibility"
@@ -190,9 +183,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyEligibility}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Job Profile"
@@ -201,9 +195,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyJOBProfile}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="First Round Name"
@@ -212,9 +207,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyFirstRoundName}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="First Round Description"
@@ -223,9 +219,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyFirstRoundDescrip}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="First Round Duration"
@@ -234,9 +231,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyFirstRoundDuration}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Second Round Name"
@@ -245,9 +243,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companySecondRoundName}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Second Round Description"
@@ -256,9 +255,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companySecondRoundDescrip}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Second Round Duration"
@@ -267,9 +267,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companySecondRoundDuration}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Third Round Name"
@@ -278,9 +279,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyThirdRoundName}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Third Round Description"
@@ -289,9 +291,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyThirdRoundDescrip}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Third Round Duration"
@@ -300,9 +303,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyThirdRoundDuration}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Fourth Round Name"
@@ -311,9 +315,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyFourthRoundName}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Fourth Round Description"
@@ -322,9 +327,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyFourthRoundDescrip}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Fourth Round Duration"
@@ -333,9 +339,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyFourthRoundDuration}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Additional Round Description"
@@ -344,9 +351,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyAdditionalRoundDescrip}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Report Approval Status"
@@ -355,9 +363,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyReportApprovalStatus}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Practice Details"
@@ -366,9 +375,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyPracticeDetails}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Report Add Date"
@@ -377,9 +387,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyReportAddDate}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Report Added By"
@@ -388,9 +399,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyReportAddedBy}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Report Year"
@@ -399,9 +411,10 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.companyReportYear}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Report Feedback"
@@ -410,27 +423,30 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
               variant="outlined"
               value={companyData.reportFeedBack}
               onChange={handleInputChange}
+              sx={{ marginBottom: "16px" }}
             />
           </Grid>
         </Grid>
         <Grid>
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <Button
               color="primary"
               fullWidth
               variant="contained"
               onClick={handleSave}
+              sx={{ marginBottom: "16px" }}
             >
               Save
             </Button>
           </Grid>
 
-          <Grid item xs={12} my={2}>
+          <Grid item xs={12}>
             <Button
               color="primary"
               fullWidth
               variant="contained"
               onClick={handleClose}
+              sx={{ marginBottom: "16px" }}
             >
               Close
             </Button>
@@ -441,4 +457,4 @@ const CompanyInformationModal = ({ open, handleClose, companyId }) => {
   );
 };
 
-export default CompanyInformationModal;
+export default ReportEditModal;

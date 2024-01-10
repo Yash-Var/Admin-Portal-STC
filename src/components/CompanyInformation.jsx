@@ -13,7 +13,6 @@ import {
   ListItemText,
   makeStyles,
 } from "@material-ui/core";
-import CompanyInformationModal from "./CompanyInformationModal";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,40 +30,6 @@ const CompanyInformation = () => {
   const classes = useStyles();
   const { id } = useParams();
   const [companyInfo, setCompanyData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [openModal, setOpenModal] = useState(false);
-  const handleDelete = async () => {
-    try {
-      const confirmDelete = window.confirm(
-        "Are you sure you want to delete this company?"
-      );
-      if (confirmDelete) {
-        // await axios.get(
-        //   `http://localhost:5000/api/admin/deleteCompanyData/${id}`,
-        //   {
-        //     headers: {
-        //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-        //       "Content-Type": "application/json",
-        //     },
-        //   }
-        // );
-        // fetchData();
-      } else {
-        console.error("Deletion cancelled by user");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleEdit = () => {
-    setOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    fetchData();
-    setOpenModal(false);
-  };
 
   useEffect(() => {
     fetchData();
@@ -83,10 +48,8 @@ const CompanyInformation = () => {
       );
       const data = response.data.data;
       setCompanyData(data);
-      setLoading(false);
     } catch (error) {
       console.error(error);
-      setLoading(false);
     }
   };
 
@@ -100,26 +63,6 @@ const CompanyInformation = () => {
                 <Typography variant="h4" color={colors.primary}>
                   {companyInfo.companyName}
                 </Typography>
-                <Box display="flex" justifyContent="end" my="20px">
-                  <Button
-                    type="submit"
-                    color="secondary"
-                    variant="contained"
-                    onClick={() => handleEdit()}
-                  >
-                    Edit
-                  </Button>
-                </Box>
-                <Box display="flex" justifyContent="end" my="20px">
-                  <Button
-                    type="submit"
-                    color="secondary"
-                    variant="contained"
-                    onClick={() => handleDelete()}
-                  >
-                    Delete
-                  </Button>
-                </Box>
               </Box>
               <Divider />
               <Grid container spacing={3} style={{ marginTop: "20px" }}>
@@ -221,11 +164,6 @@ const CompanyInformation = () => {
                 </Grid>
               </Grid>
             </Paper>
-            <CompanyInformationModal
-              open={openModal}
-              handleClose={handleCloseModal}
-              companyId={id}
-            />
           </Container>
         );
       })}

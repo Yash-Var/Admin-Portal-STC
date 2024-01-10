@@ -17,6 +17,8 @@ import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { setReportPageStatus, setReportPage } from "../utils/reportSlice";
+import CompanyInformationModal from "./ReportEditModal";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,10 +37,41 @@ const ReportPage = ({ isPending }) => {
   const { id } = useParams();
   const companyInfo = useSelector((state) => state.report.ReportPage);
   const dispatch = useDispatch();
+  const [openModal, setOpenModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleCloseModal = () => {
+    fetchData();
+    setOpenModal(false);
+  };
+
+  const handleDelete = async () => {
+    try {
+      const confirmDelete = window.confirm(
+        "Are you sure you want to delete this company?"
+      );
+      if (confirmDelete) {
+        const response = await axios.get(
+          `http://localhost:5000/api/admin/deleteCompanyData/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        navigate("/reportstatus");
+      } else {
+        console.error("Deletion cancelled by user");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const fetchData = async () => {
     try {
@@ -77,6 +110,9 @@ const ReportPage = ({ isPending }) => {
       console.error(error);
     }
   };
+  const handleEdit = () => {
+    setOpenModal(true);
+  };
   return (
     <>
       <Container maxWidth="sm">
@@ -85,30 +121,57 @@ const ReportPage = ({ isPending }) => {
             <Typography variant="h4" color={colors.primary}>
               {companyInfo.companyName}
             </Typography>
-            {companyInfo.companyReportApprovalStatus === "Pending Approval" && (
-              <Box display="flex" justifyContent="end">
-                <Box my="20px" mr="5px">
-                  <Button
-                    type="submit"
-                    color="secondary"
-                    variant="contained"
-                    onClick={() => handleStatus(true)}
-                  >
-                    <DoneOutlinedIcon />
-                  </Button>
-                </Box>
-                <Box my="20px" mx="5px">
-                  <Button
-                    type="submit"
-                    color="secondary"
-                    variant="contained"
-                    onClick={() => handleStatus(false)}
-                  >
-                    <CloseOutlinedIcon />
-                  </Button>
-                </Box>
-              </Box>
-            )}
+            <Box display="flex" justifyContent="end">
+              {companyInfo.companyReportApprovalStatus ===
+                "Pending Approval" && (
+                <>
+                  <Box my="20px" mr="5px">
+                    <Button
+                      type="submit"
+                      color="secondary"
+                      variant="contained"
+                      onClick={() => handleStatus(true)}
+                    >
+                      <DoneOutlinedIcon />
+                    </Button>
+                  </Box>
+                  <Box my="20px" mx="5px">
+                    <Button
+                      type="submit"
+                      color="secondary"
+                      variant="contained"
+                      onClick={() => handleStatus(false)}
+                    >
+                      <CloseOutlinedIcon />
+                    </Button>
+                  </Box>
+                </>
+              )}
+              {companyInfo.companyReportApprovalStatus !== "Approved" && (
+                <>
+                  <Box my="20px" mr="5px">
+                    <Button
+                      type="submit"
+                      color="secondary"
+                      variant="contained"
+                      onClick={() => handleEdit()}
+                    >
+                      Edit
+                    </Button>
+                  </Box>
+                  <Box display="flex" justifyContent="end" my="20px">
+                    <Button
+                      type="submit"
+                      color="secondary"
+                      variant="contained"
+                      onClick={() => handleDelete()}
+                    >
+                      Delete
+                    </Button>
+                  </Box>
+                </>
+              )}
+            </Box>
           </Box>
           <Divider />
           <Grid container spacing={3} style={{ marginTop: "20px" }}>
@@ -210,6 +273,11 @@ const ReportPage = ({ isPending }) => {
             </Grid>
           </Grid>
         </Paper>
+        <CompanyInformationModal
+          open={openModal}
+          handleClose={handleCloseModal}
+          reportId={id}
+        />
       </Container>
       );
     </>
