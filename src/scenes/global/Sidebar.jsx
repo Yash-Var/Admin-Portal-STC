@@ -146,8 +146,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            {isSuper === "Super Admin" && (
-              <>
+            <>
                 <Typography
                   variant="h6"
                   color={colors.grey[300]}
@@ -155,6 +154,8 @@ const Sidebar = () => {
                 >
                   Manages
                 </Typography>
+            {isSuper === "Super Admin" && (
+              
                 <Item
                   title="Add ADMIN"
                   to="/form"
@@ -162,8 +163,17 @@ const Sidebar = () => {
                   selected={selected}
                   setSelected={setSelected}
                 />
-              </>
+              
             )}
+            <Item
+                  title="Add RERORT"
+                  to="/addCompanyReport"
+                  icon={<PeopleOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+
+            </>
           </Box>
         </Menu>
       </ProSidebar>
