@@ -15,6 +15,7 @@ import Bottombar from "./scenes/global/Bottombar";
 import CompanyForm from "./components/AddCompany";
 import CompanyDetails from "./components/CompanyDetailsForm";
 import CompanyInformation from "./components/CompanyInformation";
+import ReportPage from "./components/ReportPage";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -77,6 +78,10 @@ function App() {
                 element={
                   isLoggedin ? <ReportStatus /> : <Navigate to="/login" />
                 }
+              />
+              <Route
+                path="/reportstatus/:id"
+                element={isLoggedin ? <ReportPage /> : <Navigate to="/login" />}
               />
               <Route
                 path="/questions"

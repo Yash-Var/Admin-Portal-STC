@@ -12,6 +12,7 @@ import {
   setPending,
   setRejected,
 } from "../utils/reportSlice";
+import { useNavigate } from "react-router-dom";
 
 const StatusItem = ({ title, selected, setSelected }) => {
   const theme = useTheme();
@@ -34,12 +35,17 @@ const StatusItem = ({ title, selected, setSelected }) => {
 };
 
 const ReportStatus = () => {
+  const Navigate = useNavigate();
   const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [companyData, setCompanyData] = useState([]);
   const [pageSize, setPageSize] = useState(11);
   const [selected, setSelected] = useState("All");
+  const handleViewMore = (dataId) => {
+    console.log(dataId);
+    Navigate(`/reportstatus/${dataId}`);
+  };
   const columns = [
     { field: "sNo", headerName: "S.No" },
     {
@@ -84,8 +90,8 @@ const ReportStatus = () => {
             statusText = "Rejected";
             break;
           default:
-            statusColor = "#ff9800";
-            statusText = "Pending";
+            statusColor = "#9e9e9e";
+            statusText = "Not Defined";
             break;
         }
 
@@ -102,6 +108,21 @@ const ReportStatus = () => {
           </Button>
         );
       },
+    },
+    {
+      field: "View",
+      headerName: "View",
+      sortable: false,
+      width: 100,
+      renderCell: ({ row }) => (
+        <Button
+          variant="outlined"
+          style={{ color: "#fff", borderColor: "#2196f3" }}
+          onClick={() => handleViewMore(row.dataID)}
+        >
+          View More
+        </Button>
+      ),
     },
   ];
   const fetchData = async () => {
@@ -165,7 +186,7 @@ const ReportStatus = () => {
   }, [selected]);
   return (
     <Box m="20px">
-      <Header title="Companies Reports" />
+      <Header title="Report Status" />
       <Box
         m="40px"
         height="75vh"
@@ -223,7 +244,7 @@ const ReportStatus = () => {
           />
         </Box>
         <DataGrid
-          rows={companyData.map((row, index) => ({ ...row, sNo: index + 1 }))}
+          rows={companyData.map((row, index) => ({ ...row, sNo: row.dataID }))}
           columns={columns}
           getRowId={(row) => row.dataID}
           pageSize={pageSize}
