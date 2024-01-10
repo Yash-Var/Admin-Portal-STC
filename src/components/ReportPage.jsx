@@ -63,7 +63,7 @@ const ReportPage = ({ isPending }) => {
     try {
       const obj = { companyReportApprovalStatus: status };
       const response = await axios.post(
-        `http://localhost:5000/api/admin/updateCompanyData/${id}`,
+        `http://localhost:5000/api/admin/updateCompanyDataID/${id}`,
         obj,
         {
           headers: {
