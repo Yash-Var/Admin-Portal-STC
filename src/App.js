@@ -67,7 +67,7 @@ function App() {
                 element={isLoggedin ? <Company /> : <Navigate to="/login" />}
               />
               <Route
-                path="/companyDetails"
+                path="/addCompanyReport"
                 element={
                   isLoggedin ? <CompanyDetails /> : <Navigate to="/login" />
                 }
