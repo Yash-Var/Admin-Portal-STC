@@ -14,13 +14,37 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "./Header";
 import axios from "axios";
+import { useState ,useEffect} from "react";
 
 // Define the form component
 const CompanyForm = () => {
   const Type = [1, 2, 3, 4];
+  const [companyType, setCompanyType] = useState([]);
+  useEffect(() => {
+    fetchCompanyType();
+  }, []);
+  const fetchCompanyType = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/admin/getClasses",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`, 
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response.data.data);
+      setCompanyType(response.data.data);
+      
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleFormSubmit = async (values) => {
+  const handleFormSubmit = async (values,{resetForm}) => {
     try {
       console.log(values);
       const response = await axios.post(
@@ -34,6 +58,7 @@ const CompanyForm = () => {
         }
       );
       console.log(response.data);
+      resetForm();
     } catch (error) {
       console.error(error);
     }
@@ -117,9 +142,9 @@ const CompanyForm = () => {
                   error={!!touched.companyClass && !!errors.companyClass}
                   label="Company Class"
                 >
-                  {Type.map((type) => (
-                    <MenuItem key={type} value={type}>
-                      {type}
+                  {companyType?.map((type) => (
+                    <MenuItem key={type.classID} value={type.classID}>
+                      {type.className}
                     </MenuItem>
                   ))}
                 </Select>

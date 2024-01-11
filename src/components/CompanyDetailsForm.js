@@ -69,7 +69,7 @@ const CompanyForm = () => {
   const validationSchema = Yup.object({
     companyName: Yup.string().required("Company Name is required"),
   }); 
-const onSubmit = async (values) => {
+const onSubmit = async (values,{resetForm}) => {
     try {
         const token = localStorage.getItem("token"); // Replace with your actual token
         const headers = {
@@ -84,6 +84,7 @@ const onSubmit = async (values) => {
 
         const response = await axios.post('http://localhost:5000/api/admin/addCompanyData', newValues, { headers });
         console.log(response.data); 
+        resetForm();
     } catch (error) {
         console.error(error); 
     }

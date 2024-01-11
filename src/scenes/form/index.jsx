@@ -10,7 +10,7 @@ const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const roles = ["Admin", "Super Admin"];
 
-  const handleFormSubmit = async (values) => {
+  const handleFormSubmit = async (values,{resetForm}) => {
     const { confirmPassword, ...value2 } = values;
 
     try {
@@ -26,6 +26,7 @@ const Form = () => {
         }
       );
       console.log(response.data);
+      resetForm();
     } catch (error) {
       console.error(error);
     }
@@ -166,7 +167,7 @@ const passwordRegExp =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*!])[A-Za-z\d@#$%^&*!]{8,}$/;
 
 const checkoutSchema = yup.object().shape({
-  fullName: yup.string().required("required"),
+  name: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
   password: yup
     .string()
