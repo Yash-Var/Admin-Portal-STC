@@ -18,6 +18,7 @@ import { notify } from "./toast";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Logo from "../img/kiet-logo.png";
 
 const LoginForm = () => {
   const [data, setData] = useState({
@@ -43,6 +44,7 @@ const LoginForm = () => {
           localStorage.setItem("token", data.data.access_token);
           localStorage.setItem("user", data.data.userType);
           localStorage.setItem("userId", data.data.userId);
+          localStorage.setItem("userName", data.data.userName);
           window.location.href = "/";
           notify("You login to your account successfully", "success");
 
@@ -80,44 +82,47 @@ const LoginForm = () => {
 
     >
       <ToastContainer />
+      
+      <img src={Logo} alt="logo" style={{width:"100px",height:"100px",marginBottom:"20px"}}/>
+
         <span
-              style={{
-                color: "#4cceac",
-                textAlign: "center",
-                display: "inline-block",
-                width: "100%",
-                fontSize: "1.5rem",
-                fontWeight: "bold",
-                marginBottom: "20px",
-              }}
-            >
-              Sign in to your account
-            </span>
-      <Formik
-        initialValues={data}
-        validationSchema={loginSchema}
-        onSubmit={submitHandler}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-        }) => (
-          <form onSubmit={handleSubmit} autoComplete="off">
-            <Box
-              display="grid"
-              gap="30px"
-              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-              sx={{
-                "& > div": { gridColumn: "span 4" },
-              }}
-            >
-              <TextField
-                fullWidth
-                variant="filled"
+          style={{
+            color: "#4cceac",
+            textAlign: "center",
+            display: "inline-block",
+            width: "100%",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+            marginBottom: "20px",
+          }}
+        >
+          Sign in to your account
+        </span>
+        <Formik
+          initialValues={data}
+          validationSchema={loginSchema}
+          onSubmit={submitHandler}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleBlur,
+            handleChange,
+            handleSubmit,
+          }) => (
+            <form onSubmit={handleSubmit} autoComplete="off">
+              <Box
+                display="grid"
+                gap="30px"
+                gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                sx={{
+                  "& > div": { gridColumn: "span 4" },
+                }}
+              >
+                <TextField
+                  fullWidth
+                  variant="filled"
                 type="text"
                 label="Email"
                 onBlur={handleBlur}

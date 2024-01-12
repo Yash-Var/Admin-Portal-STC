@@ -23,23 +23,25 @@ const CompanyForm = () => {
     }, []);
 
     const fetchData = async () => {
-        try {
-            const token = localStorage.getItem("token"); // Get the token from localStorage
-            const headers = {
-                Authorization: `Bearer ${token}`, // Set the Authorization header with the token
-            };
+      try {
+        const token = localStorage.getItem("token"); // Get the token from localStorage
+        const headers = {
+          Authorization: `Bearer ${token}`, // Set the Authorization header with the token
+        };
 
-            const response = await axios.get("http://localhost:5000/api/admin/getCompanyNames", { headers });
+        const response = await axios.get("http://localhost:5000/api/admin/getCompanyNames", { headers });
 
-            // Store the company names into an array
-            const companyNames = response.data.data.map(company => company.companyName);
+        // Store the company names into an array
+        const companyNames = response.data.data;
 
-            console.log(response.data.data);
-            setCompanies(response.data.data);
-        } catch (error) {
-            // Handle the error
-            console.error(error);
-        }
+        // Sort the companyNames array by companyName
+        companyNames.sort((a, b) => a.companyName.localeCompare(b.companyName));
+
+        setCompanies(companyNames);
+      } catch (error) {
+        // Handle the error
+        console.error(error);
+      }
     };
   const isNonMobile = useMediaQuery("(min-width:600px,)");
   const initialValues = {
