@@ -3,13 +3,10 @@ import Header from "./Header";
 import { Box, Typography, useTheme, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../theme";
-// import { } from "../constants";
 import { useEffect, useState } from "react";
 import CompanyModal from "./CompanyModal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setCompanyData } from "../utils/companySlice";
 const Company = () => {
   const Navigate = useNavigate();
   const handleaddCompany = () => {
@@ -18,10 +15,9 @@ const Company = () => {
   };
   const [openModal, setOpenModal] = useState(false);
   const [selectedCompanyId, setSelectedCompanyId] = useState(null);
-  const dispatch = useDispatch();
-  const companyData = useSelector((state) => state.company.companyData);
+  const [companyData, setCompanyData] = useState([]);
   useEffect(() => {
-    if (companyData.length === 0) fetchData();
+    fetchData();
   }, []);
 
   const fetchData = async () => {
@@ -39,7 +35,7 @@ const Company = () => {
       const sortedData = data.sort((a, b) =>
         a.companyName.localeCompare(b.companyName)
       );
-      dispatch(setCompanyData(sortedData));
+      setCompanyData(sortedData);
     } catch (error) {
       console.error(error);
     }
