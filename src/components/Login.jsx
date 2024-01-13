@@ -77,22 +77,21 @@ const LoginForm = () => {
       borderRadius="8px"
       boxShadow="0 4px 8px rgba(0, 0, 0, 0.5)"
       textAlign="center"
-
     >
       <ToastContainer />
-        <span
-              style={{
-                color: "#4cceac",
-                textAlign: "center",
-                display: "inline-block",
-                width: "100%",
-                fontSize: "1.5rem",
-                fontWeight: "bold",
-                marginBottom: "20px",
-              }}
-            >
-              Sign in to your account
-            </span>
+      <span
+        style={{
+          color: "#4cceac",
+          textAlign: "center",
+          display: "inline-block",
+          width: "100%",
+          fontSize: "1.5rem",
+          fontWeight: "bold",
+          marginBottom: "20px",
+        }}
+      >
+        Sign in to your account
+      </span>
       <Formik
         initialValues={data}
         validationSchema={loginSchema}
@@ -143,9 +142,14 @@ const LoginForm = () => {
               />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
-            <Button type="submit" color="secondary" variant="contained" sx={{ width: "100%" }}>
+              <Button
+                type="submit"
+                color="secondary"
+                variant="contained"
+                sx={{ width: "100%" }}
+              >
                 Login
-            </Button>
+              </Button>
             </Box>
             <span
               style={{
@@ -156,7 +160,7 @@ const LoginForm = () => {
                 marginTop: "20px",
               }}
             >
-              Don't have an account?
+              Don't have an account? Contact STC Team
             </span>
           </form>
         )}

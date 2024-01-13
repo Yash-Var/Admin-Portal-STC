@@ -20,9 +20,6 @@ const Topbar = () => {
 
   return (
     <Box p={2} position="relative">
-      {/* SEARCH BAR */}
-
-      {/* ICONS */}
       <Box display="flex" position="absolute" right="10px">
         <IconButton onClick={colorMode.toggleColorMode}>
           {theme.palette.mode === "dark" ? (
@@ -31,12 +28,12 @@ const Topbar = () => {
             <LightModeOutlinedIcon />
           )}
         </IconButton>
-        <IconButton>
+        {/* <IconButton>
           <NotificationsOutlinedIcon />
         </IconButton>
         <IconButton>
           <SettingsOutlinedIcon />
-        </IconButton>
+        </IconButton> */}
         <IconButton onClick={handleLogout}>
           <PersonOutlinedIcon />
         </IconButton>

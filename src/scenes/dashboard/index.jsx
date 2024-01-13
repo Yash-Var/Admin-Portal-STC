@@ -1,6 +1,7 @@
-import { Box,Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import EmailIcon from "@mui/icons-material/Email";
+import ReportIcon from "@mui/icons-material/Report";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import TrafficIcon from "@mui/icons-material/Traffic";
@@ -18,7 +19,7 @@ const Dashboard = () => {
     <Box m="20px">
       {/* HEADER */}
 
-      <Header title="Dashboard" subtitle="Welcome To Dashboard" />  
+      <Header title="Dashboard" subtitle="Welcome To Dashboard" />
       {/* GRID & CHARTS */}
       <Box
         display="grid"
@@ -36,16 +37,17 @@ const Dashboard = () => {
         >
           <StatBox
             title="12,361"
-            subtitle="Emails Sent"
-            progress="0.75"
+            subtitle="Total Company Report"
+            // progress="0.75"
             increase="+14%"
             icon={
-              <EmailIcon
+              <ReportIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
           />
         </Box>
+
         <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}

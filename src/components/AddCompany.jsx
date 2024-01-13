@@ -1,4 +1,3 @@
-// Import necessary components and libraries
 import {
   Box,
   Button,
@@ -14,11 +13,9 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "./Header";
 import axios from "axios";
-import { useState ,useEffect} from "react";
+import { useState, useEffect } from "react";
 
-// Define the form component
 const CompanyForm = () => {
-  const Type = [1, 2, 3, 4];
   const [companyType, setCompanyType] = useState([]);
   useEffect(() => {
     fetchCompanyType();
@@ -29,14 +26,13 @@ const CompanyForm = () => {
         "http://localhost:5000/api/admin/getClasses",
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`, 
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
           },
         }
       );
       console.log(response.data.data);
       setCompanyType(response.data.data);
-      
     } catch (error) {
       console.error(error);
     }
@@ -44,7 +40,7 @@ const CompanyForm = () => {
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleFormSubmit = async (values,{resetForm}) => {
+  const handleFormSubmit = async (values, { resetForm }) => {
     try {
       console.log(values);
       const response = await axios.post(
@@ -52,7 +48,7 @@ const CompanyForm = () => {
         values,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // Replace with your actual access token
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
           },
         }
@@ -64,7 +60,6 @@ const CompanyForm = () => {
     }
   };
 
-  // Define the form validation schema
   const companySchema = yup.object().shape({
     companyName: yup.string().required("Company Name is required"),
     companyClass: yup.number().required("Company Class is required"),
@@ -78,7 +73,6 @@ const CompanyForm = () => {
     companyAddedBy: yup.string().required("Added By is required"),
   });
 
-  // Initial values for the form fields
   const initialValues = {
     companyName: "",
     companyClass: "",
