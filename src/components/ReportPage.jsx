@@ -16,7 +16,11 @@ import {
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { useDispatch, useSelector } from "react-redux";
-import { setReportPageStatus, setReportPage } from "../utils/reportSlice";
+import {
+  setReportPageStatus,
+  setReportPage,
+  setPendingStatus,
+} from "../utils/reportSlice";
 import CompanyInformationModal from "./ReportEditModal";
 import { useNavigate } from "react-router-dom";
 
@@ -105,7 +109,10 @@ const ReportPage = ({ isPending }) => {
           },
         }
       );
-      dispatch(setReportPageStatus(status));
+      dispatch(setReportPageStatus(true));
+      dispatch(setPendingStatus(true));
+
+      navigate("/reportstatus");
     } catch (error) {
       console.error(error);
     }

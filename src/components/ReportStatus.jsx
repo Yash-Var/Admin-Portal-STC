@@ -37,10 +37,19 @@ const StatusItem = ({ title, selected, setSelected }) => {
 const ReportStatus = () => {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
+  const pendingStatus = useSelector((state) => state.report.PendingStatus);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [companyData, setCompanyData] = useState([]);
   const [pageSize, setPageSize] = useState(11);
+  let setName;
+  useEffect(() => {
+    console.log(pendingStatus);
+    if (pendingStatus == true) {
+      setSelected("Pending Approval");
+    }
+  }, []);
+
   const [selected, setSelected] = useState("All");
   const handleViewMore = (dataId) => {
     console.log(dataId);

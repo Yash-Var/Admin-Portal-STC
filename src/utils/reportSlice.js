@@ -7,6 +7,7 @@ const reportSlice = createSlice({
     Rejected: null,
     Pending: null,
     ReportPage: [],
+    PendingStatus: false,
   },
   reducers: {
     setAll(state, action) {
@@ -27,6 +28,9 @@ const reportSlice = createSlice({
     setReportPageStatus(state, action) {
       state.ReportPage.companyReportApprovalStatus = action.payload;
     },
+    setPendingStatus(state, action) {
+      state.PendingStatus = action.payload;
+    },
   },
 });
 
@@ -37,5 +41,6 @@ export const {
   setRejected,
   setReportPage,
   setReportPageStatus,
+  setPendingStatus,
 } = reportSlice.actions;
 export default reportSlice.reducer;
