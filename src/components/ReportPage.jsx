@@ -132,26 +132,30 @@ const ReportPage = ({ isPending }) => {
               {companyInfo.companyReportApprovalStatus ===
                 "Pending Approval" && (
                 <>
-                  <Box my="20px" mr="5px">
-                    <Button
-                      type="submit"
-                      color="secondary"
-                      variant="contained"
-                      onClick={() => handleStatus(true)}
-                    >
-                      <DoneOutlinedIcon />
-                    </Button>
-                  </Box>
-                  <Box my="20px" mx="5px">
-                    <Button
-                      type="submit"
-                      color="secondary"
-                      variant="contained"
-                      onClick={() => handleStatus(false)}
-                    >
-                      <CloseOutlinedIcon />
-                    </Button>
-                  </Box>
+                  {localStorage.getItem("user") === "Super Admin" && (
+                    <div>
+                      <Box my="20px" mr="5px">
+                        <Button
+                          type="submit"
+                          color="secondary"
+                          variant="contained"
+                          onClick={() => handleStatus(true)}
+                        >
+                          <DoneOutlinedIcon />
+                        </Button>
+                      </Box>
+                      <Box my="20px" mx="5px">
+                        <Button
+                          type="submit"
+                          color="secondary"
+                          variant="contained"
+                          onClick={() => handleStatus(false)}
+                        >
+                          <CloseOutlinedIcon />
+                        </Button>
+                      </Box>
+                    </div>
+                  )}
                 </>
               )}
               {companyInfo.companyReportApprovalStatus !== "Approved" && (
