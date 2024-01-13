@@ -13,12 +13,34 @@ import {
 import axios from "axios";
 
 const CompanyModal = ({ open, handleClose, companyId }) => {
+  const [companyType, setCompanyType] = useState([]);
+  useEffect(() => {
+    fetchCompanyType();
+  }, []);
+  const fetchCompanyType = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/admin/getClasses",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response.data.data);
+      setCompanyType(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const [companyData, setCompanyData] = useState({
     companyName: "",
     companyDescription: "",
     companyWebsite: "",
     establishmentyear: "",
-    // companyType: "",
+
+    classID: "",
   });
   useEffect(() => {
     const fetchData = async () => {
@@ -32,12 +54,15 @@ const CompanyModal = ({ open, handleClose, companyId }) => {
             },
           }
         );
+
         console.log(response.data.data[0]);
         setCompanyData({
           companyName: response.data.data[0].companyName,
           companyDescription: response.data.data[0].companyDescription,
           companyWebsite: response.data.data[0].companyWebsite,
           companyEstablishment: response.data.data[0].companyEstablishment,
+
+          classID: response.data.data[0].classID,
         });
       } catch (error) {
         console.error(error);
@@ -48,6 +73,7 @@ const CompanyModal = ({ open, handleClose, companyId }) => {
   }, [companyId]);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+    console.log(name, value);
     setCompanyData({
       ...companyData,
       [name]: value,
@@ -141,15 +167,15 @@ const CompanyModal = ({ open, handleClose, companyId }) => {
               <InputLabel id="companyTypeLabel">Company Type</InputLabel>
               <Select
                 labelId="companyTypeLabel"
-                value={companyData.companyType || ""}
-                onChange={(e) =>
-                  handleInputChange("companyType", e.target.value)
-                }
+                value={companyData?.classID} // Set the value to companyData.className
+                onChange={(e) => handleInputChange(e)}
+                name="classID" // Add this line to ensure the name is correctly set
               >
-                <MenuItem value="elite">Elite</MenuItem>
-                <MenuItem value="major">Major</MenuItem>
-                <MenuItem value="hero">Hero</MenuItem>
-                <MenuItem value="other">Other</MenuItem>
+                {companyType?.map((type) => (
+                  <MenuItem key={type.classID} value={type.classID}>
+                    {type.className}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>

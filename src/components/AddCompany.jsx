@@ -54,6 +54,7 @@ const CompanyForm = () => {
         }
       );
       console.log(response.data);
+      alert("Company Added Successfully");
       resetForm();
     } catch (error) {
       console.error(error);

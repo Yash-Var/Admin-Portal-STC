@@ -10,6 +10,7 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
 import FactCheckOutlinedIcon from "@mui/icons-material/FactCheckOutlined";
+import Logo from "../../img/kiet-logo.png";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -90,8 +91,8 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0kSGqejACPJKggBk7_11_nnC_Zs8PzkWUOA&usqp=CAU"
-                  style={{ cursor: "pointer", borderRadius: "50%" }}
+                  src={Logo}
+                  style={{ cursor: "pointer"}}
                 />
               </Box>
               <Box textAlign="center">
@@ -100,12 +101,13 @@ const Sidebar = () => {
                   color={colors.grey[100]}
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
+                  style={{width:"80%",margin:"0 auto",textAlign:"center"}}
                 >
-                  Bajrang Bali
+                  {localStorage.getItem("userName")}
                 </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
-                  JAI SHREE RAM
-                </Typography>
+                {/* <Typography variant="h5" color={colors.greenAccent[500]}>
+                  User
+                </Typography> */}
               </Box>
             </Box>
           )}

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { tokens } from "../theme";
 import { Box, Typography, useTheme, Button } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import {
   Container,
   Paper,
@@ -47,11 +48,39 @@ const CompanyInformation = () => {
         }
       );
       const data = response.data.data;
+      console.log(data.length);
       setCompanyData(data);
     } catch (error) {
       console.error(error);
     }
   };
+
+  if (companyInfo.length === 0) {
+    return (
+      <>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="100vh"
+        >
+          <div style={{ textAlign: "center" }}>
+            <h1 style={{ color: "#2c3e50", fontSize: "2em", margin: "0" }}>
+              No Reports Available
+            </h1>
+            <p style={{ color: "#7f8c8d", fontSize: "1.2em" }}>
+              We regret to inform you that there are currently no reports
+              available for the company.
+            </p>
+            <p style={{ color: "#7f8c8d", fontSize: "1.2em" }}>
+              Please check back later or contact our support team for
+              assistance.
+            </p>
+          </div>
+        </Box>
+      </>
+    );
+  }
 
   return (
     <>

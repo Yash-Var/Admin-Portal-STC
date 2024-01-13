@@ -18,6 +18,7 @@ import { notify } from "./toast";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Logo from "../img/kiet-logo.png";
 
 const LoginForm = () => {
   const [data, setData] = useState({
@@ -43,6 +44,7 @@ const LoginForm = () => {
           localStorage.setItem("token", data.data.access_token);
           localStorage.setItem("user", data.data.userType);
           localStorage.setItem("userId", data.data.userId);
+          localStorage.setItem("userName", data.data.userName);
           window.location.href = "/";
           notify("You login to your account successfully", "success");
 
@@ -79,6 +81,13 @@ const LoginForm = () => {
       textAlign="center"
     >
       <ToastContainer />
+
+      <img
+        src={Logo}
+        alt="logo"
+        style={{ width: "100px", height: "100px", marginBottom: "20px" }}
+      />
+
       <span
         style={{
           color: "#4cceac",

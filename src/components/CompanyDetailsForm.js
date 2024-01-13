@@ -12,35 +12,40 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "./Header";
-import { useEffect ,useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 // Define the form component
 const CompanyForm = () => {
-    const [companies, setCompanies] = useState([]);
-    useEffect(() => {
-        fetchData();
-    }, []);
+  const [companies, setCompanies] = useState([]);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    const fetchData = async () => {
-        try {
-            const token = localStorage.getItem("token"); // Get the token from localStorage
-            const headers = {
-                Authorization: `Bearer ${token}`, // Set the Authorization header with the token
-            };
+  const fetchData = async () => {
+    try {
+      const token = localStorage.getItem("token"); // Get the token from localStorage
+      const headers = {
+        Authorization: `Bearer ${token}`, // Set the Authorization header with the token
+      };
 
-            const response = await axios.get("http://localhost:5000/api/admin/getCompanyNames", { headers });
+      const response = await axios.get(
+        "http://localhost:5000/api/admin/getCompanyNames",
+        { headers }
+      );
 
-            // Store the company names into an array
-            const companyNames = response.data.data.map(company => company.companyName);
+      // Store the company names into an array
+      const companyNames = response.data.data;
 
-            console.log(response.data.data);
-            setCompanies(response.data.data);
-        } catch (error) {
-            // Handle the error
-            console.error(error);
-        }
-    };
+      // Sort the companyNames array by companyName
+      companyNames.sort((a, b) => a.companyName.localeCompare(b.companyName));
+
+      setCompanies(companyNames);
+    } catch (error) {
+      // Handle the error
+      console.error(error);
+    }
+  };
   const isNonMobile = useMediaQuery("(min-width:600px,)");
   const initialValues = {
     companyName: "",
@@ -68,27 +73,32 @@ const CompanyForm = () => {
 
   const validationSchema = Yup.object({
     companyName: Yup.string().required("Company Name is required"),
-  }); 
-const onSubmit = async (values,{resetForm}) => {
+  });
+  const onSubmit = async (values, { resetForm }) => {
     try {
-        const token = localStorage.getItem("token"); // Replace with your actual token
-        const headers = {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        };
-        
-        const newValues = {
-            ...values,
-            companyReportAddedBy: localStorage.getItem("userId"),
-        };
+      const token = localStorage.getItem("token"); // Replace with your actual token
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
 
-        const response = await axios.post('http://localhost:5000/api/admin/addCompanyData', newValues, { headers });
-        console.log(response.data); 
-        resetForm();
+      const newValues = {
+        ...values,
+        companyReportAddedBy: localStorage.getItem("userId"),
+      };
+
+      const response = await axios.post(
+        "http://localhost:5000/api/admin/addCompanyData",
+        newValues,
+        { headers }
+      );
+      console.log(response.data);
+      alert("Company Report Added Successfully");
+      resetForm();
     } catch (error) {
-        console.error(error); 
+      console.error(error);
     }
-};
+  };
 
   return (
     <Box mx="20vw" my="5vw">
@@ -118,28 +128,28 @@ const onSubmit = async (values,{resetForm}) => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
             >
-            <FormControl fullWidth variant="filled" >
+              <FormControl fullWidth variant="filled">
                 <InputLabel id="company-name-label">Company Name</InputLabel>
                 <Select
-                    labelId="company-name-label"
-                    id="companyName"
-                    name="companyName"
-                    value={values.companyName||""}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={!!touched.companyName && !!errors.companyName}
-                    label="Company Name"
+                  labelId="company-name-label"
+                  id="companyName"
+                  name="companyName"
+                  value={values.companyName || ""}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={!!touched.companyName && !!errors.companyName}
+                  label="Company Name"
                 >
-                    {companies.map((name) => (
-                        <MenuItem key={name.companyID} value={name.companyID}>
-                            {name.companyName}
-                        </MenuItem>
-                    ))}
+                  {companies.map((name) => (
+                    <MenuItem key={name.companyID} value={name.companyID}>
+                      {name.companyName}
+                    </MenuItem>
+                  ))}
                 </Select>
                 {touched.companyName && errors.companyName && (
-                    <FormHelperText>{errors.companyName}</FormHelperText>
+                  <FormHelperText>{errors.companyName}</FormHelperText>
                 )}
-            </FormControl>
+              </FormControl>
               <TextField
                 label="Number of Rounds"
                 variant="filled"
@@ -153,8 +163,7 @@ const onSubmit = async (values,{resetForm}) => {
                   Boolean(errors.companyNumOfRounds)
                 }
                 helperText={
-                  touched.companyNumOfRounds &&
-                  errors.companyNumOfRounds
+                  touched.companyNumOfRounds && errors.companyNumOfRounds
                 }
                 fullWidth
                 margin="normal"
@@ -169,12 +178,8 @@ const onSubmit = async (values,{resetForm}) => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.companyCTC}
-                error={
-                  touched.companyCTC && Boolean(errors.companyCTC)
-                }
-                helperText={
-                  touched.companyCTC && errors.companyCTC
-                }
+                error={touched.companyCTC && Boolean(errors.companyCTC)}
+                helperText={touched.companyCTC && errors.companyCTC}
                 fullWidth
                 margin="normal"
                 sx={{ gridColumn: "span 2" }}
@@ -193,8 +198,7 @@ const onSubmit = async (values,{resetForm}) => {
                   Boolean(errors.companyEligibility)
                 }
                 helperText={
-                  touched.companyEligibility &&
-                  errors.companyEligibility
+                  touched.companyEligibility && errors.companyEligibility
                 }
                 fullWidth
                 margin="normal"
@@ -210,12 +214,10 @@ const onSubmit = async (values,{resetForm}) => {
                 onBlur={handleBlur}
                 value={values.companyJOBProfile}
                 error={
-                  touched.companyJOBProfile &&
-                  Boolean(errors.companyJOBProfile)
+                  touched.companyJOBProfile && Boolean(errors.companyJOBProfile)
                 }
                 helperText={
-                  touched.companyJOBProfile &&
-                  errors.companyJOBProfile
+                  touched.companyJOBProfile && errors.companyJOBProfile
                 }
                 fullWidth
                 margin="normal"
@@ -235,8 +237,7 @@ const onSubmit = async (values,{resetForm}) => {
                   Boolean(errors.companyFirstRoundName)
                 }
                 helperText={
-                  touched.companyFirstRoundName &&
-                  errors.companyFirstRoundName
+                  touched.companyFirstRoundName && errors.companyFirstRoundName
                 }
                 fullWidth
                 margin="normal"
@@ -361,8 +362,7 @@ const onSubmit = async (values,{resetForm}) => {
                   Boolean(errors.companyThirdRoundName)
                 }
                 helperText={
-                  touched.companyThirdRoundName &&
-                  errors.companyThirdRoundName
+                  touched.companyThirdRoundName && errors.companyThirdRoundName
                 }
                 fullWidth
                 margin="normal"
@@ -537,8 +537,6 @@ const onSubmit = async (values,{resetForm}) => {
                 sx={{ gridColumn: "span 4" }}
               />
 
-              
-
               <TextField
                 label="Report Year"
                 variant="filled"
@@ -548,12 +546,10 @@ const onSubmit = async (values,{resetForm}) => {
                 onBlur={handleBlur}
                 value={values.companyReportYear}
                 error={
-                  touched.companyReportYear &&
-                  Boolean(errors.companyReportYear)
+                  touched.companyReportYear && Boolean(errors.companyReportYear)
                 }
                 helperText={
-                  touched.companyReportYear &&
-                  errors.companyReportYear
+                  touched.companyReportYear && errors.companyReportYear
                 }
                 fullWidth
                 margin="normal"
@@ -568,13 +564,8 @@ const onSubmit = async (values,{resetForm}) => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.reportFeedBack}
-                error={
-                  touched.reportFeedBack &&
-                  Boolean(errors.reportFeedBack)
-                }
-                helperText={
-                  touched.reportFeedBack && errors.reportFeedBack
-                }
+                error={touched.reportFeedBack && Boolean(errors.reportFeedBack)}
+                helperText={touched.reportFeedBack && errors.reportFeedBack}
                 fullWidth
                 margin="normal"
                 sx={{ gridColumn: "span 4" }}

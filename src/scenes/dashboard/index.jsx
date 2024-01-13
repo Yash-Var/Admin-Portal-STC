@@ -3,6 +3,8 @@ import { tokens } from "../../theme";
 import EmailIcon from "@mui/icons-material/Email";
 import ReportIcon from "@mui/icons-material/Report";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import ApartmentIcon from "@mui/icons-material/Apartment";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import TrafficIcon from "@mui/icons-material/Traffic";
 
@@ -10,10 +12,41 @@ import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
 import Header from "../../components/Header";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [Report, setReport] = useState();
+  const [company, setCompany] = useState();
+  const [admin, setAdmin] = useState();
+  const [Student, setStudent] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/admin/totalCount",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        setReport(response?.data.dataReport[0].COUNT);
+        setCompany(response?.data.dataCompany[0].totalCompanies);
+        setAdmin(response?.data.dataUsers[0].totalUsers);
+        setStudent(response?.data.dataStudents[0].totalStudents);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <Box m="20px">
@@ -36,10 +69,8 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="12,361"
+            title={Report}
             subtitle="Total Company Report"
-            // progress="0.75"
-            increase="+14%"
             icon={
               <ReportIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -56,12 +87,11 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="431,225"
-            subtitle="Sales Obtained"
+            title={company}
+            subtitle="Total Companies"
             progress="0.50"
-            increase="+21%"
             icon={
-              <PointOfSaleIcon
+              <ApartmentIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -75,10 +105,8 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="32,441"
-            subtitle="New Clients"
-            progress="0.30"
-            increase="+5%"
+            title={Student}
+            subtitle="Total Students"
             icon={
               <PersonAddIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -94,12 +122,10 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="1,325,134"
-            subtitle="Traffic Received"
-            progress="0.80"
-            increase="+43%"
+            title={admin}
+            subtitle="Total Admins"
             icon={
-              <TrafficIcon
+              <SupervisorAccountIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }

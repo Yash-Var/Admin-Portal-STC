@@ -165,13 +165,6 @@ const Company = () => {
     },
   ];
 
-  // useEffect(() => {
-  //   if(deleteRequest&&deleteIndex){
-  //     console.log(deleteIndex);
-  //     setDeleteRequest(false);
-  //     setDeleteIndex(null);
-  //   }
-  // }, [deleteRequest]);
   const handleEdit = (companyId) => {
     setSelectedCompanyId(companyId);
 
