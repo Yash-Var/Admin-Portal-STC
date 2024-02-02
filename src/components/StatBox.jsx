@@ -15,6 +15,7 @@ const StatBox = ({ title, subtitle, icon, progress, increase }) => {
             variant="h2"
             fontWeight="bold"
             sx={{ color: colors.grey[100] }}
+            fontSize="50px"
           >
             {title}
           </Typography>

@@ -56,9 +56,11 @@ const Dashboard = () => {
       {/* GRID & CHARTS */}
       <Box
         display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
-        gridAutoRows="140px"
+        gridTemplateColumns="repeat(6, 1fr)"
+        gridAutoRows="240px"
         gap="20px"
+        margin="1vh 10vw"
+        
       >
         {/* ROW 1 */}
         <Box
@@ -73,7 +75,7 @@ const Dashboard = () => {
             subtitle="Total Company Report"
             icon={
               <ReportIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+                sx={{ color: colors.greenAccent[600], fontSize: "46px" }}
               />
             }
           />
@@ -92,7 +94,7 @@ const Dashboard = () => {
             progress="0.50"
             icon={
               <ApartmentIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+                sx={{ color: colors.greenAccent[600], fontSize: "46px" }}
               />
             }
           />
@@ -109,7 +111,7 @@ const Dashboard = () => {
             subtitle="Total Students"
             icon={
               <PersonAddIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+                sx={{ color: colors.greenAccent[600], fontSize: "46px" }}
               />
             }
           />
@@ -126,14 +128,48 @@ const Dashboard = () => {
             subtitle="Total Admins"
             icon={
               <SupervisorAccountIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+                sx={{ color: colors.greenAccent[600], fontSize: "46px" }}
+              />
+            }
+          />
+        </Box>
+        <Box
+          gridColumn="span 3"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <StatBox
+            title={admin}
+            subtitle="Total Admins"
+            icon={
+              <SupervisorAccountIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "46px" }}
+              />
+            }
+          />
+        </Box>
+        <Box
+          gridColumn="span 3"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <StatBox
+            title={admin}
+            subtitle="Total Admins"
+            icon={
+              <SupervisorAccountIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "46px" }}
               />
             }
           />
         </Box>
 
         {/* ROW 3 */}
-        <Box
+        {/* <Box
           gridColumn="span 4"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
@@ -174,7 +210,7 @@ const Dashboard = () => {
           <Box height="250px" mt="-20px">
             <BarChart isDashboard={true} />
           </Box>
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );
