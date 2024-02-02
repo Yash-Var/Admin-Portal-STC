@@ -22,6 +22,8 @@ const Dashboard = () => {
   const [company, setCompany] = useState();
   const [admin, setAdmin] = useState();
   const [Student, setStudent] = useState();
+  const [active, setActive] = useState();
+  const [used, setUsed] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,6 +42,8 @@ const Dashboard = () => {
         setCompany(response?.data.dataCompany[0].totalCompanies);
         setAdmin(response?.data.dataUsers[0].totalUsers);
         setStudent(response?.data.dataStudents[0].totalStudents);
+        setActive(response?.data.dataActive[0].totalActiveStudents);
+        setUsed(response?.data.dataAciveCount[0].CountActiveStudent);
       } catch (error) {
         console.error(error);
       }
@@ -60,7 +64,6 @@ const Dashboard = () => {
         gridAutoRows="240px"
         gap="20px"
         margin="1vh 10vw"
-        
       >
         {/* ROW 1 */}
         <Box
@@ -108,7 +111,7 @@ const Dashboard = () => {
         >
           <StatBox
             title={Student}
-            subtitle="Total Students"
+            subtitle="Total Students Register"
             icon={
               <PersonAddIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "46px" }}
@@ -141,8 +144,8 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title={admin}
-            subtitle="Total Admins"
+            title={active}
+            subtitle="Active Students"
             icon={
               <SupervisorAccountIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "46px" }}
@@ -158,8 +161,8 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title={admin}
-            subtitle="Total Admins"
+            title={used}
+            subtitle="Number of Times Used"
             icon={
               <SupervisorAccountIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "46px" }}
