@@ -320,7 +320,7 @@ const ReportStatus = () => {
           />
         </Box>
         <DataGrid
-          rows={companyData.map((row, index) => ({ ...row, sNo: row.dataID }))}
+          rows={companyData?.map((row, index) => ({ ...row, sNo: row.dataID }))}
           columns={columns}
           getRowId={(row) => row.dataID}
           pageSize={pageSize}

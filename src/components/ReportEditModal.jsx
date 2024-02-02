@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Modal, TextField, Box, Button, Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ReportEditModal = ({ open, handleClose, reportId }) => {
+  const navigate = useNavigate();
   const [companyData, setCompanyData] = useState({
     companyName: "",
     companyNumOfRounds: "",
@@ -115,6 +117,7 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
       );
       console.log(response);
       handleClose();
+      navigate("/reportstatus");
     } catch (error) {
       console.error("Error while saving data:", error);
     }

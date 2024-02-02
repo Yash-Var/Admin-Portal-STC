@@ -261,6 +261,9 @@ const CompanyForm = () => {
                   errors.companyFirstRoundDescrip
                 }
                 fullWidth
+                multiline
+                minRows={1}
+                maxRows={5}
                 margin="normal"
                 sx={{ gridColumn: "span 2" }}
               />
@@ -302,6 +305,9 @@ const CompanyForm = () => {
                   touched.companySecondRoundName &&
                   errors.companySecondRoundName
                 }
+                multiline
+                minRows={1}
+                maxRows={5}
                 fullWidth
                 margin="normal"
                 sx={{ gridColumn: "span 2" }}
@@ -323,6 +329,9 @@ const CompanyForm = () => {
                   touched.companySecondRoundDescrip &&
                   errors.companySecondRoundDescrip
                 }
+                multiline
+                minRows={1}
+                maxRows={5}
                 fullWidth
                 margin="normal"
                 sx={{ gridColumn: "span 2" }}
@@ -345,6 +354,9 @@ const CompanyForm = () => {
                   errors.companySecondRoundDuration
                 }
                 fullWidth
+                multiline
+                minRows={1}
+                maxRows={5}
                 margin="normal"
                 sx={{ gridColumn: "span 4" }}
               />
@@ -365,6 +377,9 @@ const CompanyForm = () => {
                   touched.companyThirdRoundName && errors.companyThirdRoundName
                 }
                 fullWidth
+                multiline
+                minRows={1}
+                maxRows={5}
                 margin="normal"
                 sx={{ gridColumn: "span 4" }}
               />
@@ -386,6 +401,9 @@ const CompanyForm = () => {
                   errors.companyThirdRoundDescrip
                 }
                 fullWidth
+                multiline
+                minRows={1}
+                maxRows={5}
                 margin="normal"
                 sx={{ gridColumn: "span 4" }}
               />
@@ -407,6 +425,9 @@ const CompanyForm = () => {
                   errors.companyThirdRoundDuration
                 }
                 fullWidth
+                multiline
+                minRows={1}
+                maxRows={5}
                 margin="normal"
                 sx={{ gridColumn: "span 4" }}
               />
@@ -428,6 +449,9 @@ const CompanyForm = () => {
                   errors.companyFourthRoundName
                 }
                 fullWidth
+                multiline
+                minRows={1}
+                maxRows={5}
                 margin="normal"
                 sx={{ gridColumn: "span 4" }}
               />
@@ -449,6 +473,9 @@ const CompanyForm = () => {
                   errors.companyFourthRoundDescrip
                 }
                 fullWidth
+                multiline
+                minRows={1}
+                maxRows={5}
                 margin="normal"
                 sx={{ gridColumn: "span 4" }}
               />
@@ -470,6 +497,9 @@ const CompanyForm = () => {
                   errors.companyFourthRoundDuration
                 }
                 fullWidth
+                multiline
+                minRows={1}
+                maxRows={5}
                 margin="normal"
                 sx={{ gridColumn: "span 4" }}
               />
@@ -491,6 +521,9 @@ const CompanyForm = () => {
                   errors.companyAdditionalRoundDescrip
                 }
                 fullWidth
+                multiline
+                minRows={1}
+                maxRows={5}
                 margin="normal"
                 sx={{ gridColumn: "span 4" }}
               />
@@ -512,6 +545,9 @@ const CompanyForm = () => {
                   errors.companyReportApprovalStatus
                 }
                 fullWidth
+                multiline
+                minRows={1}
+                maxRows={5}
                 margin="normal"
                 sx={{ gridColumn: "span 4" }}
               />
@@ -533,6 +569,9 @@ const CompanyForm = () => {
                   errors.companyPracticeDetails
                 }
                 fullWidth
+                multiline
+                minRows={1}
+                maxRows={5}
                 margin="normal"
                 sx={{ gridColumn: "span 4" }}
               />
@@ -552,6 +591,9 @@ const CompanyForm = () => {
                   touched.companyReportYear && errors.companyReportYear
                 }
                 fullWidth
+                multiline
+                minRows={1}
+                maxRows={5}
                 margin="normal"
                 sx={{ gridColumn: "span 4" }}
               />
@@ -567,6 +609,9 @@ const CompanyForm = () => {
                 error={touched.reportFeedBack && Boolean(errors.reportFeedBack)}
                 helperText={touched.reportFeedBack && errors.reportFeedBack}
                 fullWidth
+                multiline
+                minRows={1}
+                maxRows={5}
                 margin="normal"
                 sx={{ gridColumn: "span 4" }}
               />
