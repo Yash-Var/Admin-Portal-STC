@@ -88,6 +88,7 @@ const CompanyForm = () => {
   return (
     <Box mx="20vw" my="7vw">
       <Header title="ADD COMPANY" subtitle="Add a New Company" />
+
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
@@ -166,6 +167,9 @@ const CompanyForm = () => {
                   touched.companyDescription && errors.companyDescription
                 }
                 sx={{ gridColumn: "span 4" }}
+                multiline
+                minRows={1}
+                maxRows={5}
               />
               <TextField
                 fullWidth
@@ -179,6 +183,9 @@ const CompanyForm = () => {
                 error={!!touched.companyWebsite && !!errors.companyWebsite}
                 helperText={touched.companyWebsite && errors.companyWebsite}
                 sx={{ gridColumn: "span 4" }}
+                multiline
+                minRows={1}
+                maxRows={5}
               />
               <TextField
                 fullWidth

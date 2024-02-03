@@ -64,12 +64,14 @@ const QuestionForm = () => {
   });
 
   const onSubmit = async (values, { resetForm }) => {
-    
     const newValues = {
-        ...values,company: companies.find((company) => company.companyID === values.companyId).companyName};
-        console.log(newValues);
-    try {
+      ...values,
+      company: companies.find(
+        (company) => company.companyID === values.companyId
+      ).companyName,
+    };
 
+    try {
       const token = localStorage.getItem("token");
       const headers = {
         Authorization: `Bearer ${token}`,
@@ -97,7 +99,14 @@ const QuestionForm = () => {
         initialValues={initialValues}
         validationSchema={validationSchema}
       >
-        {({ values, errors, touched, handleBlur, handleChange, handleSubmit }) => (
+        {({
+          values,
+          errors,
+          touched,
+          handleBlur,
+          handleChange,
+          handleSubmit,
+        }) => (
           <form onSubmit={handleSubmit}>
             <Box
               display="grid"
@@ -132,39 +141,125 @@ const QuestionForm = () => {
             </Box>
             <FieldArray name="questions">
               {({ push, remove }) => (
-                <>
+                <Box>
                   {values.questions.map((question, index) => (
                     <Box key={index} mb={4}>
                       <TextField
-                        label="Question"
+                        fullWidth
                         variant="filled"
-                        id={`question-${index}`}
+                        label={`Question ${index + 1}`}
                         name={`questions[${index}].question`}
+                        value={question.question}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={question.question}
-                        error={touched.questions?.[index]?.question && Boolean(errors.questions?.[index]?.question)}
-                        helperText={touched.questions?.[index]?.question && errors.questions?.[index]?.question}
-                        fullWidth
-                        margin="normal"
+                        error={
+                          !!touched.questions?.[index]?.question &&
+                          !!errors.questions?.[index]?.question
+                        }
+                        helperText={
+                          touched.questions?.[index]?.question &&
+                          errors.questions?.[index]?.question
+                        }
+                        multiline
+                        minRows={1}
+                        maxRows={5}
+                        style={{ marginTop: "1rem" }}
                       />
-                      {question.options.map((option, optionIndex) => (
+                      <Box mt={2}>
                         <TextField
-                          key={optionIndex}
-                          label={`Option ${optionIndex + 1}`}
+                          fullWidth
                           variant="filled"
-                          id={`option-${index}-${optionIndex}`}
-                          name={`questions[${index}].options[${optionIndex}]`}
+                          label="Option 1"
+                          name={`questions[${index}].options[0]`}
+                          value={question.options[0]}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          value={option}
-                          error={touched.questions?.[index]?.options?.[optionIndex] && Boolean(errors.questions?.[index]?.options?.[optionIndex])}
-                          helperText={touched.questions?.[index]?.options?.[optionIndex] && errors.questions?.[index]?.options?.[optionIndex]}
-                          fullWidth
-                          margin="normal"
+                          error={
+                            !!touched.questions?.[index]?.options?.[0] &&
+                            !!errors.questions?.[index]?.options?.[0]
+                          }
+                          helperText={
+                            touched.questions?.[index]?.options?.[0] &&
+                            errors.questions?.[index]?.options?.[0]
+                          }
+                          multiline
+                          minRows={1}
+                          maxRows={5}
                         />
-                      ))}
+                      </Box>
                       <Box mt={2}>
+                        <TextField
+                          fullWidth
+                          variant="filled"
+                          label="Option 2"
+                          name={`questions[${index}].options[1]`}
+                          value={question.options[1]}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.questions?.[index]?.options?.[1] &&
+                            !!errors.questions?.[index]?.options?.[1]
+                          }
+                          helperText={
+                            touched.questions?.[index]?.options?.[1] &&
+                            errors.questions?.[index]?.options?.[1]
+                          }
+                          multiline
+                          minRows={1}
+                          maxRows={5}
+                        />
+                      </Box>
+                      <Box mt={2}>
+                        <TextField
+                          fullWidth
+                          variant="filled"
+                          label="Option 3"
+                          name={`questions[${index}].options[2]`}
+                          value={question.options[2]}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.questions?.[index]?.options?.[2] &&
+                            !!errors.questions?.[index]?.options?.[2]
+                          }
+                          helperText={
+                            touched.questions?.[index]?.options?.[2] &&
+                            errors.questions?.[index]?.options?.[2]
+                          }
+                          multiline
+                          minRows={1}
+                          maxRows={5}
+                        />
+                      </Box>
+                      <Box mt={2}>
+                        <TextField
+                          fullWidth
+                          variant="filled"
+                          label="Option 4"
+                          multiline
+                          minRows={1}
+                          maxRows={5}
+                          name={`questions[${index}].options[3]`}
+                          value={question.options[3]}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.questions?.[index]?.options?.[3] &&
+                            !!errors.questions?.[index]?.options?.[3]
+                          }
+                          helperText={
+                            touched.questions?.[index]?.options?.[3] &&
+                            errors.questions?.[index]?.options?.[3]
+                          }
+                        />
+                      </Box>
+
+                      <Box
+                        mt={2}
+                        display="flex"
+                        justifyContent="end"
+                        gap="2rem"
+                      >
                         <Button
                           type="button"
                           variant="contained"
@@ -173,28 +268,29 @@ const QuestionForm = () => {
                         >
                           Remove Question
                         </Button>
+                        <Button
+                          type="button"
+                          variant="contained"
+                          color="primary"
+                          onClick={() =>
+                            push({
+                              question: "",
+                              options: ["", "", "", ""],
+                            })
+                          }
+                          style={{ backgroundColor: "#4caf50" }}
+                        >
+                          Add Question
+                        </Button>
                       </Box>
                     </Box>
                   ))}
-                  <Box display="flex" justifyContent="end" mt={4}>
-                    <Button
-                      type="button"
-                      variant="contained"
-                      color="primary"
-                      onClick={() => push({
-                        question: "",
-                        options: ["", "", "", ""],
-                      })}
-                    >
-                      Add Question
-                    </Button>
-                  </Box>
-                </>
+                </Box>
               )}
             </FieldArray>
             <Box display="flex" justifyContent="end" mt={4}>
               <Button type="submit" color="secondary" variant="contained">
-                Add Questions
+                Submit
               </Button>
             </Box>
           </form>

@@ -220,6 +220,8 @@ const CompanyForm = () => {
                   touched.companyJOBProfile && errors.companyJOBProfile
                 }
                 fullWidth
+                minRows={1}
+                maxRows={5}
                 margin="normal"
                 sx={{ gridColumn: "span 2" }}
               />
@@ -240,6 +242,8 @@ const CompanyForm = () => {
                   touched.companyFirstRoundName && errors.companyFirstRoundName
                 }
                 fullWidth
+                minRows={1}
+                maxRows={5}
                 margin="normal"
                 sx={{ gridColumn: "span 2" }}
               />
