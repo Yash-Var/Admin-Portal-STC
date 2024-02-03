@@ -290,7 +290,6 @@ const ReportPage = ({ isPending }) => {
           reportId={id}
         />
       </Container>
-      );
     </>
   );
 };
