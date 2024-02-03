@@ -92,7 +92,7 @@ const Sidebar = () => {
                   width="100px"
                   height="100px"
                   src={Logo}
-                  style={{ cursor: "pointer"}}
+                  style={{ cursor: "pointer" }}
                 />
               </Box>
               <Box textAlign="center">
@@ -101,7 +101,11 @@ const Sidebar = () => {
                   color={colors.grey[100]}
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
-                  style={{width:"80%",margin:"0 auto",textAlign:"center"}}
+                  style={{
+                    width: "80%",
+                    margin: "0 auto",
+                    textAlign: "center",
+                  }}
                 >
                   {localStorage.getItem("userName")}
                 </Typography>
@@ -143,21 +147,20 @@ const Sidebar = () => {
             />
             <Item
               title="Interview Questions"
-              to="/questions"
+              to="/showQuestions"
               icon={<QuestionAnswerOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <>
-                <Typography
-                  variant="h6"
-                  color={colors.grey[300]}
-                  sx={{ m: "15px 0 5px 20px" }}
-                >
-                  Manages
-                </Typography>
-            {isSuper === "Super Admin" && (
-              
+              <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Manages
+              </Typography>
+              {isSuper === "Super Admin" && (
                 <Item
                   title="Add ADMIN"
                   to="/form"
@@ -165,16 +168,14 @@ const Sidebar = () => {
                   selected={selected}
                   setSelected={setSelected}
                 />
-              
-            )}
-            <Item
-                  title="Add RERORT"
-                  to="/addCompanyReport"
-                  icon={<PeopleOutlinedIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-
+              )}
+              <Item
+                title="Add RERORT"
+                to="/addCompanyReport"
+                icon={<PeopleOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
             </>
           </Box>
         </Menu>
