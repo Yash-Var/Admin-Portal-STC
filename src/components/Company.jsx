@@ -126,7 +126,11 @@ const Company = () => {
       renderCell: ({ row }) => (
         <Button
           variant="outlined"
-          style={{ color: "#fff", borderColor: "#2196f3" }}
+          style={{
+            color: "#fff",
+            borderColor: "#2196f3",
+            backgroundColor: "#2196f3",
+          }}
           onClick={() => handleViewMore(row.companyID)}
         >
           View More
@@ -141,7 +145,11 @@ const Company = () => {
       renderCell: ({ row }) => (
         <Button
           variant="outlined"
-          style={{ color: "#fff", borderColor: "#2196f3" }}
+          style={{
+            color: "#fff",
+            borderColor: "green",
+            backgroundColor: "green",
+          }}
           onClick={() => handleEdit(row.companyID)}
         >
           Edit
@@ -156,7 +164,7 @@ const Company = () => {
       renderCell: ({ row }) => (
         <Button
           variant="outlined"
-          style={{ color: "#fff", borderColor: "#2196f3" }}
+          style={{ color: "#fff", borderColor: "red", backgroundColor: "red" }}
           onClick={() => handleDelete(row.companyID)}
         >
           Delete

@@ -153,7 +153,11 @@ const ReportStatus = () => {
       renderCell: ({ row }) => (
         <Button
           variant="outlined"
-          style={{ color: "#fff", borderColor: "#2196f3" }}
+          style={{
+            color: "#fff",
+            borderColor: "#2196f3",
+            backgroundColor: "#2196f3",
+          }}
           onClick={() => handleViewMore(row.dataID)}
         >
           View More
@@ -213,7 +217,6 @@ const ReportStatus = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
   // useEffect(() => {
   //   console.log(selected);
   //   if (selected === "All") {
@@ -320,7 +323,7 @@ const ReportStatus = () => {
           />
         </Box>
         <DataGrid
-          rows={companyData?.map((row, index) => ({ ...row, sNo: row.dataID }))}
+          rows={companyData.map((row, index) => ({ ...row, sNo: index + 1 }))}
           columns={columns}
           getRowId={(row) => row.dataID}
           pageSize={pageSize}

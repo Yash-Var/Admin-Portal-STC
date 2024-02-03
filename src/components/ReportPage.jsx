@@ -24,20 +24,9 @@ import {
 import CompanyInformationModal from "./ReportEditModal";
 import { useNavigate } from "react-router-dom";
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-  },
-  listItemText: {
-    wordBreak: "break-word",
-  },
-}));
-
 const ReportPage = ({ isPending }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const classes = useStyles();
   const { id } = useParams();
   const companyInfo = useSelector((state) => state.report.ReportPage);
   const dispatch = useDispatch();
@@ -122,42 +111,38 @@ const ReportPage = ({ isPending }) => {
   };
   return (
     <>
-      <Container maxWidth="sm">
-        <Paper elevation={3} className={classes.paper}>
-          <Box display="flex" justifyContent="space-between">
-            <Typography variant="h4" color={colors.primary}>
+      <Container>
+        <Box my="20px">
+          <Box display="flex" justifyContent="space-between" mb="20px">
+            <Typography variant="h1" color={colors.primary[100]}>
               {companyInfo.companyName}
             </Typography>
             <Box display="flex" justifyContent="end">
-              {companyInfo.companyReportApprovalStatus ===
-                "Pending Approval" && (
-                <>
-                  {localStorage.getItem("user") === "Super Admin" && (
-                    <div>
-                      <Box my="20px" mr="5px">
-                        <Button
-                          type="submit"
-                          color="secondary"
-                          variant="contained"
-                          onClick={() => handleStatus(true)}
-                        >
-                          <DoneOutlinedIcon />
-                        </Button>
-                      </Box>
-                      <Box my="20px" mx="5px">
-                        <Button
-                          type="submit"
-                          color="secondary"
-                          variant="contained"
-                          onClick={() => handleStatus(false)}
-                        >
-                          <CloseOutlinedIcon />
-                        </Button>
-                      </Box>
-                    </div>
-                  )}
-                </>
-              )}
+              {companyInfo.companyReportApprovalStatus === "Pending Approval" &&
+                localStorage.getItem("user") === "Super Admin" && (
+                  <>
+                    <Box my="20px" mr="5px">
+                      <Button
+                        type="submit"
+                        color="secondary"
+                        variant="contained"
+                        onClick={() => handleStatus(true)}
+                      >
+                        <DoneOutlinedIcon />
+                      </Button>
+                    </Box>
+                    <Box my="20px" mx="5px">
+                      <Button
+                        type="submit"
+                        color="secondary"
+                        variant="contained"
+                        onClick={() => handleStatus(false)}
+                      >
+                        <CloseOutlinedIcon />
+                      </Button>
+                    </Box>
+                  </>
+                )}
               {companyInfo.companyReportApprovalStatus !== "Approved" && (
                 <>
                   <Box my="20px" mr="5px">
@@ -170,7 +155,7 @@ const ReportPage = ({ isPending }) => {
                       Edit
                     </Button>
                   </Box>
-                  <Box display="flex" justifyContent="end" my="20px">
+                  <Box my="20px">
                     <Button
                       type="submit"
                       color="secondary"
@@ -185,114 +170,197 @@ const ReportPage = ({ isPending }) => {
             </Box>
           </Box>
           <Divider />
-          <Grid container spacing={3} style={{ marginTop: "20px" }}>
-            <Grid item xs={12} sm={6}>
-              <Typography variant="h6">
-                Company Name: {companyInfo.companyName}
-              </Typography>
-              <Typography variant="body1">
-                Number of Rounds: {companyInfo.companyNumOfRounds}
-              </Typography>
-              <Typography variant="body1">
-                CTC: {companyInfo.companyCTC}
-              </Typography>
-              <Typography variant="body1">
-                Eligibility: {companyInfo.companyEligibility}
-              </Typography>
-              <Typography variant="body1">
-                Job Profile: {companyInfo.companyJOBProfile}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Typography variant="h6">Rounds Information:</Typography>
-              <List>
-                <ListItem>
-                  <ListItemText
-                    primary={`First Round: ${companyInfo.companyFirstRoundName}`}
-                    secondary={`Description: ${companyInfo.companyFirstRoundDescrip}`}
-                    className={classes.listItemText}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemText
-                    primary={`Second Round: ${companyInfo.companySecondRoundName}`}
-                    secondary={`Description: ${companyInfo.companySecondRoundDescrip}`}
-                    className={classes.listItemText}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemText
-                    primary={`Third Round: ${companyInfo.companyThirdRoundName}`}
-                    secondary={`Description: ${companyInfo.companyThirdRoundDescrip}`}
-                    className={classes.listItemText}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemText
-                    primary={`Fourth Round: ${companyInfo.companyFourthRoundName}`}
-                    secondary={`Description: ${companyInfo.companyFourthRoundDescrip}`}
-                    className={classes.listItemText}
-                  />
-                </ListItem>
-              </List>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h6">
-                Additional Round Description:{" "}
-                {companyInfo.companyAdditionalRoundDescrip}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Typography variant="h6">Report Information:</Typography>
-              <List>
-                <ListItem>
-                  <ListItemText
-                    primary={`Approval Status: ${companyInfo.companyReportApprovalStatus}`}
-                    className={classes.listItemText}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemText
-                    primary={`Practice Details: ${companyInfo.companyPracticeDetails}`}
-                    className={classes.listItemText}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemText
-                    primary={`Report Added Date: ${companyInfo.companyReportAddDate}`}
-                    className={classes.listItemText}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemText
-                    primary={`Report Added By: ${companyInfo.companyReportAddedBy}`}
-                    className={classes.listItemText}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemText
-                    primary={`Report Year: ${companyInfo.companyReportYear}`}
-                    className={classes.listItemText}
-                  />
-                </ListItem>
-              </List>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h6">
-                Report Feedback: {companyInfo.reportFeedBack}
-              </Typography>
-            </Grid>
+          <Grid style={{ marginBottom: "20px" }}>
+            <Typography
+              variant="h3"
+              color={colors.primary[100]}
+              style={{ marginTop: "10px" }}
+            >
+              Company Name: {companyInfo.companyName}
+            </Typography>
+            <Typography
+              variant="h5"
+              color={colors.primary[100]}
+              style={{ marginTop: "10px" }}
+            >
+              Number of Rounds: {companyInfo.companyNumOfRounds}
+            </Typography>
+            <Typography
+              variant="h5"
+              color={colors.primary[100]}
+              style={{ marginTop: "10px" }}
+            >
+              CTC: {companyInfo.companyCTC}
+            </Typography>
+            <Typography
+              variant="h5"
+              color={colors.primary[100]}
+              style={{ marginTop: "10px" }}
+            >
+              Eligibility: {companyInfo.companyEligibility}
+            </Typography>
+            <Typography
+              variant="h5"
+              color={colors.primary[100]}
+              style={{ marginTop: "10px" }}
+            >
+              Job Profile: {companyInfo.companyJOBProfile}
+            </Typography>
           </Grid>
-        </Paper>
+          <Divider />
+          <Grid style={{ marginBottom: "20px" }}>
+            <Typography
+              variant="h3"
+              color={colors.primary[100]}
+              style={{ marginTop: "10px" }}
+            >
+              Rounds Information:
+            </Typography>
+            <Typography
+              variant="h4"
+              color={colors.primary[100]}
+              style={{ marginTop: "10px" }}
+            >
+              <span style={{ fontWeight: "bold" }}>First Round:</span>
+              <span>{companyInfo.companyFirstRoundName}</span>
+            </Typography>
+            <Typography
+              variant="h5"
+              color={colors.primary[100]}
+              style={{ marginTop: "5px" }}
+            >
+              <span style={{ marginLeft: "8px", fontStyle: "italic" }}>
+                Description:
+              </span>
+              <span>{companyInfo.companyFirstRoundDescrip}</span>
+            </Typography>
+            <Typography
+              variant="h4"
+              color={colors.primary[100]}
+              style={{ marginTop: "10px" }}
+            >
+              <span style={{ fontWeight: "bold" }}>Second Round:</span>
+              <span>{companyInfo.companySecondRoundName}</span>
+            </Typography>
+            <Typography
+              variant="h5"
+              color={colors.primary[100]}
+              style={{ marginTop: "5px" }}
+            >
+              <span style={{ marginLeft: "8px", fontStyle: "italic" }}>
+                Description:
+              </span>
+              <span>{companyInfo.companySecondRoundDescrip}</span>
+            </Typography>
+
+            <Typography
+              variant="h4"
+              color={colors.primary[100]}
+              style={{ marginTop: "10px" }}
+            >
+              <span style={{ fontWeight: "bold" }}>Third Round:</span>
+              <span>{companyInfo.companyThirdRoundName}</span>
+            </Typography>
+            <Typography
+              variant="h5"
+              color={colors.primary[100]}
+              style={{ marginTop: "10px" }}
+            >
+              <span style={{ marginLeft: "8px", fontStyle: "italic" }}>
+                Description:
+              </span>
+              <span>{companyInfo.companyThirdRoundDescrip}</span>
+            </Typography>
+            <Typography
+              variant="h4"
+              color={colors.primary[100]}
+              style={{ marginTop: "10px" }}
+            >
+              <span style={{ fontWeight: "bold" }}>Fourth Round:</span>
+              <span>{companyInfo.companyFourthRoundName}</span>
+            </Typography>
+            <Typography
+              variant="h5"
+              color={colors.primary[100]}
+              style={{ marginTop: "5px" }}
+            >
+              <span style={{ marginLeft: "8px", fontStyle: "italic" }}>
+                Description:
+              </span>
+              <span>{companyInfo.companyFourthRoundDescrip}</span>
+            </Typography>
+            <Typography
+              variant="h5"
+              color={colors.primary[100]}
+              style={{ marginTop: "5px" }}
+            >
+              <span style={{ fontStyle: "italic" }}>
+                Additional Round Description:
+              </span>
+              <span>{companyInfo.companyAdditionalRoundDescrip}</span>
+            </Typography>
+          </Grid>
+          <Divider />
+          <Grid style={{ marginBottom: "20px" }}>
+            <Typography variant="h3" color={colors.primary[100]}>
+              Report Information:
+            </Typography>
+
+            <Typography
+              variant="h5"
+              color={colors.primary[100]}
+              style={{ marginTop: "10px" }}
+            >
+              {`Approval Status: ${companyInfo.companyReportApprovalStatus}`}
+            </Typography>
+
+            <Typography
+              variant="h5"
+              color={colors.primary[100]}
+              style={{ marginTop: "10px" }}
+            >
+              {`Practice Details: ${companyInfo.companyPracticeDetails}`}
+            </Typography>
+
+            <Typography
+              variant="h5"
+              color={colors.primary[100]}
+              style={{ marginTop: "10px" }}
+            >
+              {`Report Added Date: ${companyInfo.companyReportAddDate}`}
+            </Typography>
+
+            <Typography
+              variant="h5"
+              color={colors.primary[100]}
+              style={{ marginTop: "10px" }}
+            >
+              {`Report Added By: ${companyInfo.companyReportAddedBy}`}
+            </Typography>
+
+            <Typography
+              variant="h5"
+              color={colors.primary[100]}
+              style={{ marginTop: "10px" }}
+            >
+              {`Report Year: ${companyInfo.companyReportYear}`}
+            </Typography>
+          </Grid>
+          <Divider />
+          <Grid style={{ marginBottom: "20px" }}>
+            <Typography variant="h5" color={colors.primary[100]}>
+              Report Feedback: {companyInfo.reportFeedBack}
+            </Typography>
+          </Grid>
+          <Divider />
+        </Box>
         <CompanyInformationModal
           open={openModal}
           handleClose={handleCloseModal}
           reportId={id}
         />
       </Container>
-      );
     </>
   );
 };
-
 export default ReportPage;
