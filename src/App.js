@@ -16,7 +16,8 @@ import CompanyForm from "./components/AddCompany";
 import CompanyDetails from "./components/CompanyDetailsForm";
 import CompanyInformation from "./components/CompanyInformation";
 import ReportPage from "./components/ReportPage";
-import AddQuestions from "./components/AddQuestions"
+import AddQuestions from "./components/AddQuestions";
+import ShowQuestions from "./components/showQuestions";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -80,6 +81,13 @@ function App() {
                   isLoggedin ? <AddQuestions /> : <Navigate to="/login" />
                 }
               />
+              <Route
+                path="/showQuestions"
+                element={
+                  isLoggedin ? <ShowQuestions /> : <Navigate to="/login" />
+                }
+              />
+                
               <Route
                 path="/reportstatus"
                 element={
