@@ -32,8 +32,10 @@ const CompanyForm = () => {
         }
       );
       console.log(response.data.data);
+      console.log("company tyoe");
       setCompanyType(response.data.data);
     } catch (error) {
+      console.error("company type error");
       console.error(error);
     }
   };
