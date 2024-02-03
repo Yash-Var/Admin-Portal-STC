@@ -19,12 +19,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setReportPageStatus,
   setReportPage,
-  setPendingStatus,
+  setStatus,
 } from "../utils/reportSlice";
 import CompanyInformationModal from "./ReportEditModal";
 import { useNavigate } from "react-router-dom";
 
-const ReportPage = ({ isPending }) => {
+const ReportPage = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { id } = useParams();
@@ -57,6 +57,7 @@ const ReportPage = ({ isPending }) => {
             },
           }
         );
+        dispatch(setStatus("Pending Approval"));
         navigate("/reportstatus");
       } else {
         console.error("Deletion cancelled by user");
@@ -99,8 +100,7 @@ const ReportPage = ({ isPending }) => {
         }
       );
       dispatch(setReportPageStatus(true));
-      dispatch(setPendingStatus(true));
-
+      dispatch(setStatus("Pending Approval"));
       navigate("/reportstatus");
     } catch (error) {
       console.error(error);

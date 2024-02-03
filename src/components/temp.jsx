@@ -11,14 +11,17 @@ import {
   setApproved,
   setPending,
   setRejected,
-  setStatus,
 } from "../utils/reportSlice";
 import { useNavigate } from "react-router-dom";
 
-const StatusItem = ({ title, selected, setSelected }) => {
+const StatusItem = ({ title, selected, setSelected, func }) => {
+  console.log(selected);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const dispatch = useDispatch();
+  const handleChange = () => {
+    setSelected(title);
+    func();
+  };
   return (
     <MenuItem
       active={selected === title}
@@ -29,10 +32,7 @@ const StatusItem = ({ title, selected, setSelected }) => {
         borderRadius: "5px",
         margin: "0 10px",
       }}
-      onClick={() => {
-        setSelected(title);
-        dispatch(setStatus(title));
-      }}
+      onClick={() => handleChange()}
     >
       <Typography>{title}</Typography>
     </MenuItem>
@@ -42,17 +42,42 @@ const StatusItem = ({ title, selected, setSelected }) => {
 const ReportStatus = () => {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
+  const data = useSelector((state) => state.report);
+  const handleAll = () => {
+    setCompanyData(data.All);
+  };
+
+  const handlepending = () => {
+    setCompanyData(data.Pending);
+  };
+
+  const handleReject = () => {
+    setCompanyData(data.Rejected);
+  };
+  const handleApprove = () => {
+    setCompanyData(data.Approved);
+  };
   const pendingStatus = useSelector((state) => state.report.PendingStatus);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [companyData, setCompanyData] = useState([]);
   const [pageSize, setPageSize] = useState(11);
-  const status = useSelector((state) => state.report.status);
-  const [selected, setSelected] = useState(status);
+
+  useEffect(() => {
+    console.log(pendingStatus);
+    if (pendingStatus == true) {
+      setSelected("Pending Approval");
+      fetchData();
+      handlepending();
+    }
+  }, []);
+
+  const [selected, setSelected] = useState("All");
   const handleViewMore = (dataId) => {
     console.log(dataId);
     Navigate(`/reportstatus/${dataId}`);
   };
+
   const columns = [
     { field: "sNo", headerName: "S.No" },
     {
@@ -83,18 +108,22 @@ const ReportStatus = () => {
       renderCell: ({ row }) => {
         let statusColor = "";
         let statusText = "";
+        console.log(row.companyReportApprovalStatus);
         switch (row.companyReportApprovalStatus) {
           case "Approved":
             statusColor = "#4caf50";
             statusText = "Approved";
+
             break;
           case "Pending Approval":
             statusColor = "#ff9800";
             statusText = "Pending";
+
             break;
           case "Rejected":
             statusColor = "#f44336";
             statusText = "Rejected";
+
             break;
           default:
             statusColor = "#9e9e9e";
@@ -124,7 +153,11 @@ const ReportStatus = () => {
       renderCell: ({ row }) => (
         <Button
           variant="outlined"
-          style={{ color: "#fff", borderColor: "#2196f3" }}
+          style={{
+            color: "#fff",
+            borderColor: "#2196f3",
+            backgroundColor: "#2196f3",
+          }}
           onClick={() => handleViewMore(row.dataID)}
         >
           View More
@@ -144,56 +177,88 @@ const ReportStatus = () => {
         }
       );
       const data = response.data.data[0];
+      const approved = handleAcceptedData(data);
+      const pending = handlePendingData(data);
+      const rejected = handleRejectedData(data);
+      dispatch(setApproved(approved));
+      dispatch(setPending(pending));
+      dispatch(setRejected(rejected));
       dispatch(setAll(data));
-      dispatch(setApproved(null));
-      dispatch(setPending(null));
-      dispatch(setRejected(null));
-      setSelected(status);
-      changeData();
+      if (pendingStatus) {
+        console.log("yash");
+        setCompanyData(pending);
+      } else setCompanyData(data);
     } catch (error) {
       console.error(error);
     }
   };
+
+  const handleAcceptedData = (data) => {
+    const fil = data.filter(
+      (item) => item.companyReportApprovalStatus === "Approved"
+    );
+    return fil;
+  };
+
+  const handlePendingData = (data) => {
+    const fil = data.filter(
+      (item) => item.companyReportApprovalStatus === "Pending Approval"
+    );
+    return fil;
+  };
+
+  const handleRejectedData = (data) => {
+    const fil = data.filter(
+      (item) => item.companyReportApprovalStatus === "Rejected"
+    );
+    return fil;
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
-  const data = useSelector((state) => state.report);
-  const changeData = () => {
-    if (selected === "All") {
-      if (data.All) setCompanyData(data.All);
-      else fetchData();
-    } else if (selected === "Approved") {
-      if (data.Approved) setCompanyData(data.Approved);
-      else {
-        const fil = data.All.filter(
-          (item) => item.companyReportApprovalStatus === "Approved"
-        );
-        dispatch(setApproved(fil));
-        setCompanyData(fil);
-      }
-    } else if (selected === "Pending Approval") {
-      if (data.Pending) setCompanyData(data.Pending);
-      else {
-        const pfil = data.All.filter(
-          (item) => item.companyReportApprovalStatus === "Pending Approval"
-        );
-        dispatch(setPending(pfil));
-        setCompanyData(pfil);
-      }
-    } else if (selected === "Rejected") {
-      if (data.Rejected) setCompanyData(data.Rejected);
-      else {
-        const rfil = data.All.filter(
-          (item) => item.companyReportApprovalStatus === "Rejected"
-        );
-        dispatch(setRejected(rfil));
-        setCompanyData(rfil);
-      }
-    }
-  };
-  useEffect(() => {
-    changeData();
-  }, [selected]);
+  // useEffect(() => {
+  //   console.log(selected);
+  //   if (selected === "All") {
+  //     if (data.All) {
+  //       console.log("yash");
+  //       setCompanyData(data.All);
+  //     } else {
+  //       console.log("yash");
+  //       fetchData();
+  //     }
+  //   } else if (selected === "Approved") {
+  //     if (data.Approved) setCompanyData(data.Approved);
+  //     else {
+  //       const fil = data.All.filter(
+  //         (item) => item.companyReportApprovalStatus === "Approved"
+  //       );
+  //       dispatch(setApproved(fil));
+  //       setCompanyData(fil);
+  //     }
+  //   } else if (selected === "Pending Approval") {
+  //     if (data.Pending) setCompanyData(data.Pending);
+  //     else {
+  //       console.log("yash");
+  //       const pfil = data.All.filter(
+  //         (item) => item.companyReportApprovalStatus === "Pending Approval"
+  //       );
+  //       dispatch(setPending(pfil));
+  //       setCompanyData(pfil);
+  //     }
+  //   } else if (selected === "Rejected") {
+  //     if (data.Rejected) setCompanyData(data.Rejected);
+  //     else {
+  //       const rfil = data.All.filter(
+  //         (item) => item.companyReportApprovalStatus === "Rejected"
+  //       );
+  //       dispatch(setRejected(rfil));
+  //       setCompanyData(rfil);
+  //     }
+  //   }
+  //   console.log(data);
+  //   console.log("yash varshney");
+  // }, [selected]);
   return (
     <Box m="20px">
       <Header title="Report Status" />
@@ -236,25 +301,29 @@ const ReportStatus = () => {
             title="All"
             selected={selected}
             setSelected={setSelected}
+            func={handleAll}
           />
           <StatusItem
             title="Approved"
             selected={selected}
             setSelected={setSelected}
+            func={handleApprove}
           />
           <StatusItem
             title="Pending Approval"
             selected={selected}
             setSelected={setSelected}
+            func={handlepending}
           />
           <StatusItem
             title="Rejected"
             selected={selected}
             setSelected={setSelected}
+            func={handleReject}
           />
         </Box>
         <DataGrid
-          rows={companyData.map((row, index) => ({ ...row, sNo: row.dataID }))}
+          rows={companyData.map((row, index) => ({ ...row, sNo: index + 1 }))}
           columns={columns}
           getRowId={(row) => row.dataID}
           pageSize={pageSize}
