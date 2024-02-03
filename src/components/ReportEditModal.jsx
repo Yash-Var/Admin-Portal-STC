@@ -151,6 +151,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyName}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -163,6 +166,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyNumOfRounds}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -175,6 +181,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyCTC}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -187,6 +196,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyEligibility}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -199,6 +211,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyJOBProfile}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -211,6 +226,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyFirstRoundName}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -223,6 +241,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyFirstRoundDescrip}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -235,6 +256,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyFirstRoundDuration}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -247,6 +271,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companySecondRoundName}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -259,6 +286,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companySecondRoundDescrip}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -271,6 +301,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companySecondRoundDuration}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -283,6 +316,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyThirdRoundName}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -295,6 +331,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyThirdRoundDescrip}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -307,6 +346,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyThirdRoundDuration}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -319,6 +361,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyFourthRoundName}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -331,6 +376,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyFourthRoundDescrip}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -343,6 +391,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyFourthRoundDuration}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -355,6 +406,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyAdditionalRoundDescrip}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -367,6 +421,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyReportApprovalStatus}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -379,6 +436,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyPracticeDetails}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -391,6 +451,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyReportAddDate}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -403,6 +466,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyReportAddedBy}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -415,6 +481,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.companyReportYear}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
@@ -427,6 +496,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               value={companyData.reportFeedBack}
               onChange={handleInputChange}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
         </Grid>
@@ -438,6 +510,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               variant="contained"
               onClick={handleSave}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             >
               Save
             </Button>
@@ -450,6 +525,9 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               variant="contained"
               onClick={handleClose}
               sx={{ marginBottom: "16px" }}
+              multiline
+              minRows={1}
+              maxRows={5}
             >
               Close
             </Button>

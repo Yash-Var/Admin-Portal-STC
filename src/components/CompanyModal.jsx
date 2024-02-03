@@ -138,6 +138,8 @@ const CompanyModal = ({ open, handleClose, companyId }) => {
               value={companyData.companyDescription}
               onChange={handleInputChange}
               multiline
+              minRows={1}
+              maxRows={5}
             />
           </Grid>
           <Grid item xs={12}>
