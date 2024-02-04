@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const reportSlice = createSlice({
   name: "report",
   initialState: {
-    All: null,
+    All: [],
     Approved: null,
     Rejected: null,
     Pending: null,

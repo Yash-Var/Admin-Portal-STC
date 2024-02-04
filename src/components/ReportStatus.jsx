@@ -42,7 +42,6 @@ const StatusItem = ({ title, selected, setSelected }) => {
 const ReportStatus = () => {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
-  const pendingStatus = useSelector((state) => state.report.PendingStatus);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [companyData, setCompanyData] = useState([]);
@@ -50,8 +49,8 @@ const ReportStatus = () => {
   const status = useSelector((state) => state.report.status);
   const [selected, setSelected] = useState(status);
   const handleViewMore = (dataId) => {
-    console.log(dataId);
     Navigate(`/reportstatus/${dataId}`);
+    setSelected(status);
   };
   const columns = [
     { field: "sNo", headerName: "S.No" },
@@ -132,6 +131,7 @@ const ReportStatus = () => {
       ),
     },
   ];
+  const data = useSelector((state) => state.report);
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -143,13 +143,16 @@ const ReportStatus = () => {
           },
         }
       );
-      const data = response.data.data[0];
-      dispatch(setAll(data));
+      const value = response.data.data[0];
+      dispatch(setAll(value));
       dispatch(setApproved(null));
       dispatch(setPending(null));
       dispatch(setRejected(null));
-      setSelected(status);
-      changeData();
+      if (status === "All") {
+        setCompanyData(value);
+      } else {
+        changeData();
+      }
     } catch (error) {
       console.error(error);
     }
@@ -157,11 +160,9 @@ const ReportStatus = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  const data = useSelector((state) => state.report);
   const changeData = () => {
     if (selected === "All") {
       if (data.All) setCompanyData(data.All);
-      else fetchData();
     } else if (selected === "Approved") {
       if (data.Approved) setCompanyData(data.Approved);
       else {
@@ -254,7 +255,7 @@ const ReportStatus = () => {
           />
         </Box>
         <DataGrid
-          rows={companyData.map((row, index) => ({ ...row, sNo: row.dataID }))}
+          rows={companyData.map((row, index) => ({ ...row, sNo: index + 1 }))}
           columns={columns}
           getRowId={(row) => row.dataID}
           pageSize={pageSize}
