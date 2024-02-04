@@ -123,7 +123,11 @@ const ReportStatus = () => {
       renderCell: ({ row }) => (
         <Button
           variant="outlined"
-          style={{ color: "#fff", borderColor: "#2196f3" }}
+          style={{
+            color: "#fff",
+            borderColor: "#2196f3",
+            backgroundColor: "#2196f3",
+          }}
           onClick={() => handleViewMore(row.dataID)}
         >
           View More
