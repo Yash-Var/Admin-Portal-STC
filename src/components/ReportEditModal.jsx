@@ -108,6 +108,7 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
   const handleSave = async () => {
     try {
       companyData.companyReportApprovalStatus = "Pending Approval";
+      console.log(companyData);
       const response = await axios.post(
         `http://localhost:5000/api/admin/updateCompanyData/${reportId}`,
         companyData,
@@ -158,6 +159,7 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
               multiline
               minRows={1}
               maxRows={5}
+              InputProps={{ readOnly: true }}
             />
           </Grid>
           <Grid item xs={12}>

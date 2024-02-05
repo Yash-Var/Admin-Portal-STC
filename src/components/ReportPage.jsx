@@ -128,7 +128,8 @@ const ReportPage = () => {
                         variant="contained"
                         onClick={() => handleStatus(true)}
                       >
-                        <DoneOutlinedIcon />
+                        {/* <DoneOutlinedIcon /> */}
+                        Accept
                       </Button>
                     </Box>
                     <Box my="20px" mx="5px">
@@ -138,7 +139,7 @@ const ReportPage = () => {
                         variant="contained"
                         onClick={() => handleStatus(false)}
                       >
-                        <CloseOutlinedIcon />
+                        Reject
                       </Button>
                     </Box>
                   </>

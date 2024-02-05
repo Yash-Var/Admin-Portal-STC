@@ -1,4 +1,11 @@
-import { Box, Button, TextField, FormControl, InputLabel, FormHelperText } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  FormControl,
+  InputLabel,
+  FormHelperText,
+} from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -10,7 +17,7 @@ const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const roles = ["Admin", "Super Admin"];
 
-  const handleFormSubmit = async (values,{resetForm}) => {
+  const handleFormSubmit = async (values, { resetForm }) => {
     const { confirmPassword, ...value2 } = values;
 
     try {
@@ -19,8 +26,7 @@ const Form = () => {
         value2,
         {
           headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNAc3RjYWRtaW4uY29tIiwiZGF0YSI6IlNodWJoZW5kcmEiLCJ1c2VyVHlwZSI6IlN1cGVyIEFkbWluIiwiaWF0IjoxNzA0MTIxMDE5LCJleHAiOjE3MzU2Nzg2MTl9.xw5bdNKGeRlknod92qN-f5mXBqnIdw6Xz0mvh_4FKJM",
+            Authorization: "Bearer " + localStorage.getItem("token"),
             "Content-Type": "application/json",
           },
         }
@@ -109,7 +115,11 @@ const Form = () => {
                 helperText={touched.confirmPassword && errors.confirmPassword}
                 sx={{ gridColumn: "span 4" }}
               />
-              <FormControl fullWidth variant="filled" sx={{ gridColumn: "span 4" }}>
+              <FormControl
+                fullWidth
+                variant="filled"
+                sx={{ gridColumn: "span 4" }}
+              >
                 <InputLabel id="type-label">Type</InputLabel>
                 <Select
                   labelId="type-label"
@@ -122,10 +132,10 @@ const Form = () => {
                   label="Type"
                 >
                   {roles.map((role) => (
-                  <MenuItem key={role} value={role}>
-                    {role}
-                  </MenuItem>
-                ))}
+                    <MenuItem key={role} value={role}>
+                      {role}
+                    </MenuItem>
+                  ))}
                 </Select>
                 {touched.type && errors.type && (
                   <FormHelperText>{errors.type}</FormHelperText>
@@ -178,7 +188,6 @@ const checkoutSchema = yup.object().shape({
     .oneOf([yup.ref("password"), null], "Passwords must match")
     .required("Confirm Password is required"),
   type: yup.string().required("required"),
-
 });
 const initialValues = {
   email: "",

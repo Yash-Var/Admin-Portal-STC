@@ -50,7 +50,7 @@ const QuestionForm = () => {
     questions: [
       {
         question: "",
-        options: [null, null, null, null],
+        options: ["", "", "", ""],
       },
     ],
   };
@@ -86,6 +86,7 @@ const QuestionForm = () => {
       console.log(response.data);
       alert("Questions Added Successfully");
       resetForm();
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }

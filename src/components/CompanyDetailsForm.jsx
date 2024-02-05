@@ -73,6 +73,7 @@ const CompanyForm = () => {
 
   const validationSchema = Yup.object({
     companyName: Yup.string().required("Company Name is required"),
+    companyReportYear: Yup.string().required("Report Year is required"),
   });
   const onSubmit = async (values, { resetForm }) => {
     try {
@@ -224,6 +225,27 @@ const CompanyForm = () => {
                 maxRows={5}
                 margin="normal"
                 sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                label="Report Year"
+                variant="filled"
+                id="companyReportYear"
+                name="companyReportYear"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyReportYear}
+                error={
+                  touched.companyReportYear && Boolean(errors.companyReportYear)
+                }
+                helperText={
+                  touched.companyReportYear && errors.companyReportYear
+                }
+                fullWidth
+                multiline
+                minRows={1}
+                maxRows={5}
+                margin="normal"
+                sx={{ gridColumn: "span 4" }}
               />
 
               <TextField
@@ -581,28 +603,6 @@ const CompanyForm = () => {
               />
 
               <TextField
-                label="Report Year"
-                variant="filled"
-                id="companyReportYear"
-                name="companyReportYear"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.companyReportYear}
-                error={
-                  touched.companyReportYear && Boolean(errors.companyReportYear)
-                }
-                helperText={
-                  touched.companyReportYear && errors.companyReportYear
-                }
-                fullWidth
-                multiline
-                minRows={1}
-                maxRows={5}
-                margin="normal"
-                sx={{ gridColumn: "span 4" }}
-              />
-
-              <TextField
                 label="Report Feedback"
                 variant="filled"
                 id="reportFeedBack"
@@ -620,7 +620,12 @@ const CompanyForm = () => {
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
-            <Box display="flex" justifyContent="end" my="20px">
+            <Box
+              display="flex"
+              justifyContent="end"
+              my="20px"
+              paddingBottom="2rem"
+            >
               <Button type="submit" color="secondary" variant="contained">
                 Add Company Description
               </Button>
