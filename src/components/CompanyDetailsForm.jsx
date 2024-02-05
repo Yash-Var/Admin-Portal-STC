@@ -33,12 +33,17 @@ const CompanyForm = () => {
         "http://localhost:5000/api/admin/getCompanyNames",
         { headers }
       );
-
+      console.log(response.data.data);
       // Store the company names into an array
       const companyNames = response.data.data;
 
       // Sort the companyNames array by companyName
-      companyNames.sort((a, b) => a.companyName.localeCompare(b.companyName));
+      // companyNames?.sort((a, b) => a.companyName.localeCompare(b.companyName));
+      companyNames.sort((a, b) => {
+        const companyNameA = a.companyName || ""; // Use empty string if null or undefined
+        const companyNameB = b.companyName || "";
+        return companyNameA.localeCompare(companyNameB);
+      });
 
       setCompanies(companyNames);
     } catch (error) {

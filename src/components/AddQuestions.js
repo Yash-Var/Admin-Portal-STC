@@ -83,10 +83,17 @@ const QuestionForm = () => {
         newValues,
         { headers }
       );
+
       console.log(response.data);
-      alert("Questions Added Successfully");
-      resetForm();
-      window.location.reload();
+
+      if (response.status === 200) {
+        alert("Questions Added Successfully");
+        resetForm();
+        window.location.reload();
+      } else {
+        // Handle other response statuses if needed
+        console.error(`Failed to add questions. Status: ${response.status}`);
+      }
     } catch (error) {
       console.error(error);
     }
