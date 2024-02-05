@@ -35,7 +35,12 @@ const QuestionForm = () => {
 
       const companyData = response.data.data;
 
-      companyData.sort((a, b) => a.companyName.localeCompare(b.companyName));
+      // companyData.sort((a, b) => a.companyName.localeCompare(b.companyName));
+      companyData.sort((a, b) => {
+        const companyNameA = a.companyName || ""; // Use empty string if null or undefined
+        const companyNameB = b.companyName || "";
+        return companyNameA.localeCompare(companyNameB);
+      });
 
       setCompanies(companyData);
     } catch (error) {
