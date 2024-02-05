@@ -32,9 +32,12 @@ const Company = () => {
         }
       );
       const data = response.data.data[0];
-      const sortedData = data.sort((a, b) =>
-        a.companyName.localeCompare(b.companyName)
-      );
+      const sortedData = data.sort((a, b) => {
+        const companyNameA = a.companyName || ""; // Use empty string if null or undefined
+        const companyNameB = b.companyName || "";
+        return companyNameA.localeCompare(companyNameB);
+      });
+
       setCompanyData(sortedData);
     } catch (error) {
       console.error(error);
