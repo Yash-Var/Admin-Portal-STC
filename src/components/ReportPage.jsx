@@ -57,7 +57,7 @@ const ReportPage = () => {
             },
           }
         );
-        dispatch(setStatus("Pending Approval"));
+        dispatch(setStatus("Pending"));
         navigate("/reportstatus");
       } else {
         console.error("Deletion cancelled by user");
@@ -100,7 +100,7 @@ const ReportPage = () => {
         }
       );
       dispatch(setReportPageStatus(true));
-      dispatch(setStatus("Pending Approval"));
+      dispatch(setStatus("Pending"));
       navigate("/reportstatus");
     } catch (error) {
       console.error(error);
@@ -118,7 +118,7 @@ const ReportPage = () => {
               {companyInfo.companyName}
             </Typography>
             <Box display="flex" justifyContent="end">
-              {companyInfo.companyReportApprovalStatus === "Pending Approval" &&
+              {companyInfo.companyReportApprovalStatus === "Pending" &&
                 localStorage.getItem("user") === "Super Admin" && (
                   <>
                     <Box my="20px" mr="5px">

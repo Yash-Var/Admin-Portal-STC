@@ -87,7 +87,7 @@ const ReportStatus = () => {
             statusColor = "#4caf50";
             statusText = "Approved";
             break;
-          case "Pending Approval":
+          case "Pending":
             statusColor = "#ff9800";
             statusText = "Pending";
             break;
@@ -176,11 +176,11 @@ const ReportStatus = () => {
         dispatch(setApproved(fil));
         setCompanyData(fil);
       }
-    } else if (selected === "Pending Approval") {
+    } else if (selected === "Pending") {
       if (data.Pending) setCompanyData(data.Pending);
       else {
         const pfil = data.All.filter(
-          (item) => item.companyReportApprovalStatus === "Pending Approval"
+          (item) => item.companyReportApprovalStatus === "Pending"
         );
         dispatch(setPending(pfil));
         setCompanyData(pfil);
@@ -248,7 +248,7 @@ const ReportStatus = () => {
             setSelected={setSelected}
           />
           <StatusItem
-            title="Pending Approval"
+            title="Pending"
             selected={selected}
             setSelected={setSelected}
           />
