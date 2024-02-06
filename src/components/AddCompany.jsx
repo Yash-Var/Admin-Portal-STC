@@ -82,7 +82,7 @@ const CompanyForm = () => {
     companyDescription: "",
     companyEstablishment: "",
     companyWebsite: "",
-    companyAddedBy: "7",
+    companyAddedBy: localStorage.getItem("userId"),
   };
 
   return (
