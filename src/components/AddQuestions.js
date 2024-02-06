@@ -130,11 +130,11 @@ const QuestionForm = () => {
               }}
             >
               <FormControl fullWidth variant="filled">
-                <InputLabel id="company-id-label">Company ID</InputLabel>
+                <InputLabel id="company-id-label">Company Name</InputLabel>
                 <Select
                   labelId="company-id-label"
                   id="companyId"
-                  name="companyId"
+                  name="Company Name"
                   value={values.companyId || ""}
                   onChange={handleChange}
                   onBlur={handleBlur}

@@ -10,6 +10,7 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
 import FactCheckOutlinedIcon from "@mui/icons-material/FactCheckOutlined";
+import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
 import Logo from "../../img/kiet-logo.png";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -139,7 +140,7 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Reports Status"
+              title="Reports"
               to="/reportstatus"
               icon={<FactCheckOutlinedIcon />}
               selected={selected}
@@ -172,7 +173,7 @@ const Sidebar = () => {
               <Item
                 title="Add RERORT"
                 to="/addCompanyReport"
-                icon={<PeopleOutlinedIcon />}
+                icon={<InsertDriveFileOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
