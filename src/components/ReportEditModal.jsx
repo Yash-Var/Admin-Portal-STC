@@ -121,7 +121,7 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
       );
       console.log(response);
       handleClose();
-      dispatch(setStatus("Pending"));
+      // dispatch(setStatus("Pending"));
       navigate("/reportstatus");
     } catch (error) {
       console.error("Error while saving data:", error);
