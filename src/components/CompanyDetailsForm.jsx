@@ -560,30 +560,6 @@ const CompanyForm = () => {
               />
 
               <TextField
-                label="Report Approval Status"
-                variant="filled"
-                id="companyReportApprovalStatus"
-                name="companyReportApprovalStatus"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.companyReportApprovalStatus}
-                error={
-                  touched.companyReportApprovalStatus &&
-                  Boolean(errors.companyReportApprovalStatus)
-                }
-                helperText={
-                  touched.companyReportApprovalStatus &&
-                  errors.companyReportApprovalStatus
-                }
-                fullWidth
-                multiline
-                minRows={1}
-                maxRows={5}
-                margin="normal"
-                sx={{ gridColumn: "span 4" }}
-              />
-
-              <TextField
                 label="Practice Details"
                 variant="filled"
                 id="companyPracticeDetails"
