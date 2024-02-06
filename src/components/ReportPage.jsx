@@ -57,7 +57,7 @@ const ReportPage = () => {
             },
           }
         );
-        dispatch(setStatus("Pending"));
+        // dispatch(setStatus("Pending"));
         navigate("/reportstatus");
       } else {
         console.error("Deletion cancelled by user");
@@ -100,7 +100,7 @@ const ReportPage = () => {
         }
       );
       dispatch(setReportPageStatus(true));
-      dispatch(setStatus("Pending"));
+      // dispatch(setStatus("Pending"));
       navigate("/reportstatus");
     } catch (error) {
       console.error(error);
