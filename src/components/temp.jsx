@@ -66,7 +66,7 @@ const ReportStatus = () => {
   useEffect(() => {
     console.log(pendingStatus);
     if (pendingStatus == true) {
-      setSelected("Pending Approval");
+      setSelected("Pending");
       fetchData();
       handlepending();
     }
@@ -115,7 +115,7 @@ const ReportStatus = () => {
             statusText = "Approved";
 
             break;
-          case "Pending Approval":
+          case "Pending":
             statusColor = "#ff9800";
             statusText = "Pending";
 
@@ -202,7 +202,7 @@ const ReportStatus = () => {
 
   const handlePendingData = (data) => {
     const fil = data.filter(
-      (item) => item.companyReportApprovalStatus === "Pending Approval"
+      (item) => item.companyReportApprovalStatus === "Pending"
     );
     return fil;
   };
@@ -236,12 +236,12 @@ const ReportStatus = () => {
   //       dispatch(setApproved(fil));
   //       setCompanyData(fil);
   //     }
-  //   } else if (selected === "Pending Approval") {
+  //   } else if (selected === "Pending") {
   //     if (data.Pending) setCompanyData(data.Pending);
   //     else {
   //       console.log("yash");
   //       const pfil = data.All.filter(
-  //         (item) => item.companyReportApprovalStatus === "Pending Approval"
+  //         (item) => item.companyReportApprovalStatus === "Pending"
   //       );
   //       dispatch(setPending(pfil));
   //       setCompanyData(pfil);
@@ -310,7 +310,7 @@ const ReportStatus = () => {
             func={handleApprove}
           />
           <StatusItem
-            title="Pending Approval"
+            title="Pending"
             selected={selected}
             setSelected={setSelected}
             func={handlepending}

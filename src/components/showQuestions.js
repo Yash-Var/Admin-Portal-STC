@@ -86,23 +86,27 @@ const FAQ = () => {
             <AccordionDetails>
               <Box>
                 {companyQuestions[companyName].map((question) => (
-                  <Box key={question.QuestionID}>
+                  <Box key={question.QuestionID} mb="20px">
                     <Typography variant="subtitle1">
-                      {question.Question}
+                      {"Q : " + question.Question}
                     </Typography>
                     <Typography>
-                      {question?.Options?.split(",")?.map((op, index) => {
-                        if (op) {
-                          return (
-                            <div
-                              style={{ margin: "5px", marginLeft: "10px" }}
-                              key={"op" + index}
-                            >
-                              <Typography>{index + 1 + " : " + op}</Typography>
-                            </div>
-                          );
-                        }
-                      })}
+                      {question?.Options?.slice(1, question.Options.length - 1)
+                        ?.split(",")
+                        ?.map((op, index) => {
+                          if (op) {
+                            return (
+                              <div
+                                style={{ margin: "5px", marginLeft: "10px" }}
+                                key={"op" + index}
+                              >
+                                <Typography>
+                                  {index + 1 + " : " + op}
+                                </Typography>
+                              </div>
+                            );
+                          }
+                        })}
                     </Typography>
                   </Box>
                 ))}

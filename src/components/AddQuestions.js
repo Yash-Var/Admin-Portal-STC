@@ -35,7 +35,12 @@ const QuestionForm = () => {
 
       const companyData = response.data.data;
 
-      companyData.sort((a, b) => a.companyName.localeCompare(b.companyName));
+      // companyData.sort((a, b) => a.companyName.localeCompare(b.companyName));
+      companyData.sort((a, b) => {
+        const companyNameA = a.companyName || ""; // Use empty string if null or undefined
+        const companyNameB = b.companyName || "";
+        return companyNameA.localeCompare(companyNameB);
+      });
 
       setCompanies(companyData);
     } catch (error) {
@@ -50,7 +55,7 @@ const QuestionForm = () => {
     questions: [
       {
         question: "",
-        options: [null, null, null, null],
+        options: ["", "", "", ""],
       },
     ],
   };
@@ -83,9 +88,17 @@ const QuestionForm = () => {
         newValues,
         { headers }
       );
+
       console.log(response.data);
-      alert("Questions Added Successfully");
-      resetForm();
+
+      if (response.status === 201) {
+        alert("Questions Added Successfully");
+        resetForm();
+        window.location.reload();
+      } else {
+        // Handle other response statuses if needed
+        console.error(`Failed to add questions. Status: ${response.status}`);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -117,11 +130,11 @@ const QuestionForm = () => {
               }}
             >
               <FormControl fullWidth variant="filled">
-                <InputLabel id="company-id-label">Company ID</InputLabel>
+                <InputLabel id="company-id-label">Company Name</InputLabel>
                 <Select
                   labelId="company-id-label"
                   id="companyId"
-                  name="companyId"
+                  name="Company Name"
                   value={values.companyId || ""}
                   onChange={handleChange}
                   onBlur={handleBlur}

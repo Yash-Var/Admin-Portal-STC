@@ -33,12 +33,17 @@ const CompanyForm = () => {
         "http://localhost:5000/api/admin/getCompanyNames",
         { headers }
       );
-
+      console.log(response.data.data);
       // Store the company names into an array
       const companyNames = response.data.data;
 
       // Sort the companyNames array by companyName
-      companyNames.sort((a, b) => a.companyName.localeCompare(b.companyName));
+      // companyNames?.sort((a, b) => a.companyName.localeCompare(b.companyName));
+      companyNames.sort((a, b) => {
+        const companyNameA = a.companyName || ""; // Use empty string if null or undefined
+        const companyNameB = b.companyName || "";
+        return companyNameA.localeCompare(companyNameB);
+      });
 
       setCompanies(companyNames);
     } catch (error) {
@@ -73,6 +78,7 @@ const CompanyForm = () => {
 
   const validationSchema = Yup.object({
     companyName: Yup.string().required("Company Name is required"),
+    companyReportYear: Yup.string().required("Report Year is required"),
   });
   const onSubmit = async (values, { resetForm }) => {
     try {
@@ -224,6 +230,27 @@ const CompanyForm = () => {
                 maxRows={5}
                 margin="normal"
                 sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                label="Report Year"
+                variant="filled"
+                id="companyReportYear"
+                name="companyReportYear"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.companyReportYear}
+                error={
+                  touched.companyReportYear && Boolean(errors.companyReportYear)
+                }
+                helperText={
+                  touched.companyReportYear && errors.companyReportYear
+                }
+                fullWidth
+                multiline
+                minRows={1}
+                maxRows={5}
+                margin="normal"
+                sx={{ gridColumn: "span 4" }}
               />
 
               <TextField
@@ -533,30 +560,6 @@ const CompanyForm = () => {
               />
 
               <TextField
-                label="Report Approval Status"
-                variant="filled"
-                id="companyReportApprovalStatus"
-                name="companyReportApprovalStatus"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.companyReportApprovalStatus}
-                error={
-                  touched.companyReportApprovalStatus &&
-                  Boolean(errors.companyReportApprovalStatus)
-                }
-                helperText={
-                  touched.companyReportApprovalStatus &&
-                  errors.companyReportApprovalStatus
-                }
-                fullWidth
-                multiline
-                minRows={1}
-                maxRows={5}
-                margin="normal"
-                sx={{ gridColumn: "span 4" }}
-              />
-
-              <TextField
                 label="Practice Details"
                 variant="filled"
                 id="companyPracticeDetails"
@@ -571,28 +574,6 @@ const CompanyForm = () => {
                 helperText={
                   touched.companyPracticeDetails &&
                   errors.companyPracticeDetails
-                }
-                fullWidth
-                multiline
-                minRows={1}
-                maxRows={5}
-                margin="normal"
-                sx={{ gridColumn: "span 4" }}
-              />
-
-              <TextField
-                label="Report Year"
-                variant="filled"
-                id="companyReportYear"
-                name="companyReportYear"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.companyReportYear}
-                error={
-                  touched.companyReportYear && Boolean(errors.companyReportYear)
-                }
-                helperText={
-                  touched.companyReportYear && errors.companyReportYear
                 }
                 fullWidth
                 multiline
@@ -620,7 +601,12 @@ const CompanyForm = () => {
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
-            <Box display="flex" justifyContent="end" my="20px">
+            <Box
+              display="flex"
+              justifyContent="end"
+              my="20px"
+              paddingBottom="2rem"
+            >
               <Button type="submit" color="secondary" variant="contained">
                 Add Company Description
               </Button>
