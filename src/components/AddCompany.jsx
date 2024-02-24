@@ -23,7 +23,7 @@ const CompanyForm = () => {
   const fetchCompanyType = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/admin/getClasses",
+        `${process.env.React_App_BASE_URL}/api/admin/getClasses`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -46,7 +46,7 @@ const CompanyForm = () => {
     try {
       console.log(values);
       const response = await axios.post(
-        "http://localhost:5000/api/admin/addCompany",
+        `${process.env.React_App_BASE_URL}/api/admin/addCompany`,
         values,
         {
           headers: {

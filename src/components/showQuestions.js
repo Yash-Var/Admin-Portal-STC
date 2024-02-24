@@ -33,7 +33,7 @@ const FAQ = () => {
         Authorization: `Bearer ${token}`,
       };
       const response = await axios.get(
-        "http://localhost:5000/api/admin/getQuestions",
+        `${process.env.React_App_BASE_URL}/api/admin/getQuestions`,
         { headers }
       );
       setCompanyQuestions(response.data.CompanyData);

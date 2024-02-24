@@ -139,7 +139,7 @@ const ReportStatus = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/admin/getCompanyDataDivided`,
+        `${process.env.React_App_BASE_URL}/api/admin/getCompanyDataDivided`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -49,7 +49,7 @@ const ReportPage = () => {
       );
       if (confirmDelete) {
         const response = await axios.get(
-          `http://localhost:5000/api/admin/deleteCompanyData/${id}`,
+          `${process.env.React_App_BASE_URL}/api/admin/deleteCompanyData/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -70,7 +70,7 @@ const ReportPage = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/admin/getCompanyDataByDataId/${id}`,
+        `${process.env.React_App_BASE_URL}/api/admin/getCompanyDataByDataId/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -90,7 +90,7 @@ const ReportPage = () => {
     try {
       const obj = { companyReportApprovalStatus: status };
       const response = await axios.post(
-        `http://localhost:5000/api/admin/updateCompanyDataID/${id}`,
+        `${process.env.React_App_BASE_URL}/api/admin/updateCompanyDataID/${id}`,
         obj,
         {
           headers: {

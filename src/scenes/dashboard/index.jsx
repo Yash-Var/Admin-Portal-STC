@@ -29,7 +29,7 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/admin/totalCount",
+          `${process.env.React_App_BASE_URL}/api/admin/totalCount`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,

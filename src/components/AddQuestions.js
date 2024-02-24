@@ -29,7 +29,7 @@ const QuestionForm = () => {
       };
 
       const response = await axios.get(
-        "http://localhost:5000/api/admin/getCompanyNames",
+        `${process.env.React_App_BASE_URL}/api/admin/getCompanyNames`,
         { headers }
       );
 
@@ -84,7 +84,7 @@ const QuestionForm = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:5000/api/admin/addQuestion",
+        `${process.env.React_App_BASE_URL}/api/admin/addQuestion`,
         newValues,
         { headers }
       );

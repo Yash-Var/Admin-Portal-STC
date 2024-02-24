@@ -22,7 +22,7 @@ const Form = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/admin/registerAdmin",
+        `${process.env.React_App_BASE_URL}/api/admin/registerAdmin`,
         value2,
         {
           headers: {

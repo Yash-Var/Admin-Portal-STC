@@ -34,7 +34,7 @@ const LoginForm = () => {
   });
 
   const chaeckData = (obj) => {
-    const urlApi = `http://localhost:5000/api/admin/loginAdmin`;
+    const urlApi = `${process.env.React_App_BASE_URL}/api/admin/loginAdmin`;
     const api = axios
       .post(urlApi, obj)
       .then((data) => {

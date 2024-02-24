@@ -23,7 +23,7 @@ const Company = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/admin/getCompanies",
+        `${process.env.React_App_BASE_URL}/api/admin/getCompanies`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

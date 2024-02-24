@@ -20,7 +20,7 @@ const CompanyModal = ({ open, handleClose, companyId }) => {
   const fetchCompanyType = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/admin/getClasses",
+        `${process.env.React_App_BASE_URL}/api/admin/getClasses`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -46,7 +46,7 @@ const CompanyModal = ({ open, handleClose, companyId }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/admin/getCompany/${companyId}`,
+          `${process.env.React_App_BASE_URL}/api/admin/getCompany/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -85,7 +85,7 @@ const CompanyModal = ({ open, handleClose, companyId }) => {
       // Perform action to save data (e.g., send updated data to an API)
       // Example: Axios PUT request to update company details
       await axios.post(
-        `http://localhost:5000/api/admin/updateCompany/${companyId}`,
+        `${process.env.React_App_BASE_URL}/api/admin/updateCompany/${companyId}`,
         companyData,
         {
           headers: {

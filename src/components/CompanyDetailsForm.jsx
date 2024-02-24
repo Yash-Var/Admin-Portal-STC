@@ -30,7 +30,7 @@ const CompanyForm = () => {
       };
 
       const response = await axios.get(
-        "http://localhost:5000/api/admin/getCompanyNames",
+        `${process.env.React_App_BASE_URL}/api/admin/getCompanyNames`,
         { headers }
       );
       console.log(response.data.data);
@@ -94,7 +94,7 @@ const CompanyForm = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:5000/api/admin/addCompanyData",
+        `${process.env.React_App_BASE_URL}/api/admin/addCompanyData`,
         newValues,
         { headers }
       );

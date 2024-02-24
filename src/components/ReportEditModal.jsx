@@ -38,7 +38,7 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/admin/getCompanyDataByDataId/${reportId}`,
+          `${process.env.React_App_BASE_URL}/api/admin/getCompanyDataByDataId/${reportId}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -110,7 +110,7 @@ const ReportEditModal = ({ open, handleClose, reportId }) => {
       companyData.companyReportApprovalStatus = "Pending";
       console.log(companyData);
       const response = await axios.post(
-        `http://localhost:5000/api/admin/updateCompanyData/${reportId}`,
+        `${process.env.React_App_BASE_URL}/api/admin/updateCompanyData/${reportId}`,
         companyData,
         {
           headers: {
