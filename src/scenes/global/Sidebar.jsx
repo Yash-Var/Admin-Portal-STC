@@ -147,7 +147,7 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Interview Questions"
+              title="Aptitude Questions"
               to="/showQuestions"
               icon={<QuestionAnswerOutlinedIcon />}
               selected={selected}
