@@ -69,6 +69,7 @@ const QuestionForm = () => {
   });
 
   const onSubmit = async (values, { resetForm }) => {
+    console.log(values);
     const newValues = {
       ...values,
       company: companies.find(
@@ -134,7 +135,7 @@ const QuestionForm = () => {
                 <Select
                   labelId="company-id-label"
                   id="companyId"
-                  name="Company Name"
+                  name="companyId"
                   value={values.companyId || ""}
                   onChange={handleChange}
                   onBlur={handleBlur}

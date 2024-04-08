@@ -233,7 +233,18 @@ const ReportPage = () => {
               <span style={{ marginLeft: "8px", fontStyle: "italic" }}>
                 Description:
               </span>
-              <span>{companyInfo.companyFirstRoundDescrip}</span>
+              <span>
+                {companyInfo?.companyFirstRoundDescrip
+                  .split("\n")
+                  .map((e, key) => {
+                    return (
+                      <span key={key}>
+                        {e}
+                        <br />
+                      </span>
+                    );
+                  })}
+              </span>
             </Typography>
             <Typography
               variant="h4"
@@ -251,7 +262,13 @@ const ReportPage = () => {
               <span style={{ marginLeft: "8px", fontStyle: "italic" }}>
                 Description:
               </span>
-              <span>{companyInfo.companySecondRoundDescrip}</span>
+              <span>
+                {companyInfo.companySecondRoundDescrip
+                  .split("\n")
+                  .map((e, key) => {
+                    return <div key={key}>{e}</div>;
+                  })}
+              </span>
             </Typography>
 
             <Typography
@@ -270,7 +287,13 @@ const ReportPage = () => {
               <span style={{ marginLeft: "8px", fontStyle: "italic" }}>
                 Description:
               </span>
-              <span>{companyInfo.companyThirdRoundDescrip}</span>
+              <span>
+                {companyInfo.companyThirdRoundDescrip
+                  .split("\n")
+                  .map((e, key) => {
+                    return <div key={key}>{e}</div>;
+                  })}
+              </span>
             </Typography>
             <Typography
               variant="h4"
@@ -288,7 +311,13 @@ const ReportPage = () => {
               <span style={{ marginLeft: "8px", fontStyle: "italic" }}>
                 Description:
               </span>
-              <span>{companyInfo.companyFourthRoundDescrip}</span>
+              <span>
+                {companyInfo.companyFourthRoundDescrip
+                  .split("\n")
+                  .map((e, key) => {
+                    return <div key={key}>{e}</div>;
+                  })}
+              </span>
             </Typography>
             <Typography
               variant="h5"
